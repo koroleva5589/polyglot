@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Полиглот — английский и китайский</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#4f46e5">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Полиглот">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<style>
+:root{
+  --bg:#f6f4ef; --card:#ffffff; --ink:#22201b; --mut:#8a8577; --line:#e7e2d8;
+  --acc:#4f46e5; --acc2:#4338ca; --en:#2563eb; --zh:#d9483b;
+  --ok:#15803d; --bad:#dc2626; --gold:#d97706;
+  --r:16px; --sh:0 1px 3px rgba(30,25,10,.08),0 4px 14px rgba(30,25,10,.07);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.45 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+#app{max-width:720px;margin:0 auto;padding:14px 14px 48px;
+  padding-top:max(14px,env(safe-area-inset-top));padding-bottom:max(48px,env(safe-area-inset-bottom));
+  padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}
+.hanzi{font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC","Source Han Sans SC",sans-serif}
+h1,h2,h3{line-height:1.2;margin:.35em 0} h1{font-size:24px} h2{font-size:19px}
+.muted{color:var(--mut)} .small{font-size:13px} .big{font-size:20px}
+.center{text-align:center}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.between{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.grid{display:grid;gap:10px}
+.cols2{grid-template-columns:repeat(2,1fr)}
+.cols3{grid-template-columns:repeat(2,1fr)}
+@media(min-width:560px){.cols3{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:14px;
+  padding:13px 18px;font-size:17px;font-weight:600;background:var(--acc);color:#fff;cursor:pointer;
+  box-shadow:var(--sh);transition:transform .06s ease;font-family:inherit}
+.btn:active{transform:scale(.96)}
+.btn.ghost{background:var(--card);color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.btn.big{width:100%;padding:18px;font-size:19px}
+.btn.sm{padding:7px 12px;font-size:14px;border-radius:10px}
+.btn.gr{background:var(--ok)} .btn.rd{background:var(--bad)} .btn.bl{background:var(--en)}
+.btn.yl{background:var(--gold)} .btn:disabled{opacity:.45;cursor:default}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--line);
+  border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600;cursor:pointer}
+.chip.on-en{border-color:var(--en);color:var(--en);background:#eff6ff}
+.chip.on-zh{border-color:var(--zh);color:var(--zh);background:#fef2f2}
+.topbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.logo{font-size:20px;font-weight:800;letter-spacing:.2px}
+.spacer{flex:1}
+.statrow{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.stat{background:var(--card);border-radius:12px;box-shadow:var(--sh);padding:8px 12px;font-size:14px;font-weight:600}
+.deck{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:var(--r);
+  box-shadow:var(--sh);padding:12px 14px;cursor:pointer;border:1.5px solid transparent}
+.deck .ic{font-size:30px}
+.deck .ttl{font-weight:700}
+.deck .pr{margin-top:2px;font-size:12px;color:var(--mut)}
+.deck.zh{border-left:5px solid var(--zh)} .deck.en{border-left:5px solid var(--en)}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:6px}
+.bar>i{display:block;height:100%;background:var(--acc);border-radius:99px}
+.flash{position:relative;text-align:center;padding:26px 14px;min-height:300px;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;gap:8px;cursor:pointer;user-select:none}
+.flash .emoji{font-size:54px}
+.flash .word{font-size:40px;font-weight:800}
+.flash .pinyin{font-size:22px;color:var(--mut)}
+.flash .ru{font-size:30px;font-weight:700;color:var(--acc2)}
+.flash .note{font-size:13px;color:var(--mut)}
+.spk{border:0;background:#eef2ff;color:var(--acc2);border-radius:999px;width:46px;height:46px;font-size:20px;
+  cursor:pointer;box-shadow:var(--sh)}
+.rates{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.opt{display:flex;align-items:center;justify-content:center;min-height:58px;padding:10px;font-size:19px;font-weight:600;
+  background:var(--card);border:2px solid var(--line);border-radius:14px;cursor:pointer;text-align:center}
+.opt.ok{border-color:var(--ok);background:#f0fdf4;color:var(--ok)}
+.opt.no{border-color:var(--bad);background:#fef2f2;color:var(--bad)}
+.tiles{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+.tile{padding:10px 14px;font-size:18px;font-weight:700;background:var(--card);border:2px solid var(--line);
+  border-radius:12px;cursor:pointer;box-shadow:var(--sh)}
+.tile.ok{border-color:var(--ok);background:#f0fdf4}
+.tile.no{border-color:var(--bad);background:#fef2f2}
+.tile.used{opacity:.25;pointer-events:none}
+.ansline{min-height:58px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;
+  border:2px dashed var(--line);border-radius:14px;padding:8px;margin-top:8px}
+.tonebtns{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+.tonebtn{font-size:26px;font-weight:800;padding:14px 0;background:var(--card);border:2px solid var(--line);
+  border-radius:14px;cursor:pointer}
+.kgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(min-width:560px){.kgrid{grid-template-columns:repeat(4,1fr)}}
+.kcard{background:var(--card);border-radius:20px;box-shadow:var(--sh);aspect-ratio:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:4px;cursor:pointer;border:2px solid transparent}
+.kcard .em{font-size:52px} .kcard .wd{font-size:15px;font-weight:700}
+.kcard:active{transform:scale(.95);border-color:var(--acc)}
+.pop{animation:pop .35s ease} @keyframes pop{0%{transform:scale(1)}50%{transform:scale(1.25)}100%{transform:scale(1)}}
+.shake{animation:shake .3s} @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.select,.input{width:100%;padding:11px;border:1.5px solid var(--line);border-radius:12px;font-size:15px;
+  font-family:inherit;background:var(--card);color:var(--ink)}
+.hint{background:#fffbeb;border:1.5px solid #fde68a;border-radius:12px;padding:12px;font-size:14px;margin:10px 0}
+.setrow{margin:14px 0} .setrow label{display:block;font-weight:700;margin-bottom:6px;font-size:14px}
+.badge{display:inline-block;background:#f5f3ff;color:var(--acc2);border-radius:999px;padding:4px 10px;
+  font-size:13px;font-weight:700;margin:2px}
+.gameIcon{font-size:30px} .gameName{font-weight:700;font-size:15px} .gameDesc{font-size:12px;color:var(--mut);margin-top:2px}
+.gbtn{display:flex;flex-direction:column;align-items:flex-start;gap:4px;background:var(--card);border-radius:var(--r);
+  box-shadow:var(--sh);padding:14px;cursor:pointer;text-align:left;border:1.5px solid transparent}
+.gbtn:active{border-color:var(--acc)}
+hr{border:0;border-top:1.5px solid var(--line);margin:18px 0}
+a{color:var(--acc)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+"use strict";
+/* ============================================================
+   ПОЛИГЛОТ — семейный тренажёр английского и китайского
+   Один файл, без интернета. Прогресс — в localStorage браузера.
+   ============================================================ */
+
+const DATA = {};
+
+/* ---------- КИТАЙСКИЙ: слова (HSK 1 + самое нужное) ---------- */
+DATA.zh = { key:"zh", name:"Китайский", flag:"🇨🇳", decks:[
+{id:"zh01",t:"Приветствия",i:"👋",words:[
+ {r:"привет",w:"你好",p:"nǐ hǎo",e:"👋"},
+ {r:"здравствуйте (вежливо)",w:"您好",p:"nín hǎo",e:"🙏"},
+ {r:"до свидания",w:"再见",p:"zàijiàn",e:"👋"},
+ {r:"до завтра",w:"明天见",p:"míngtiān jiàn",e:"🌅"},
+ {r:"спасибо",w:"谢谢",p:"xièxie",e:"🙏"},
+ {r:"пожалуйста (не за что)",w:"不客气",p:"bú kèqì",e:"😊"},
+ {r:"пожалуйста (прошу)",w:"请",p:"qǐng",e:"🤝"},
+ {r:"извините",w:"对不起",p:"duìbuqǐ",e:"🙁"},
+ {r:"ничего страшного",w:"没关系",p:"méi guānxi",e:"😊"},
+ {r:"алло (в трубку)",w:"喂",p:"wèi",e:"☎️"},
+ {r:"да; быть",w:"是",p:"shì",e:"✅"},
+ {r:"нет; не",w:"不",p:"bù",e:"❌"},
+ {r:"тоже, также",w:"也",p:"yě",e:"➕"}
+]},
+{id:"zh02",t:"Семья и люди",i:"👨‍👩‍👧",words:[
+ {r:"папа",w:"爸爸",p:"bàba",e:"👨"},
+ {r:"мама",w:"妈妈",p:"māma",e:"👩"},
+ {r:"сын",w:"儿子",p:"érzi",e:"👦"},
+ {r:"дочь",w:"女儿",p:"nǚ'ér",e:"👧"},
+ {r:"дом; семья",w:"家",p:"jiā",e:"🏠"},
+ {r:"друг",w:"朋友",p:"péngyou",e:"🤝"},
+ {r:"учитель",w:"老师",p:"lǎoshī",e:"👩‍🏫"},
+ {r:"ученик",w:"学生",p:"xuésheng",e:"🧑‍🎓"},
+ {r:"врач",w:"医生",p:"yīshēng",e:"🩺"},
+ {r:"человек",w:"人",p:"rén",e:"🧑"},
+ {r:"господин",w:"先生",p:"xiānsheng",e:"🤵"},
+ {r:"госпожа",w:"小姐",p:"xiǎojiě",e:"💁‍♀️"}
+]},
+{id:"zh03",t:"Числа и цвета",i:"🔢",words:[
+ {r:"ноль",w:"零",p:"líng",e:"0️⃣"},
+ {r:"один",w:"一",p:"yī",e:"1️⃣"},
+ {r:"два",w:"二",p:"èr",e:"2️⃣"},
+ {r:"три",w:"三",p:"sān",e:"3️⃣"},
+ {r:"четыре",w:"四",p:"sì",e:"4️⃣"},
+ {r:"пять",w:"五",p:"wǔ",e:"5️⃣"},
+ {r:"шесть",w:"六",p:"liù",e:"6️⃣"},
+ {r:"семь",w:"七",p:"qī",e:"7️⃣"},
+ {r:"восемь",w:"八",p:"bā",e:"8️⃣"},
+ {r:"девять",w:"九",p:"jiǔ",e:"9️⃣"},
+ {r:"десять",w:"十",p:"shí",e:"🔟"},
+ {r:"сто",w:"百",p:"bǎi",e:"💯"},
+ {r:"красный",w:"红",p:"hóng",e:"🔴"},
+ {r:"белый",w:"白",p:"bái",e:"⚪"},
+ {r:"чёрный",w:"黑",p:"hēi",e:"⚫"},
+ {r:"синий",w:"蓝",p:"lán",e:"🔵"},
+ {r:"зелёный",w:"绿",p:"lǜ",e:"💚"}
+]},
+{id:"zh04",t:"Еда и напитки",i:"🍚",words:[
+ {r:"есть, кушать",w:"吃",p:"chī",e:"🍽️"},
+ {r:"пить",w:"喝",p:"hē",e:"🥤"},
+ {r:"чай",w:"茶",p:"chá",e:"🍵"},
+ {r:"вода",w:"水",p:"shuǐ",e:"💧"},
+ {r:"рис (блюдо)",w:"米饭",p:"mǐfàn",e:"🍚"},
+ {r:"блюдо; овощи",w:"菜",p:"cài",e:"🥬"},
+ {r:"яблоко",w:"苹果",p:"píngguǒ",e:"🍎"},
+ {r:"лапша",w:"面条",p:"miàntiáo",e:"🍜"},
+ {r:"курица (мясо)",w:"鸡肉",p:"jīròu",e:"🍗"},
+ {r:"молоко",w:"牛奶",p:"niúnǎi",e:"🥛"},
+ {r:"кофе",w:"咖啡",p:"kāfēi",e:"☕"},
+ {r:"вкусный",w:"好吃",p:"hǎochī",e:"😋"},
+ {r:"чашка, стакан",w:"杯子",p:"bēizi",e:"🍶"},
+ {r:"палочки (для еды)",w:"筷子",p:"kuàizi",e:"🥢"}
+]},
+{id:"zh05",t:"Дом и вещи",i:"🏠",words:[
+ {r:"комната",w:"房间",p:"fángjiān",e:"🏠"},
+ {r:"стол",w:"桌子",p:"zhuōzi",e:"🧾"},
+ {r:"стул",w:"椅子",p:"yǐzi",e:"🪑"},
+ {r:"кровать",w:"床",p:"chuáng",e:"🛏️"},
+ {r:"дверь",w:"门",p:"mén",e:"🚪"},
+ {r:"окно",w:"窗户",p:"chuānghu",e:"🪟"},
+ {r:"телевизор",w:"电视",p:"diànshì",e:"📺"},
+ {r:"компьютер",w:"电脑",p:"diànnǎo",e:"💻"},
+ {r:"телефон (мобильный)",w:"手机",p:"shǒujī",e:"📱"},
+ {r:"книга",w:"书",p:"shū",e:"📚"},
+ {r:"одежда",w:"衣服",p:"yīfu",e:"👕"},
+ {r:"кошелёк",w:"钱包",p:"qiánbāo",e:"👛"},
+ {r:"ключи",w:"钥匙",p:"yàoshi",e:"🔑"},
+ {r:"лампа; свет",w:"灯",p:"dēng",e:"💡"}
+]},
+{id:"zh06",t:"Глаголы 1",i:"🚶",words:[
+ {r:"идти, ехать (куда-то)",w:"去",p:"qù",e:"➡️"},
+ {r:"приходить",w:"来",p:"lái",e:"⬅️"},
+ {r:"возвращаться",w:"回",p:"huí",e:"↩️"},
+ {r:"смотреть",w:"看",p:"kàn",e:"👁️"},
+ {r:"увидеть",w:"看见",p:"kànjiàn",e:"👀"},
+ {r:"слушать",w:"听",p:"tīng",e:"👂"},
+ {r:"говорить",w:"说",p:"shuō",e:"🗣️"},
+ {r:"писать",w:"写",p:"xiě",e:"✍️"},
+ {r:"читать",w:"读",p:"dú",e:"📖"},
+ {r:"покупать",w:"买",p:"mǎi",e:"🛒"},
+ {r:"продавать",w:"卖",p:"mài",e:"💰"},
+ {r:"сидеть",w:"坐",p:"zuò",e:"🪑"},
+ {r:"идти пешком",w:"走",p:"zǒu",e:"🚶"},
+ {r:"звонить по телефону",w:"打电话",p:"dǎ diànhuà",e:"📞"}
+]},
+{id:"zh07",t:"Глаголы 2",i:"💼",words:[
+ {r:"спать",w:"睡觉",p:"shuìjiào",e:"😴"},
+ {r:"работать; работа",w:"工作",p:"gōngzuò",e:"💼"},
+ {r:"учиться",w:"学习",p:"xuéxí",e:"📝"},
+ {r:"вести машину",w:"开车",p:"kāi chē",e:"🚗"},
+ {r:"помогать",w:"帮助",p:"bāngzhù",e:"🫱"},
+ {r:"понимать",w:"懂",p:"dǒng",e:"💡"},
+ {r:"искать",w:"找",p:"zhǎo",e:"🔍"},
+ {r:"давать",w:"给",p:"gěi",e:"🎁"},
+ {r:"звать; называться",w:"叫",p:"jiào",e:"📣"},
+ {r:"быть знакомым (с человеком)",w:"认识",p:"rènshi",e:"🙂"}
+]},
+{id:"zh08",t:"Какой-какой",i:"🌈",words:[
+ {r:"большой",w:"大",p:"dà",e:"🐘"},
+ {r:"маленький",w:"小",p:"xiǎo",e:"🐭"},
+ {r:"много",w:"多",p:"duō",e:"➕"},
+ {r:"мало",w:"少",p:"shǎo",e:"➖"},
+ {r:"хороший; хорошо",w:"好",p:"hǎo",e:"👍"},
+ {r:"радостный, довольный",w:"高兴",p:"gāoxìng",e:"😄"},
+ {r:"красивый",w:"漂亮",p:"piàoliang",e:"🌸"},
+ {r:"жаркий; горячий",w:"热",p:"rè",e:"🥵"},
+ {r:"холодный",w:"冷",p:"lěng",e:"🥶"},
+ {r:"голодный",w:"饿",p:"è",e:"🍞"},
+ {r:"хотеть пить",w:"渴",p:"kě",e:"🥤"},
+ {r:"усталый",w:"累",p:"lèi",e:"😴"},
+ {r:"дорогой (о цене)",w:"贵",p:"guì",e:"💰"},
+ {r:"дешёвый",w:"便宜",p:"piányi",e:"🏷️"},
+ {r:"быстрый",w:"快",p:"kuài",e:"🏃"},
+ {r:"медленный",w:"慢",p:"màn",e:"🐢"}
+]},
+{id:"zh09",t:"Время",i:"⏰",words:[
+ {r:"сегодня",w:"今天",p:"jīntiān",e:"📆"},
+ {r:"завтра",w:"明天",p:"míngtiān",e:"⏩"},
+ {r:"вчера",w:"昨天",p:"zuótiān",e:"⏪"},
+ {r:"сейчас",w:"现在",p:"xiànzài",e:"⌚"},
+ {r:"утро (до полудня)",w:"上午",p:"shàngwǔ",e:"🌅"},
+ {r:"день (после полудня)",w:"下午",p:"xiàwǔ",e:"🌇"},
+ {r:"вечер, ночь",w:"晚上",p:"wǎnshang",e:"🌙"},
+ {r:"год",w:"年",p:"nián",e:"🗓️"},
+ {r:"месяц",w:"月",p:"yuè",e:"🌕"},
+ {r:"неделя; день недели",w:"星期",p:"xīngqī",e:"📅"},
+ {r:"время, момент",w:"时候",p:"shíhou",e:"🕰️"},
+ {r:"минута",w:"分钟",p:"fēnzhōng",e:"⏱️"},
+ {r:"час (на часах)",w:"点",p:"diǎn",e:"🕐"},
+ {r:"день рождения",w:"生日",p:"shēngrì",e:"🎂"},
+ {r:"погода",w:"天气",p:"tiānqì",e:"⛅"},
+ {r:"идёт дождь",w:"下雨",p:"xiàyǔ",e:"🌧️"}
+]},
+{id:"zh10",t:"Транспорт и места",i:"🚕",words:[
+ {r:"такси",w:"出租车",p:"chūzūchē",e:"🚕"},
+ {r:"самолёт",w:"飞机",p:"fēijī",e:"✈️"},
+ {r:"поезд",w:"火车",p:"huǒchē",e:"🚆"},
+ {r:"метро",w:"地铁",p:"dìtiě",e:"🚇"},
+ {r:"автобус",w:"公交车",p:"gōngjiāochē",e:"🚌"},
+ {r:"станция, остановка",w:"车站",p:"chēzhàn",e:"🚏"},
+ {r:"аэропорт",w:"机场",p:"jīchǎng",e:"🛫"},
+ {r:"магазин",w:"商店",p:"shāngdiàn",e:"🏪"},
+ {r:"ресторан",w:"饭馆",p:"fànguǎn",e:"🍽️"},
+ {r:"школа",w:"学校",p:"xuéxiào",e:"🏫"},
+ {r:"больница",w:"医院",p:"yīyuàn",e:"🏥"},
+ {r:"туалет",w:"厕所",p:"cèsuǒ",e:"🚾"},
+ {r:"банк",w:"银行",p:"yínháng",e:"🏦"},
+ {r:"здесь",w:"这里",p:"zhèlǐ",e:"📍"},
+ {r:"впереди, перед",w:"前面",p:"qiánmiàn",e:"⬆️"},
+ {r:"позади, сзади",w:"后面",p:"hòumiàn",e:"⬇️"}
+]},
+{id:"zh11",t:"Вопросы и помощники",i:"❓",words:[
+ {r:"что",w:"什么",p:"shénme",e:"❓"},
+ {r:"кто",w:"谁",p:"shéi",e:"👤"},
+ {r:"где (о месте)",w:"哪儿",p:"nǎr",e:"🗺️"},
+ {r:"как",w:"怎么",p:"zěnme",e:"🤔"},
+ {r:"почему",w:"为什么",p:"wèishénme",e:"⁉️"},
+ {r:"сколько",w:"多少",p:"duōshao",e:"🔢"},
+ {r:"сколько (о малом числе)",w:"几",p:"jǐ",e:"#️⃣"},
+ {r:"вопросительная частица «ли»",w:"吗",p:"ma",e:"❔"},
+ {r:"частица «а?»",w:"呢",p:"ne",e:"❕"},
+ {r:"частица притяжания",w:"的",p:"de",e:""},
+ {r:"частица прошедшего времени",w:"了",p:"le",e:""},
+ {r:"очень",w:"很",p:"hěn",e:"⚡"},
+ {r:"все",w:"都",p:"dōu",e:"👥"},
+ {r:"и",w:"和",p:"hé",e:"➕"},
+ {r:"хотеть; думать",w:"想",p:"xiǎng",e:"💭"},
+ {r:"уметь",w:"会",p:"huì",e:"🎓"},
+ {r:"мочь (иметь возможность)",w:"能",p:"néng",e:"🔋"},
+ {r:"хотеть; нужно",w:"要",p:"yào",e:"❗"},
+ {r:"находиться; в",w:"在",p:"zài",e:"📍"},
+ {r:"иметь, есть",w:"有",p:"yǒu",e:"🫴"}
+]}
+]};
+
+/* ---------- КИТАЙСКИЙ: фразы для переезда ---------- */
+DATA.zh.decks.push(
+{id:"zhp1",t:"Знакомство",i:"🤝",ph:1,words:[
+ {r:"Меня зовут…",w:"我叫……",p:"wǒ jiào…"},
+ {r:"Я из России",w:"我是俄国人",p:"wǒ shì Éguó rén"},
+ {r:"Приятно познакомиться",w:"很高兴认识你",p:"hěn gāoxìng rènshi nǐ"},
+ {r:"Как вас зовут?",w:"你叫什么名字?",p:"nǐ jiào shénme míngzi?"},
+ {r:"Вы говорите по-английски?",w:"你会说英语吗?",p:"nǐ huì shuō Yīngyǔ ma?"},
+ {r:"Я не говорю по-китайски",w:"我不会说汉语",p:"wǒ bú huì shuō Hànyǔ"},
+ {r:"Повторите, пожалуйста",w:"请再说一遍",p:"qǐng zài shuō yí biàn"},
+ {r:"Говорите медленнее, пожалуйста",w:"请说慢一点",p:"qǐng shuō màn yìdiǎn"},
+ {r:"Я не понимаю",w:"我不明白",p:"wǒ bù míngbái"},
+ {r:"Как это называется?",w:"这个怎么说?",p:"zhège zěnme shuō?"}
+]},
+{id:"zhp2",t:"Такси и дорога",i:"🚕",ph:1,words:[
+ {r:"В аэропорт, пожалуйста",w:"去机场",p:"qù jīchǎng"},
+ {r:"По этому адресу",w:"去这个地址",p:"qù zhège dìzhǐ"},
+ {r:"Остановитесь здесь",w:"停在这里",p:"tíng zài zhèlǐ"},
+ {r:"Включите счётчик, пожалуйста",w:"请打表",p:"qǐng dǎ biǎo"},
+ {r:"Идите прямо",w:"直走",p:"zhí zǒu"},
+ {r:"Поверните налево",w:"左拐",p:"zuǒ guǎi"},
+ {r:"Поверните направо",w:"右拐",p:"yòu guǎi"},
+ {r:"Где находится…?",w:"在哪里?",p:"zài nǎlǐ?"},
+ {r:"Сколько стоит?",w:"多少钱?",p:"duōshao qián?"},
+ {r:"Слишком дорого!",w:"太贵了!",p:"tài guì le!"},
+ {r:"Можно подешевле?",w:"便宜一点可以吗?",p:"piányi yìdiǎn kěyǐ ma?"}
+]},
+{id:"zhp3",t:"Магазин",i:"🛍️",ph:1,words:[
+ {r:"Я хочу это купить",w:"我要买这个",p:"wǒ yào mǎi zhège"},
+ {r:"Я просто смотрю",w:"我随便看看",p:"wǒ suíbiàn kànkàn"},
+ {r:"Есть другой цвет?",w:"有没有别的颜色?",p:"yǒu méiyǒu biéde yánsè?"},
+ {r:"Можно примерить?",w:"可以试试吗?",p:"kěyǐ shìshi ma?"},
+ {r:"Слишком большое",w:"太大了",p:"tài dà le"},
+ {r:"Слишком маленькое",w:"太小了",p:"tài xiǎo le"},
+ {r:"Сколько всего?",w:"一共多少钱?",p:"yígòng duōshao qián?"},
+ {r:"Можно заплатить картой?",w:"刷卡可以吗?",p:"shuākǎ kěyǐ ma?"},
+ {r:"Дайте пакет, пожалуйста",w:"给我袋子",p:"gěi wǒ dáizi"},
+ {r:"Сдачи не надо",w:"不用找了",p:"búyòng zhǎo le"}
+]},
+{id:"zhp4",t:"Кафе и ресторан",i:"🍜",ph:1,words:[
+ {r:"Дайте меню, пожалуйста",w:"请给我菜单",p:"qǐng gěi wǒ càidān"},
+ {r:"Я возьму это",w:"我要这个",p:"wǒ yào zhège"},
+ {r:"Бутылку воды",w:"一瓶水",p:"yì píng shuǐ"},
+ {r:"Два чая",w:"两杯茶",p:"liǎng bēi chá"},
+ {r:"Я не ем острое",w:"我不吃辣",p:"wǒ bù chī là"},
+ {r:"Очень вкусно!",w:"太好吃了!",p:"tài hǎochī le!"},
+ {r:"Невкусно",w:"不好吃",p:"bù hǎochī"},
+ {r:"Здесь или с собой?",w:"在这儿吃还是带走?",p:"zài zhèr chī háishi dàizǒu?"},
+ {r:"Официант!",w:"服务员!",p:"fúwùyuán!"},
+ {r:"Счёт, пожалуйста",w:"买单",p:"mǎidān"}
+]},
+{id:"zhp5",t:"Врач и здоровье",i:"🩺",ph:1,words:[
+ {r:"Мне плохо",w:"我不舒服",p:"wǒ bù shūfu"},
+ {r:"Я заболел(а)",w:"我生病了",p:"wǒ shēngbìng le"},
+ {r:"У меня болит голова",w:"我头疼",p:"wǒ tóuténg"},
+ {r:"У меня болит живот",w:"我肚子疼",p:"wǒ dùzi téng"},
+ {r:"У меня температура",w:"我发烧",p:"wǒ fāshāo"},
+ {r:"Вызовите врача",w:"叫医生",p:"jiào yīshēng"},
+ {r:"Мне нужно лекарство",w:"我要买药",p:"wǒ yào mǎi yào"},
+ {r:"У меня аллергия на…",w:"我对……过敏",p:"wǒ duì… guòmǐn"},
+ {r:"В больницу, пожалуйста",w:"去医院",p:"qù yīyuàn"},
+ {r:"Помогите!",w:"救命!",p:"jiùmìng!"}
+]},
+{id:"zhp6",t:"Жильё",i:"🏠",ph:1,words:[
+ {r:"Я хочу снять квартиру",w:"我想租房子",p:"wǒ xiǎng zū fángzi"},
+ {r:"Сколько стоит аренда?",w:"房租多少?",p:"fángzū duōshao?"},
+ {r:"Коммунальные услуги включены?",w:"包括水电费吗?",p:"bāokuò shuǐdiànfèi ma?"},
+ {r:"Какой депозит?",w:"押金多少?",p:"yājīn duōshao?"},
+ {r:"Есть кондиционер?",w:"有空调吗?",p:"yǒu kōngtiáo ma?"},
+ {r:"Есть мебель?",w:"有家具吗?",p:"yǒu jiājù ma?"},
+ {r:"Когда можно заехать?",w:"什么时候可以搬进来?",p:"shénme shíhou kěyǐ bān jìnlai?"},
+ {r:"Слишком шумно",w:"太吵了",p:"tài chǎo le"},
+ {r:"Я потерял(а) ключи",w:"我的钥匙丢了",p:"wǒ de yàoshi diū le"}
+]},
+{id:"zhp7",t:"Школа",i:"🏫",ph:1,words:[
+ {r:"Я хочу записаться (записать ребёнка)",w:"我想报名",p:"wǒ xiǎng bàomíng"},
+ {r:"Сколько стоит обучение?",w:"学费多少?",p:"xuéfèi duōshao?"},
+ {r:"Во сколько начинаются уроки?",w:"几点上课?",p:"jǐ diǎn shàngkè?"},
+ {r:"Есть школьный автобус?",w:"有没有校车?",p:"yǒu méiyǒu xiàochē?"},
+ {r:"Учитель говорит слишком быстро",w:"老师说得太快",p:"lǎoshī shuō de tài kuài"},
+ {r:"Мне нужна помощь",w:"我需要帮助",p:"wǒ xūyào bāngzhù"},
+ {r:"Я понял(а)",w:"我明白了",p:"wǒ míngbái le"},
+ {r:"Завтра экзамен",w:"明天有考试",p:"míngtiān yǒu kǎoshì"},
+ {r:"Я сделал(а) домашнее задание",w:"我做完作业了",p:"wǒ zuò wán zuòyè le"}
+]}
+);
+
+/* ---------- АНГЛИЙСКИЙ: слова A1, часть 1 ---------- */
+DATA.en = { key:"en", name:"Английский", flag:"🇬🇧", decks:[
+{id:"en01",t:"Приветствия",i:"👋",words:[
+ {r:"привет, здравствуйте",w:"hello",e:"👋"},
+ {r:"привет (неформально)",w:"hi",e:"🙂"},
+ {r:"доброе утро",w:"good morning",e:"🌅"},
+ {r:"добрый день",w:"good afternoon",e:"🌇"},
+ {r:"добрый вечер",w:"good evening",e:"🌆"},
+ {r:"доброй ночи",w:"good night",e:"🌙"},
+ {r:"до свидания",w:"goodbye",e:"👋"},
+ {r:"пока",w:"bye",e:"🙋"},
+ {r:"пожалуйста",w:"please",e:"🤝"},
+ {r:"спасибо",w:"thank you",e:"🙏"},
+ {r:"спасибо (коротко)",w:"thanks",e:"🙏"},
+ {r:"пожалуйста (в ответ на спасибо)",w:"you are welcome",e:"😊"},
+ {r:"извините",w:"sorry",e:"🙁"},
+ {r:"извините (обратить внимание)",w:"excuse me",e:"🧏"},
+ {r:"да",w:"yes",e:"✅"},
+ {r:"нет",w:"no",e:"❌"},
+ {r:"хорошо, ладно",w:"OK",e:"👌"}
+]},
+{id:"en02",t:"Семья",i:"👨‍👩‍👧",words:[
+ {r:"семья",w:"family",e:"👨‍👩‍👧"},
+ {r:"мама",w:"mother",e:"👩"},
+ {r:"мамочка, мама (разговорное)",w:"mum",e:"👩"},
+ {r:"папа",w:"father",e:"👨"},
+ {r:"папа (разговорное)",w:"dad",e:"👨"},
+ {r:"сын",w:"son",e:"👦"},
+ {r:"дочь",w:"daughter",e:"👧"},
+ {r:"брат",w:"brother",e:"🧑"},
+ {r:"сестра",w:"sister",e:"👧"},
+ {r:"бабушка",w:"grandmother",e:"👵"},
+ {r:"дедушка",w:"grandfather",e:"👴"},
+ {r:"жена",w:"wife",e:"💍"},
+ {r:"муж",w:"husband",e:"💍"},
+ {r:"ребёнок",w:"child",e:"🧒"},
+ {r:"дети",w:"children",e:"🧒"},
+ {r:"друг",w:"friend",e:"🤝"},
+ {r:"имя",w:"name",e:"📛"}
+]},
+{id:"en03",t:"Числа и цвета",i:"🔢",words:[
+ {r:"ноль",w:"zero",e:"0️⃣"},
+ {r:"один",w:"one",e:"1️⃣"},
+ {r:"два",w:"two",e:"2️⃣"},
+ {r:"три",w:"three",e:"3️⃣"},
+ {r:"четыре",w:"four",e:"4️⃣"},
+ {r:"пять",w:"five",e:"5️⃣"},
+ {r:"шесть",w:"six",e:"6️⃣"},
+ {r:"семь",w:"seven",e:"7️⃣"},
+ {r:"восемь",w:"eight",e:"8️⃣"},
+ {r:"девять",w:"nine",e:"9️⃣"},
+ {r:"десять",w:"ten",e:"🔟"},
+ {r:"сто",w:"hundred",e:"💯"},
+ {r:"красный",w:"red",e:"🔴"},
+ {r:"синий, голубой",w:"blue",e:"🔵"},
+ {r:"зелёный",w:"green",e:"💚"},
+ {r:"жёлтый",w:"yellow",e:"💛"},
+ {r:"чёрный",w:"black",e:"⚫"},
+ {r:"белый",w:"white",e:"⚪"},
+ {r:"оранжевый",w:"orange",e:"🟠"},
+ {r:"коричневый",w:"brown",e:"🟤"},
+ {r:"розовый",w:"pink",e:"🩷"}
+]},
+{id:"en04",t:"Еда и напитки",i:"🍎",words:[
+ {r:"еда",w:"food",e:"🍽️"},
+ {r:"есть, кушать",w:"eat",e:"🍽️"},
+ {r:"пить",w:"drink",e:"🥤"},
+ {r:"вода",w:"water",e:"💧"},
+ {r:"чай",w:"tea",e:"🍵"},
+ {r:"кофе",w:"coffee",e:"☕"},
+ {r:"молоко",w:"milk",e:"🥛"},
+ {r:"хлеб",w:"bread",e:"🍞"},
+ {r:"яйцо",w:"egg",e:"🥚"},
+ {r:"рис",w:"rice",e:"🍚"},
+ {r:"курица",w:"chicken",e:"🍗"},
+ {r:"рыба",w:"fish",e:"🐟"},
+ {r:"фрукт",w:"fruit",e:"🍑"},
+ {r:"яблоко",w:"apple",e:"🍎"},
+ {r:"банан",w:"banana",e:"🍌"},
+ {r:"овощ",w:"vegetable",e:"🥕"},
+ {r:"суп",w:"soup",e:"🍲"},
+ {r:"сахар",w:"sugar",e:"🍬"},
+ {r:"вкусный",w:"delicious",e:"😋"}
+]},
+{id:"en05",t:"Дом и вещи",i:"🏠",words:[
+ {r:"дом (здание)",w:"house",e:"🏠"},
+ {r:"дом (место, где живёшь)",w:"home",e:"🏡"},
+ {r:"комната",w:"room",e:"🚪"},
+ {r:"кухня",w:"kitchen",e:"🍳"},
+ {r:"ванная",w:"bathroom",e:"🛁"},
+ {r:"спальня",w:"bedroom",e:"🛏️"},
+ {r:"дверь",w:"door",e:"🚪"},
+ {r:"окно",w:"window",e:"🪟"},
+ {r:"стол",w:"table",e:"🧾"},
+ {r:"стул",w:"chair",e:"🪑"},
+ {r:"кровать",w:"bed",e:"🛏️"},
+ {r:"диван",w:"sofa",e:"🛋️"},
+ {r:"телевизор",w:"TV",e:"📺"},
+ {r:"компьютер",w:"computer",e:"💻"},
+ {r:"телефон",w:"phone",e:"📱"},
+ {r:"ключ",w:"key",e:"🔑"},
+ {r:"холодильник",w:"fridge",e:"🧊"},
+ {r:"полотенце",w:"towel",e:"🧻"}
+]},
+{id:"en06",t:"Одежда",i:"👕",words:[
+ {r:"одежда",w:"clothes",e:"👕"},
+ {r:"рубашка",w:"shirt",e:"👔"},
+ {r:"футболка",w:"T-shirt",e:"👕"},
+ {r:"брюки",w:"trousers",e:"👖"},
+ {r:"платье",w:"dress",e:"👗"},
+ {r:"юбка",w:"skirt",e:"👗"},
+ {r:"пальто",w:"coat",e:"🧥"},
+ {r:"куртка",w:"jacket",e:"🧥"},
+ {r:"обувь, ботинки",w:"shoes",e:"👟"},
+ {r:"носки",w:"socks",e:"🧦"},
+ {r:"шапка, шляпа",w:"hat",e:"🧢"},
+ {r:"очки",w:"glasses",e:"👓"},
+ {r:"сумка",w:"bag",e:"👜"},
+ {r:"часы (на руке)",w:"watch",e:"⌚"}
+]},
+{id:"en07",t:"Транспорт и город",i:"🚕",words:[
+ {r:"машина, автомобиль",w:"car",e:"🚗"},
+ {r:"автобус",w:"bus",e:"🚌"},
+ {r:"такси",w:"taxi",e:"🚕"},
+ {r:"поезд",w:"train",e:"🚆"},
+ {r:"самолёт",w:"plane",e:"✈️"},
+ {r:"метро",w:"metro",e:"🚇"},
+ {r:"велосипед",w:"bike",e:"🚲"},
+ {r:"корабль",w:"ship",e:"🚢"},
+ {r:"станция, вокзал",w:"station",e:"🚉"},
+ {r:"аэропорт",w:"airport",e:"🛫"},
+ {r:"остановка",w:"stop",e:"🚏"},
+ {r:"билет",w:"ticket",e:"🎫"},
+ {r:"водитель",w:"driver",e:"🧑‍✈️"},
+ {r:"дорога",w:"road",e:"🛣️"},
+ {r:"улица",w:"street",e:"🏙️"},
+ {r:"мост",w:"bridge",e:"🌉"},
+ {r:"близко",w:"near",e:"📍"},
+ {r:"далеко",w:"far",e:"🗺️"}
+]}
+]};
+
+/* ---------- АНГЛИЙСКИЙ: слова A1, часть 2 ---------- */
+DATA.en.decks.push(
+{id:"en08",t:"Места в городе",i:"🏙️",words:[
+ {r:"город",w:"city",e:"🏙️"},
+ {r:"страна",w:"country",e:"🗺️"},
+ {r:"магазин",w:"shop",e:"🏪"},
+ {r:"супермаркет",w:"supermarket",e:"🛒"},
+ {r:"ресторан",w:"restaurant",e:"🍽️"},
+ {r:"кафе",w:"cafe",e:"☕"},
+ {r:"школа",w:"school",e:"🏫"},
+ {r:"больница",w:"hospital",e:"🏥"},
+ {r:"аптека",w:"pharmacy",e:"💊"},
+ {r:"банк",w:"bank",e:"🏦"},
+ {r:"парк",w:"park",e:"🌳"},
+ {r:"отель",w:"hotel",e:"🏨"},
+ {r:"кино",w:"cinema",e:"🎬"},
+ {r:"музей",w:"museum",e:"🖼️"},
+ {r:"туалет",w:"toilet",e:"🚾"},
+ {r:"адрес",w:"address",e:"📮"}
+]},
+{id:"en09",t:"Время",i:"⏰",words:[
+ {r:"сегодня",w:"today",e:"📆"},
+ {r:"завтра",w:"tomorrow",e:"⏩"},
+ {r:"вчера",w:"yesterday",e:"⏪"},
+ {r:"сейчас",w:"now",e:"⌚"},
+ {r:"утро",w:"morning",e:"🌅"},
+ {r:"день (после полудня)",w:"afternoon",e:"🌇"},
+ {r:"вечер",w:"evening",e:"🌆"},
+ {r:"ночь",w:"night",e:"🌙"},
+ {r:"день, сутки",w:"day",e:"☀️"},
+ {r:"неделя",w:"week",e:"📅"},
+ {r:"месяц",w:"month",e:"🌕"},
+ {r:"год",w:"year",e:"🗓️"},
+ {r:"час",w:"hour",e:"🕐"},
+ {r:"минута",w:"minute",e:"⏱️"},
+ {r:"поздно",w:"late",e:"🥱"},
+ {r:"рано",w:"early",e:"🌅"}
+]},
+{id:"en10",t:"Дни недели",i:"📅",words:[
+ {r:"понедельник",w:"Monday",e:"1️⃣"},
+ {r:"вторник",w:"Tuesday",e:"2️⃣"},
+ {r:"среда",w:"Wednesday",e:"3️⃣"},
+ {r:"четверг",w:"Thursday",e:"4️⃣"},
+ {r:"пятница",w:"Friday",e:"5️⃣"},
+ {r:"суббота",w:"Saturday",e:"6️⃣"},
+ {r:"воскресенье",w:"Sunday",e:"7️⃣"},
+ {r:"выходные",w:"weekend",e:"🎈"}
+]},
+{id:"en11",t:"Погода и природа",i:"🌤️",words:[
+ {r:"погода",w:"weather",e:"⛅"},
+ {r:"солнце",w:"sun",e:"☀️"},
+ {r:"солнечный",w:"sunny",e:"🌞"},
+ {r:"дождь",w:"rain",e:"🌧️"},
+ {r:"дождливый",w:"rainy",e:"☔"},
+ {r:"облачный",w:"cloudy",e:"☁️"},
+ {r:"ветреный",w:"windy",e:"🌬️"},
+ {r:"снег",w:"snow",e:"❄️"},
+ {r:"жаркий",w:"hot",e:"🥵"},
+ {r:"холодный",w:"cold",e:"🥶"},
+ {r:"тёплый",w:"warm",e:"🔥"},
+ {r:"прохладный",w:"cool",e:"🍃"},
+ {r:"небо",w:"sky",e:"🌌"},
+ {r:"дерево",w:"tree",e:"🌳"},
+ {r:"цветок",w:"flower",e:"🌸"},
+ {r:"река",w:"river",e:"🏞️"},
+ {r:"море",w:"sea",e:"🌊"},
+ {r:"гора",w:"mountain",e:"⛰️"}
+]},
+{id:"en12",t:"Тело и здоровье",i:"🩺",words:[
+ {r:"голова",w:"head",e:"🗣️"},
+ {r:"волосы",w:"hair",e:"💇"},
+ {r:"лицо",w:"face",e:"🙂"},
+ {r:"глаз",w:"eye",e:"👁️"},
+ {r:"ухо",w:"ear",e:"👂"},
+ {r:"нос",w:"nose",e:"👃"},
+ {r:"рот",w:"mouth",e:"👄"},
+ {r:"зуб",w:"tooth",e:"🦷"},
+ {r:"рука (кисть)",w:"hand",e:"✋"},
+ {r:"рука (от плеча)",w:"arm",e:"💪"},
+ {r:"нога",w:"leg",e:"🦵"},
+ {r:"стопа, нога (ступня)",w:"foot",e:"🦶"},
+ {r:"живот",w:"stomach",e:"🫃"},
+ {r:"спина",w:"back",e:"🧍"},
+ {r:"сердце",w:"heart",e:"❤️"},
+ {r:"врач",w:"doctor",e:"🩺"},
+ {r:"больной",w:"sick",e:"🤒"},
+ {r:"лекарство",w:"medicine",e:"💊"},
+ {r:"усталый",w:"tired",e:"😴"}
+]},
+{id:"en13",t:"Животные",i:"🐼",words:[
+ {r:"животное",w:"animal",e:"🐾"},
+ {r:"собака",w:"dog",e:"🐶"},
+ {r:"кошка",w:"cat",e:"🐱"},
+ {r:"птица",w:"bird",e:"🐦"},
+ {r:"лошадь",w:"horse",e:"🐴"},
+ {r:"корова",w:"cow",e:"🐮"},
+ {r:"свинья",w:"pig",e:"🐷"},
+ {r:"мышь",w:"mouse",e:"🐭"},
+ {r:"кролик",w:"rabbit",e:"🐰"},
+ {r:"утка",w:"duck",e:"🦆"},
+ {r:"обезьяна",w:"monkey",e:"🐵"},
+ {r:"тигр",w:"tiger",e:"🐯"},
+ {r:"слон",w:"elephant",e:"🐘"},
+ {r:"змея",w:"snake",e:"🐍"},
+ {r:"медведь",w:"bear",e:"🐻"},
+ {r:"панда",w:"panda",e:"🐼"}
+]},
+{id:"en14",t:"Глаголы 1",i:"🚶",words:[
+ {r:"идти, ехать",w:"go",e:"➡️"},
+ {r:"приходить",w:"come",e:"⬅️"},
+ {r:"гулять, ходить пешком",w:"walk",e:"🚶"},
+ {r:"бежать",w:"run",e:"🏃"},
+ {r:"сидеть",w:"sit",e:"🪑"},
+ {r:"стоять",w:"stand",e:"🧍"},
+ {r:"спать",w:"sleep",e:"😴"},
+ {r:"просыпаться",w:"wake up",e:"⏰"},
+ {r:"работать",w:"work",e:"💼"},
+ {r:"учиться (в школе, вузе)",w:"study",e:"📚"},
+ {r:"изучать, учить (что-то)",w:"learn",e:"📝"},
+ {r:"читать",w:"read",e:"📖"},
+ {r:"писать",w:"write",e:"✍️"},
+ {r:"говорить (на языке)",w:"speak",e:"🗣️"},
+ {r:"слушать",w:"listen",e:"👂"},
+ {r:"видеть",w:"see",e:"👀"},
+ {r:"смотреть (на)",w:"look",e:"👁️"}
+]},
+{id:"en15",t:"Глаголы 2",i:"🛒",words:[
+ {r:"покупать",w:"buy",e:"🛒"},
+ {r:"продавать",w:"sell",e:"💰"},
+ {r:"платить",w:"pay",e:"💳"},
+ {r:"помогать",w:"help",e:"🫱"},
+ {r:"хотеть",w:"want",e:"💭"},
+ {r:"нужен, нуждаться",w:"need",e:"❗"},
+ {r:"нравиться",w:"like",e:"👍"},
+ {r:"любить",w:"love",e:"❤️"},
+ {r:"знать",w:"know",e:"🧠"},
+ {r:"понимать",w:"understand",e:"💡"},
+ {r:"открывать",w:"open",e:"🔓"},
+ {r:"закрывать",w:"close",e:"🔒"},
+ {r:"давать",w:"give",e:"🎁"},
+ {r:"брать, взять",w:"take",e:"🫴"},
+ {r:"играть",w:"play",e:"🎮"},
+ {r:"плавать",w:"swim",e:"🏊"},
+ {r:"готовить (еду)",w:"cook",e:"🍳"},
+ {r:"водить (машину)",w:"drive",e:"🚗"},
+ {r:"звонить, называть",w:"call",e:"📞"}
+]},
+{id:"en16",t:"Какой-какой 1",i:"🌈",words:[
+ {r:"большой",w:"big",e:"🐘"},
+ {r:"маленький",w:"small",e:"🐭"},
+ {r:"длинный",w:"long",e:"📏"},
+ {r:"короткий",w:"short",e:"✂️"},
+ {r:"новый",w:"new",e:"✨"},
+ {r:"старый",w:"old",e:"👴"},
+ {r:"хороший",w:"good",e:"👍"},
+ {r:"плохой",w:"bad",e:"👎"},
+ {r:"красивый",w:"beautiful",e:"🌸"},
+ {r:"счастливый, радостный",w:"happy",e:"😄"},
+ {r:"грустный",w:"sad",e:"😢"},
+ {r:"злой, сердитый",w:"angry",e:"😠"},
+ {r:"испуганный",w:"afraid",e:"😨"},
+ {r:"легкий (простой)",w:"easy",e:"😌"},
+ {r:"трудный",w:"difficult",e:"🤯"}
+]},
+{id:"en17",t:"Какой-какой 2",i:"⚡",words:[
+ {r:"быстрый",w:"fast",e:"🏃"},
+ {r:"медленный",w:"slow",e:"🐢"},
+ {r:"дорогой",w:"expensive",e:"💰"},
+ {r:"дешёвый",w:"cheap",e:"🏷️"},
+ {r:"чистый",w:"clean",e:"🧼"},
+ {r:"грязный",w:"dirty",e:"🧽"},
+ {r:"голодный",w:"hungry",e:"🍞"},
+ {r:"хочется пить",w:"thirsty",e:"🥤"},
+ {r:"занятой",w:"busy",e:"💼"},
+ {r:"готов",w:"ready",e:"✅"},
+ {r:"любимый",w:"favourite",e:"⭐"},
+ {r:"сильный",w:"strong",e:"💪"},
+ {r:"слабый",w:"weak",e:"🥀"},
+ {r:"молодой",w:"young",e:"🧒"}
+]},
+{id:"en18",t:"Вопросы",i:"❓",words:[
+ {r:"что",w:"what",e:"❓"},
+ {r:"кто",w:"who",e:"👤"},
+ {r:"где",w:"where",e:"🗺️"},
+ {r:"когда",w:"when",e:"⏰"},
+ {r:"почему",w:"why",e:"🤔"},
+ {r:"как",w:"how",e:"🛠️"},
+ {r:"который, какой",w:"which",e:"🔢"},
+ {r:"сколько (исчисляемое)",w:"how many",e:"🔢"},
+ {r:"сколько (неисчисляемое)",w:"how much",e:"💰"}
+]},
+{id:"en19",t:"Связки и наречия",i:"🔗",words:[
+ {r:"и",w:"and",e:"➕"},
+ {r:"или",w:"or",e:"🔀"},
+ {r:"но",w:"but",e:"↔️"},
+ {r:"потому что",w:"because",e:"💡"},
+ {r:"очень",w:"very",e:"⚡"},
+ {r:"слишком",w:"too",e:"⚠️"},
+ {r:"тоже, также",w:"also",e:"➕"},
+ {r:"здесь",w:"here",e:"📍"},
+ {r:"там",w:"there",e:"🗺️"},
+ {r:"это",w:"this",e:"👉"},
+ {r:"то",w:"that",e:"☝️"},
+ {r:"все",w:"all",e:"👥"},
+ {r:"всегда",w:"always",e:"♾️"},
+ {r:"иногда",w:"sometimes",e:"🎲"},
+ {r:"никогда",w:"never",e:"🚫"},
+ {r:"может быть",w:"maybe",e:"🤷"}
+]}
+);
+
+/* ---------- АНГЛИЙСКИЙ: фразы для переезда ---------- */
+DATA.en.decks.push(
+{id:"enp1",t:"Знакомство",i:"🤝",ph:1,words:[
+ {r:"Меня зовут…",w:"My name is…"},
+ {r:"Я из России",w:"I am from Russia"},
+ {r:"Приятно познакомиться",w:"Nice to meet you"},
+ {r:"Как вас зовут?",w:"What is your name?"},
+ {r:"Вы говорите по-русски?",w:"Do you speak Russian?"},
+ {r:"Я немного говорю по-английски",w:"I speak a little English"},
+ {r:"Повторите, пожалуйста",w:"Could you repeat that, please?"},
+ {r:"Говорите медленнее, пожалуйста",w:"Can you speak slowly, please?"},
+ {r:"Я не понимаю",w:"I do not understand"},
+ {r:"Как это называется?",w:"How do you say this?"},
+ {r:"Что это значит?",w:"What does this mean?"}
+]},
+{id:"enp2",t:"Такси и дорога",i:"🚕",ph:1,words:[
+ {r:"В аэропорт, пожалуйста",w:"To the airport, please"},
+ {r:"По этому адресу",w:"To this address, please"},
+ {r:"Остановитесь здесь",w:"Stop here, please"},
+ {r:"Идите прямо",w:"Go straight"},
+ {r:"Поверните налево",w:"Turn left"},
+ {r:"Поверните направо",w:"Turn right"},
+ {r:"Где находится…?",w:"Where is…?"},
+ {r:"Сколько это стоит?",w:"How much is it?"},
+ {r:"Это слишком дорого",w:"That is too expensive"},
+ {r:"Можно подешевле?",w:"Can you make it cheaper?"},
+ {r:"Сдачи не надо",w:"Keep the change"}
+]},
+{id:"enp3",t:"Магазин",i:"🛍️",ph:1,words:[
+ {r:"Я хотел(а) бы это купить",w:"I would like to buy this"},
+ {r:"Я просто смотрю",w:"I am just looking"},
+ {r:"Есть другой цвет?",w:"Do you have another colour?"},
+ {r:"Можно примерить?",w:"Can I try it on?"},
+ {r:"Где примерочная?",w:"Where is the fitting room?"},
+ {r:"Это слишком большое",w:"It is too big"},
+ {r:"Это слишком маленькое",w:"It is too small"},
+ {r:"Сколько всего?",w:"How much in total?"},
+ {r:"Можно заплатить картой?",w:"Can I pay by card?"},
+ {r:"Пакет, пожалуйста",w:"A bag, please"}
+]},
+{id:"enp4",t:"Кафе и ресторан",i:"🍽️",ph:1,words:[
+ {r:"Столик на двоих",w:"A table for two, please"},
+ {r:"Меню, пожалуйста",w:"The menu, please"},
+ {r:"Я возьму это",w:"I will have this"},
+ {r:"Воду без льда",w:"Water, no ice, please"},
+ {r:"Не острое, пожалуйста",w:"Not spicy, please"},
+ {r:"Ещё одно, пожалуйста",w:"One more, please"},
+ {r:"Очень вкусно!",w:"It is delicious!"},
+ {r:"С собой, пожалуйста",w:"To take away, please"},
+ {r:"Счёт, пожалуйста",w:"The bill, please"},
+ {r:"Где туалет?",w:"Where is the toilet?"}
+]},
+{id:"enp5",t:"Врач и здоровье",i:"🩺",ph:1,words:[
+ {r:"Мне плохо",w:"I feel ill"},
+ {r:"У меня болит голова",w:"I have a headache"},
+ {r:"У меня температура",w:"I have a fever"},
+ {r:"У меня болит живот",w:"My stomach hurts"},
+ {r:"Здесь болит",w:"It hurts here"},
+ {r:"Вызовите врача",w:"Call a doctor, please"},
+ {r:"Мне нужно лекарство",w:"I need medicine"},
+ {r:"У меня аллергия на…",w:"I am allergic to…"},
+ {r:"Где больница?",w:"Where is the hospital?"},
+ {r:"Помогите!",w:"Help!"}
+]},
+{id:"enp6",t:"Жильё",i:"🏠",ph:1,words:[
+ {r:"Я ищу квартиру",w:"I am looking for an apartment"},
+ {r:"Сколько стоит аренда?",w:"How much is the rent?"},
+ {r:"Коммунальные услуги включены?",w:"Are utilities included?"},
+ {r:"Какой депозит?",w:"How much is the deposit?"},
+ {r:"Есть кондиционер?",w:"Is there air conditioning?"},
+ {r:"Есть мебель?",w:"Is it furnished?"},
+ {r:"Когда можно заехать?",w:"When can I move in?"},
+ {r:"Здесь слишком шумно",w:"It is too noisy here"},
+ {r:"Я потерял(а) ключи",w:"I lost my keys"}
+]},
+{id:"enp7",t:"Школа",i:"🏫",ph:1,words:[
+ {r:"Я хочу записать ребёнка",w:"I want to enrol my child"},
+ {r:"Сколько стоит обучение?",w:"How much is the tuition?"},
+ {r:"Во сколько начинаются уроки?",w:"What time do lessons start?"},
+ {r:"Есть школьный автобус?",w:"Is there a school bus?"},
+ {r:"У меня есть вопрос",w:"I have a question"},
+ {r:"Можно войти?",w:"May I come in?"},
+ {r:"Можно мне помочь?",w:"Can you help me, please?"},
+ {r:"Я понял(а)",w:"I understand"},
+ {r:"Завтра экзамен",w:"We have an exam tomorrow"},
+ {r:"Я сделал(а) домашнее задание",w:"I have done my homework"}
+]}
+);
+
+/* ---------- АНГЛИЙСКИЙ: уровень A1 → B1 (часть 1: повседневная жизнь) ---------- */
+DATA.en.decks.push(
+{id:"en20",t:"Время: прошлое и будущее",i:"⏳",lv:2,words:[
+ {r:"прошлый, прошлый раз",w:"last",e:"⏪"},
+ {r:"следующий",w:"next",e:"⏩"},
+ {r:"тому назад",w:"ago",e:"📜"},
+ {r:"до, прежде чем",w:"before",e:"⏮️"},
+ {r:"после",w:"after",e:"⏭️"},
+ {r:"потом, тогда",w:"then",e:"➡️"},
+ {r:"скоро",w:"soon",e:"⚡"},
+ {r:"позже",w:"later",e:"🕓"},
+ {r:"уже",w:"already",e:"✅"},
+ {r:"ещё (не)",w:"yet",e:"⏳"},
+ {r:"всё ещё",w:"still",e:"🔁"},
+ {r:"в то время как",w:"while",e:"⏱️"},
+ {r:"в течение (периода)",w:"during",e:"📅"},
+ {r:"до (какого-то времени)",w:"until",e:"🛑"},
+ {r:"с (какого-то времени)",w:"since",e:"📍"},
+ {r:"в течение (срока)",w:"for",e:"📏"},
+ {r:"обычно",w:"usually",e:"🙂"},
+ {r:"редко",w:"rarely",e:"🌙"},
+ {r:"однажды, один раз",w:"once",e:"1️⃣"},
+ {r:"дважды",w:"twice",e:"2️⃣"}
+]},
+{id:"en21",t:"Путешествия",i:"✈️",lv:2,words:[
+ {r:"поездка",w:"trip",e:"🧳"},
+ {r:"путешествовать",w:"travel",e:"🌍"},
+ {r:"поездка, путь",w:"journey",e:"🛤️"},
+ {r:"паспорт",w:"passport",e:"🛂"},
+ {r:"виза",w:"visa",e:"📋"},
+ {r:"таможня",w:"customs",e:"🛃"},
+ {r:"багаж",w:"luggage",e:"🧳"},
+ {r:"чемодан",w:"suitcase",e:"🧳"},
+ {r:"рейс",w:"flight",e:"🛫"},
+ {r:"бронирование",w:"booking",e:"📝"},
+ {r:"бронировать",w:"reserve",e:"📝"},
+ {r:"регистрация (на рейс)",w:"check-in",e:"🛎️"},
+ {r:"выход на посадку",w:"gate",e:"🚪"},
+ {r:"задержка",w:"delay",e:"⏰"},
+ {r:"прибывать",w:"arrive",e:"🛬"},
+ {r:"отправление",w:"departure",e:"🛫"},
+ {r:"возвращение, обратный",w:"return",e:"↩️"},
+ {r:"граница",w:"border",e:"🚧"},
+ {r:"за границей",w:"abroad",e:"🌏"}
+]},
+{id:"en22",t:"Деньги и покупки",i:"💰",lv:2,words:[
+ {r:"деньги",w:"money",e:"💵"},
+ {r:"наличные",w:"cash",e:"💵"},
+ {r:"цена",w:"price",e:"🏷️"},
+ {r:"стоить",w:"cost",e:"💰"},
+ {r:"тратить",w:"spend",e:"💸"},
+ {r:"копить, экономить",w:"save",e:"🐖"},
+ {r:"зарабатывать",w:"earn",e:"💼"},
+ {r:"зарплата",w:"salary",e:"💳"},
+ {r:"скидка",w:"discount",e:"🏷️"},
+ {r:"распродажа",w:"sale",e:"🛍️"},
+ {r:"чек",w:"receipt",e:"🧾"},
+ {r:"возврат денег",w:"refund",e:"↩️"},
+ {r:"обмен",w:"exchange",e:"🔄"},
+ {r:"чаевые",w:"tip",e:"🪙"},
+ {r:"торговаться",w:"bargain",e:"🤝"},
+ {r:"счёт-фактура",w:"invoice",e:"🧾"},
+ {r:"налог",w:"tax",e:"🏛️"},
+ {r:"сбор, плата",w:"fee",e:"🧾"},
+ {r:"бюджет",w:"budget",e:"📊"},
+ {r:"прибыль",w:"profit",e:"📈"}
+]},
+{id:"en23",t:"Работа и офис",i:"💼",lv:2,words:[
+ {r:"работа (место)",w:"job",e:"💼"},
+ {r:"карьера",w:"career",e:"🚀"},
+ {r:"начальник",w:"boss",e:"👔"},
+ {r:"коллега",w:"colleague",e:"🤝"},
+ {r:"сотрудник",w:"employee",e:"🧑‍💼"},
+ {r:"менеджер",w:"manager",e:"📊"},
+ {r:"компания",w:"company",e:"🏢"},
+ {r:"офис",w:"office",e:"🏢"},
+ {r:"совещание",w:"meeting",e:"📅"},
+ {r:"срок (выполнения)",w:"deadline",e:"⏳"},
+ {r:"проект",w:"project",e:"📋"},
+ {r:"задача",w:"task",e:"✅"},
+ {r:"отчёт",w:"report",e:"📄"},
+ {r:"контракт",w:"contract",e:"📜"},
+ {r:"клиент",w:"client",e:"🤝"},
+ {r:"заказчик, покупатель",w:"customer",e:"🛒"},
+ {r:"отдел",w:"department",e:"🗂️"},
+ {r:"опыт",w:"experience",e:"🎓"},
+ {r:"собеседование",w:"interview",e:"🗣️"},
+ {r:"резюме",w:"resume",e:"📄"},
+ {r:"нанимать",w:"hire",e:"✍️"},
+ {r:"увольняться",w:"resign",e:"🚪"}
+]},
+{id:"en24",t:"Телефон и интернет",i:"💬",lv:2,words:[
+ {r:"сообщение",w:"message",e:"💬"},
+ {r:"смс, написать смс",w:"text",e:"📱"},
+ {r:"электронное письмо",w:"email",e:"📧"},
+ {r:"входящие",w:"inbox",e:"📥"},
+ {r:"отправлять",w:"send",e:"📤"},
+ {r:"получать",w:"receive",e:"📥"},
+ {r:"прикреплять",w:"attach",e:"📎"},
+ {r:"скачивать",w:"download",e:"⬇️"},
+ {r:"загружать",w:"upload",e:"⬆️"},
+ {r:"сайт",w:"website",e:"🌐"},
+ {r:"онлайн, в сети",w:"online",e:"🟢"},
+ {r:"пароль",w:"password",e:"🔑"},
+ {r:"входить (в аккаунт)",w:"log in",e:"🔓"},
+ {r:"искать",w:"search",e:"🔍"},
+ {r:"приложение",w:"app",e:"📲"},
+ {r:"экран",w:"screen",e:"🖥️"},
+ {r:"заряжать",w:"charge",e:"🔌"},
+ {r:"батарея",w:"battery",e:"🔋"},
+ {r:"файл",w:"file",e:"📁"},
+ {r:"папка",w:"folder",e:"🗂️"}
+]},
+{id:"en25",t:"Чувства и мнения",i:"🎭",lv:2,words:[
+ {r:"чувствовать",w:"feel",e:"🫶"},
+ {r:"думать",w:"think",e:"🤔"},
+ {r:"считать, верить",w:"believe",e:"🙏"},
+ {r:"соглашаться",w:"agree",e:"👍"},
+ {r:"не соглашаться",w:"disagree",e:"👎"},
+ {r:"надеяться",w:"hope",e:"🤞"},
+ {r:"желать",w:"wish",e:"🌟"},
+ {r:"беспокоиться",w:"worry",e:"😟"},
+ {r:"уверенный",w:"sure",e:"💪"},
+ {r:"вероятно",w:"probably",e:"🤷"},
+ {r:"конечно",w:"of course",e:"✅"},
+ {r:"на самом деле",w:"actually",e:"😉"},
+ {r:"действительно",w:"really",e:"❗"},
+ {r:"казаться",w:"seem",e:"👀"},
+ {r:"возражать (не против?)",w:"mind",e:"🙅"},
+ {r:"заботиться",w:"care",e:"❤️"},
+ {r:"гордый",w:"proud",e:"🦚"},
+ {r:"ревнующий, завистливый",w:"jealous",e:"😑"},
+ {r:"спокойный",w:"calm",e:"🧘"},
+ {r:"нервный",w:"nervous",e:"😬"},
+ {r:"разочарованный",w:"disappointed",e:"😞"},
+ {r:"взволнованный",w:"excited",e:"🤩"},
+ {r:"скучающий",w:"bored",e:"🥱"},
+ {r:"удивлённый",w:"surprised",e:"😲"}
+]},
+{id:"en26",t:"Здоровье: подробнее",i:"🚑",lv:2,words:[
+ {r:"зубной врач",w:"dentist",e:"🦷"},
+ {r:"скорая помощь",w:"ambulance",e:"🚑"},
+ {r:"чрезвычайная ситуация",w:"emergency",e:"🆘"},
+ {r:"травма",w:"injury",e:"🤕"},
+ {r:"аллергия",w:"allergy",e:"🤧"},
+ {r:"запись, приём (к врачу)",w:"appointment",e:"📅"},
+ {r:"страховка",w:"insurance",e:"📋"},
+ {r:"таблетка",w:"pill",e:"💊"},
+ {r:"лечить",w:"treat",e:"🩹"},
+ {r:"лекарство, вылечить",w:"cure",e:"💉"},
+ {r:"поправляться",w:"recover",e:"💚"},
+ {r:"бинт",w:"bandage",e:"🩹"},
+ {r:"головокружение",w:"dizzy",e:"💫"},
+ {r:"больничный (отпуск)",w:"sick leave",e:"🏥"},
+ {r:"кровь",w:"blood",e:"🩸"},
+ {r:"операция",w:"operation",e:"🏥"}
+]},
+{id:"en27",t:"Дом и быт",i:"🧰",lv:2,words:[
+ {r:"мебель",w:"furniture",e:"🛋️"},
+ {r:"пол",w:"floor",e:"🟫"},
+ {r:"стена",w:"wall",e:"🧱"},
+ {r:"потолок",w:"ceiling",e:"⬆️"},
+ {r:"крыша",w:"roof",e:"🏠"},
+ {r:"лестница",w:"stairs",e:"🪜"},
+ {r:"лифт",w:"lift",e:"🛗"},
+ {r:"отопление",w:"heating",e:"🔥"},
+ {r:"кондиционер",w:"air conditioning",e:"❄️"},
+ {r:"стирка, бельё",w:"laundry",e:"🧺"},
+ {r:"утюг, гладить",w:"iron",e:"👔"},
+ {r:"мусор",w:"trash",e:"🗑️"},
+ {r:"сосед",w:"neighbour",e:"🧑"},
+ {r:"чинить",w:"repair",e:"🔧"},
+ {r:"сломанный",w:"broken",e:"💔"},
+ {r:"протечка",w:"leak",e:"💧"},
+ {r:"кран (водопроводный)",w:"tap",e:"🚰"},
+ {r:"счётчик",w:"meter",e:"📊"},
+ {r:"подъезд",w:"entrance",e:"🚪"},
+ {r:"двор",w:"yard",e:"🌳"}
+]},
+{id:"en28",t:"Еда: подробнее",i:"🍜",lv:2,words:[
+ {r:"меню",w:"menu",e:"📋"},
+ {r:"заказ, заказывать",w:"order",e:"📝"},
+ {r:"официант",w:"waiter",e:"🧑‍🍳"},
+ {r:"блюдо",w:"dish",e:"🍽️"},
+ {r:"вкус",w:"taste",e:"👅"},
+ {r:"сладкий",w:"sweet",e:"🍬"},
+ {r:"кислый",w:"sour",e:"🍋"},
+ {r:"солёный",w:"salty",e:"🧂"},
+ {r:"острый",w:"spicy",e:"🌶️"},
+ {r:"свежий",w:"fresh",e:"🥬"},
+ {r:"сырой",w:"raw",e:"🥩"},
+ {r:"жареный",w:"fried",e:"🍳"},
+ {r:"варёный",w:"boiled",e:"🍲"},
+ {r:"гриль",w:"grilled",e:"🔥"},
+ {r:"перекус",w:"snack",e:"🥨"},
+ {r:"десерт",w:"dessert",e:"🍰"},
+ {r:"сок",w:"juice",e:"🧃"},
+ {r:"вино",w:"wine",e:"🍷"},
+ {r:"пиво",w:"beer",e:"🍺"},
+ {r:"завтрак",w:"breakfast",e:"🥣"},
+ {r:"обед",w:"lunch",e:"🍛"},
+ {r:"ужин",w:"dinner",e:"🍽️"},
+ {r:"вегетарианский",w:"vegetarian",e:"🥗"}
+]},
+{id:"en29",t:"Люди и общество",i:"👥",lv:2,words:[
+ {r:"незнакомец",w:"stranger",e:"🕵️"},
+ {r:"гость",w:"guest",e:"🙋"},
+ {r:"хозяин",w:"host",e:"🏠"},
+ {r:"толпа",w:"crowd",e:"👥"},
+ {r:"команда",w:"team",e:"🤾"},
+ {r:"участник, член",w:"member",e:"🧩"},
+ {r:"лидер",w:"leader",e:"🧭"},
+ {r:"население",w:"population",e:"🌍"},
+ {r:"общество",w:"society",e:"🏙️"},
+ {r:"поведение",w:"behaviour",e:"🎭"},
+ {r:"вежливый",w:"polite",e:"🤝"},
+ {r:"грубый",w:"rude",e:"😠"},
+ {r:"честный",w:"honest",e:"💯"},
+ {r:"добрый",w:"kind",e:"💛"},
+ {r:"строгий",w:"strict",e:"📏"},
+ {r:"ленивый",w:"lazy",e:"🦥"},
+ {r:"трудолюбивый",w:"hard-working",e:"💪"},
+ {r:"талантливый",w:"talented",e:"⭐"},
+ {r:"женат, замужем",w:"married",e:"💍"},
+ {r:"не женат, не замужем",w:"single",e:"🧑"}
+]}
+);
+
+/* ---------- АНГЛИЙСКИЙ: уровень A1 → B1 (часть 2: работа с китайцами, B1) ---------- */
+DATA.en.decks.push(
+{id:"en30",t:"Деловые переговоры",i:"🤝",lv:2,words:[
+ {r:"предложение",w:"offer",e:"📤"},
+ {r:"сделка",w:"deal",e:"🤝"},
+ {r:"соглашение",w:"agreement",e:"📜"},
+ {r:"вести переговоры",w:"negotiate",e:"🗣️"},
+ {r:"качество",w:"quality",e:"🏅"},
+ {r:"образец",w:"sample",e:"🧪"},
+ {r:"поставщик",w:"supplier",e:"🚚"},
+ {r:"производитель",w:"manufacturer",e:"🏭"},
+ {r:"фабрика",w:"factory",e:"🏭"},
+ {r:"опт (оптовая торговля)",w:"wholesale",e:"📦"},
+ {r:"склад, запас",w:"stock",e:"🏬"},
+ {r:"условия (сделки)",w:"terms",e:"📋"},
+ {r:"условие",w:"condition",e:"✅"},
+ {r:"гарантия",w:"warranty",e:"🛡️"},
+ {r:"жалоба, претензия",w:"complaint",e:"😠"},
+ {r:"решать (проблему)",w:"solve",e:"💡"},
+ {r:"проблема, вопрос",w:"issue",e:"⚠️"},
+ {r:"подтверждать",w:"confirm",e:"✔️"}
+]},
+{id:"en31",t:"Финансы и банк",i:"🏦",lv:2,words:[
+ {r:"счёт (в банке)",w:"account",e:"🏛️"},
+ {r:"перевод (денег)",w:"transfer",e:"💸"},
+ {r:"валюта",w:"currency",e:"💱"},
+ {r:"курс обмена",w:"exchange rate",e:"📊"},
+ {r:"кредит",w:"loan",e:"🧾"},
+ {r:"процент (по кредиту)",w:"interest",e:"📈"},
+ {r:"инвестировать",w:"invest",e:"💹"},
+ {r:"убыток",w:"loss",e:"📉"},
+ {r:"доход",w:"income",e:"💰"},
+ {r:"расход",w:"expense",e:"🧾"},
+ {r:"платёж",w:"payment",e:"💳"}
+]},
+{id:"en32",t:"Мнения и обсуждение",i:"🗣️",lv:2,words:[
+ {r:"мнение",w:"opinion",e:"💭"},
+ {r:"по моему мнению",w:"in my opinion",e:"🙋"},
+ {r:"с одной стороны",w:"on the one hand",e:"⬅️"},
+ {r:"с другой стороны",w:"on the other hand",e:"➡️"},
+ {r:"преимущество",w:"advantage",e:"➕"},
+ {r:"недостаток",w:"disadvantage",e:"➖"},
+ {r:"например",w:"for example",e:"💡"},
+ {r:"такие как",w:"such as",e:"🔢"},
+ {r:"однако",w:"however",e:"🔀"},
+ {r:"хотя",w:"although",e:"↩️"},
+ {r:"несмотря на",w:"despite",e:"🚧"},
+ {r:"поэтому",w:"therefore",e:"➡️"},
+ {r:"кроме того",w:"moreover",e:"➕"},
+ {r:"на самом деле",w:"in fact",e:"❗"},
+ {r:"подводя итог",w:"to sum up",e:"📋"},
+ {r:"я имею в виду",w:"I mean",e:"💬"},
+ {r:"насколько я знаю",w:"as far as I know",e:"🤷"},
+ {r:"это зависит (от ситуации)",w:"it depends",e:"🎲"}
+]},
+{id:"en33",t:"Технологии",i:"🔧",lv:2,words:[
+ {r:"технология",w:"technology",e:"⚙️"},
+ {r:"устройство",w:"device",e:"📱"},
+ {r:"программное обеспечение",w:"software",e:"💿"},
+ {r:"«железо», комплектующие",w:"hardware",e:"🔧"},
+ {r:"обновление, обновлять",w:"update",e:"🔄"},
+ {r:"устанавливать",w:"install",e:"📥"},
+ {r:"ошибка (в программе)",w:"bug",e:"🐞"},
+ {r:"исправлять",w:"fix",e:"🛠️"},
+ {r:"данные",w:"data",e:"🗃️"},
+ {r:"облако (хранилище)",w:"cloud",e:"☁️"},
+ {r:"робот",w:"robot",e:"🤖"},
+ {r:"машина, механизм",w:"machine",e:"⚙️"},
+ {r:"инструмент",w:"tool",e:"🔧"},
+ {r:"оборудование",w:"equipment",e:"🏗️"},
+ {r:"кнопка",w:"button",e:"🔘"},
+ {r:"кабель",w:"cable",e:"🔌"}
+]},
+{id:"en34",t:"Учёба и навыки",i:"🎓",lv:2,words:[
+ {r:"навык",w:"skill",e:"🥋"},
+ {r:"способность",w:"ability",e:"💪"},
+ {r:"знания",w:"knowledge",e:"📚"},
+ {r:"практика, практиковать",w:"practice",e:"🔁"},
+ {r:"улучшать",w:"improve",e:"📈"},
+ {r:"прогресс",w:"progress",e:"🚀"},
+ {r:"преуспеть",w:"succeed",e:"🏆"},
+ {r:"потерпеть неудачу",w:"fail",e:" ❌"},
+ {r:"ошибка",w:"mistake",e:"⚠️"},
+ {r:"правильный, исправлять",w:"correct",e:"✔️"},
+ {r:"объяснять",w:"explain",e:"💬"},
+ {r:"переводить",w:"translate",e:"🔁"},
+ {r:"запоминать",w:"memorise",e:"🧠"},
+ {r:"начинающий",w:"beginner",e:"🐣"},
+ {r:"продвинутый",w:"advanced",e:"🚀"},
+ {r:"беглый (о языке)",w:"fluent",e:"🗣️"},
+ {r:"акцент",w:"accent",e:"🎵"},
+ {r:"произношение",w:"pronunciation",e:"👄"}
+]},
+{id:"en35",t:"Разговорные связки",i:"🔗",lv:2,words:[
+ {r:"в любом случае",w:"anyway",e:"🔄"},
+ {r:"кроме того",w:"besides",e:"➕"},
+ {r:"вместо",w:"instead",e:"↔️"},
+ {r:"кроме (за исключением)",w:"except",e:"🚫"},
+ {r:"на случай, если",w:"in case",e:"☂️"},
+ {r:"даже если",w:"even though",e:"💪"},
+ {r:"неважно (какой)",w:"no matter",e:"🎭"},
+ {r:"кстати",w:"by the way",e:"💬"},
+ {r:"пока что",w:"so far",e:"⏳"},
+ {r:"по крайней мере",w:"at least",e:"🔢"},
+ {r:"внезапно",w:"suddenly",e:"⚡"},
+ {r:"наконец",w:"finally",e:"🏁"},
+ {r:"к сожалению",w:"unfortunately",e:"😕"},
+ {r:"к счастью",w:"fortunately",e:"😄"}
+]}
+);
+/* ---------- АНГЛИЙСКИЙ: деловые фразы (A2–B1) ---------- */
+DATA.en.decks.push(
+{id:"enp8",t:"Собеседование",i:"💼",ph:1,lv:2,words:[
+ {r:"Я претендую на должность…",w:"I am applying for the position of…"},
+ {r:"У меня … лет опыта",w:"I have five years of experience"},
+ {r:"Я хорошо работаю в команде",w:"I work well in a team"},
+ {r:"Я отвечаю за…",w:"I am responsible for…"},
+ {r:"Мои сильные стороны — …",w:"My strengths are…"},
+ {r:"Я изучаю китайский язык",w:"I am learning Chinese"},
+ {r:"Когда я могу начать?",w:"When can I start?"},
+ {r:"Какой график работы?",w:"What are the working hours?"},
+ {r:"Какая зарплата?",w:"What is the salary?"},
+ {r:"Я отправлю вам своё резюме",w:"I will send you my resume"}
+]},
+{id:"enp9",t:"Почта и переписка",i:"📧",ph:1,lv:2,words:[
+ {r:"Уважаемый господин / госпожа…",w:"Dear Mr Smith, / Dear Mrs Smith,"},
+ {r:"Пишу вам, чтобы спросить о…",w:"I am writing to ask about…"},
+ {r:"Спасибо за ваш ответ",w:"Thank you for your reply"},
+ {r:"Документы прилагаются",w:"Please find the documents attached"},
+ {r:"Не могли бы вы подтвердить…?",w:"Could you confirm…?"},
+ {r:"Мы вернёмся к вам с ответом",w:"We will get back to you"},
+ {r:"Извините за поздний ответ",w:"Sorry for the late reply"},
+ {r:"С уважением (в конце письма)",w:"Best regards,"},
+ {r:"Ждём вашего ответа",w:"Looking forward to hearing from you"},
+ {r:"Если будут вопросы — пишите",w:"Let me know if you have any questions"}
+]},
+{id:"enp10",t:"Переговоры с поставщиком",i:"🤝",ph:1,lv:2,words:[
+ {r:"Мы заинтересованы в вашей продукции",w:"We are interested in your products"},
+ {r:"Пришлите, пожалуйста, коммерческое предложение",w:"Could you send us a quotation?"},
+ {r:"Какая у вас лучшая цена?",w:"What is your best price?"},
+ {r:"Какой минимальный объём заказа?",w:"What is the minimum order quantity?"},
+ {r:"Можете прислать образцы?",w:"Can you send samples?"},
+ {r:"Какие сроки поставки?",w:"How long is the delivery time?"},
+ {r:"Это есть в наличии?",w:"Do you have this in stock?"},
+ {r:"Качество нас не устраивает",w:"The quality is not acceptable"},
+ {r:"Можете устранить проблему?",w:"Can you fix the problem?"},
+ {r:"Мы согласны на эти условия",w:"We agree to these terms"},
+ {r:"Давайте подпишем контракт",w:"Let us sign the contract"},
+ {r:"Надеемся на сотрудничество",w:"We look forward to cooperating with you"}
+]},
+{id:"enp11",t:"Встречи и созвоны",i:"📅",ph:1,lv:2,words:[
+ {r:"Давайте назначим встречу",w:"Let us schedule a meeting"},
+ {r:"Вам удобно в понедельник?",w:"Are you available on Monday?"},
+ {r:"Меня слышно?",w:"Can you hear me?"},
+ {r:"Вы не включили микрофон",w:"You are on mute"},
+ {r:"Позвольте показать экран",w:"Let me share my screen"},
+ {r:"Повторите, пожалуйста",w:"Could you repeat that, please?"},
+ {r:"Что вы думаете?",w:"What do you think?"},
+ {r:"У меня другое мнение",w:"I have a different opinion"},
+ {r:"Перейдём к следующему вопросу",w:"Let us move on to the next question"},
+ {r:"Итак, мы договорились, что…",w:"To sum up, we agreed that…"}
+]},
+{id:"enp12",t:"Мнения и обсуждение",i:"💬",ph:1,lv:2,words:[
+ {r:"По моему мнению…",w:"In my opinion…"},
+ {r:"Я с вами согласен(на)",w:"I agree with you"},
+ {r:"Боюсь, я не согласен(на)",w:"I am afraid I disagree"},
+ {r:"Это дельное замечание",w:"That is a good point"},
+ {r:"С другой стороны…",w:"On the other hand…"},
+ {r:"Понимаю, что вы имеете в виду",w:"I see what you mean"},
+ {r:"Дайте подумать",w:"Let me think about it"},
+ {r:"Зависит от ситуации",w:"It depends on the situation"},
+ {r:"Я в этом не уверен(а)",w:"I am not sure about that"},
+ {r:"Совершенно верно!",w:"Absolutely!"}
+]},
+{id:"enp13",t:"Сложные ситуации",i:"🆘",ph:1,lv:2,words:[
+ {r:"Я не расслышал(а)",w:"I did not catch that"},
+ {r:"Что вы имеете в виду?",w:"What do you mean?"},
+ {r:"Произнесите по буквам, пожалуйста",w:"Could you spell that?"},
+ {r:"Извините, я всё ещё учу английский",w:"Sorry, I am still learning English"},
+ {r:"Скажу это по-другому",w:"Let me say that in another way"},
+ {r:"Как это произносится?",w:"How do you pronounce this?"},
+ {r:"Я правильно сказал(а)?",w:"Did I say it correctly?"},
+ {r:"Один момент, пожалуйста",w:"Just a moment, please"},
+ {r:"Я проверю и сообщу",w:"I will check and let you know"},
+ {r:"Ничего страшного, не важно",w:"Never mind, it is not important"}
+]}
+);
+
+/* ---------- СОСТОЯНИЕ (localStorage) ---------- */
+const LS="polyglot_v1", DAY=86400000;
+const AVATARS=["👤","👩","👨","🧒","👶","🦊","🐼","🐯","🦁","🐨","🐸","🦄"];
+let P=loadState();
+function loadState(){
+  try{const d=JSON.parse(localStorage.getItem(LS));if(d&&d.pr&&d.pr.length)return d}catch(e){}
+  return {cur:0,tip:0,pr:[{n:"Профиль 1",a:"👤"},{n:"Профиль 2",a:"👤"},{n:"Ребёнок",a:"🧒"},{n:"Малыш",a:"👶"}],st:{}};
+}
+function save(){try{localStorage.setItem(LS,JSON.stringify(P))}catch(e){}}
+function st(){
+  const i=P.cur;
+  if(!P.st[i])P.st[i]={c:{},strk:{d:0,n:0},lang:"zh",set:{rate:0.9,per:5,v:{}}};
+  const s=P.st[i];
+  if(!s.set)s.set={rate:0.9,per:5,v:{}};
+  if(!s.strk)s.strk={d:0,n:0};
+  if(!s.c)s.c={};
+  if(!s.lang)s.lang="zh";
+  return s;
+}
+
+/* ---------- ПОМОЩНИКИ ---------- */
+function $(id){return document.getElementById(id)}
+function esc(x){return String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));const t=a[i];a[i]=a[j];a[j]=t}return a}
+function pick(a,n){const c=a.slice();const out=[];while(out.length<n&&c.length)out.push(c.splice(Math.floor(Math.random()*c.length),1)[0]);return out}
+function today0(){const d=new Date();d.setHours(0,0,0,0);return d.getTime()}
+function wordList(lang,deckId){
+  const out=[];
+  DATA[lang].decks.forEach(function(d){
+    if(deckId&&d.id!==deckId)return;
+    d.words.forEach(function(w,i){out.push({r:w.r,w:w.w,p:w.p||"",e:w.e||"",ph:!!d.ph,deck:d.id,dt:d.t,cid:d.id+":"+i})});
+  });
+  return out;
+}
+function cardOf(cid){return st().c[cid]}
+
+/* ---------- ИНТЕРВАЛЬНОЕ ПОВТОРЕНИЕ (SM-2 упрощённый) ---------- */
+/* g: 0 = сложно, 1 = норм, 2 = легко */
+function rate(cid,g){
+  const s=st();
+  const c=s.c[cid]||(s.c[cid]={e:2.5,i:0,r:0,l:0,d:0});
+  const now=Date.now();
+  if(g===0){c.e=Math.max(1.3,c.e-0.2);c.l++;c.i=0;c.d=now+60000;save();return}
+  if(c.i===0){c.i=(g===2)?3:1}
+  else if(g===1){c.i=Math.max(1,Math.round(c.i*c.e))}
+  else if(g===2){c.e=Math.min(3.2,c.e+0.1);c.i=Math.max(1,Math.round(c.i*c.e*1.25))}
+  c.i=Math.min(c.i,180);c.r++;c.d=now+c.i*DAY;
+  save();
+}
+function weaken(cid){ /* ошибка в игре: слово скоро вернётся в урок */
+  const c=st().c[cid];if(!c)return;
+  c.l++;c.i=Math.max(1,Math.floor(c.i/2));c.d=Date.now();save();
+}
+function isDue(w){const c=st().c[w.cid];return !!c&&c.d<=Date.now()}
+function isLearned(w){const c=st().c[w.cid];return !!c&&c.r>0&&c.i>=1}
+function bumpStreak(){
+  const t=today0(),s=st().strk;
+  if(s.d===t)return;
+  s.n=(s.d===t-DAY)?s.n+1:1;s.d=t;save();
+}
+function buildQueue(lang,deckId){
+  const s=st();
+  const scope=deckId?wordList(lang,deckId):wordList(lang);
+  const due=scope.filter(isDue);
+  const fresh=scope.filter(function(w){return !st().c[w.cid]}).slice(0,s.set.per);
+  return due.concat(fresh);
+}
+function badgesHtml(n){
+  let h="";for(let k=25;k<=n;k+=25)h+='<span class="badge">🏅 '+k+' слов</span> ';return h;
+}
+
+/* ---------- ОЗВУЧКА (Web Speech API) ---------- */
+let VOICES=[];
+function refreshVoices(){try{VOICES=window.speechSynthesis?speechSynthesis.getVoices():[]}catch(e){VOICES=[]}}
+if(window.speechSynthesis){
+  refreshVoices();
+  speechSynthesis.onvoiceschanged=function(){refreshVoices();if(CUR.v==="home"||CUR.v==="settings")render()};
+}
+function voicesFor(lang){const want=lang==="zh"?"zh":"en";return VOICES.filter(function(v){return (v.lang||"").toLowerCase().indexOf(want)===0})}
+function pickVoice(lang){
+  const pref=st().set.v[lang];
+  if(pref){const v=VOICES.filter(function(x){return x.name===pref})[0];if(v)return v}
+  return voicesFor(lang)[0]||null;
+}
+function say(text,lang){
+  if(!window.speechSynthesis)return;
+  try{
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang=lang==="zh"?"zh-CN":"en-US";
+    const v=pickVoice(lang);if(v)u.voice=v;
+    u.rate=Number(st().set.rate)||0.9;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function zhMissing(){return voicesFor("zh").length===0}
+
+/* ---------- ТОНЫ (по диакритике пиньиня) ---------- */
+const TONES={"ā":1,"á":2,"ǎ":3,"à":4,"ē":1,"é":2,"ě":3,"è":4,"ī":1,"í":2,"ǐ":3,"ì":4,
+             "ō":1,"ó":2,"ǒ":3,"ò":4,"ū":1,"ú":2,"ǔ":3,"ù":4,"ǖ":1,"ǘ":2,"ǚ":3,"ǜ":4};
+function toneOf(pinyin){
+  const first=(pinyin||"").trim().split(/\s+/)[0]||"";
+  for(const ch of first){if(TONES[ch])return TONES[ch]}
+  return 0;
+}
+const TONE_MARKS={1:"ˉ",2:"´",3:"ˇ",4:"`"};
+
+/* ---------- НАВИГАЦИЯ И ЭКРАНЫ ---------- */
+let CUR={v:"home"};
+function go(v,a){CUR={v:v,a:a};render()}
+function render(){
+  const app=$("app");
+  if(CUR.v==="home")viewHome(app);
+  else if(CUR.v==="lesson")viewLesson(app);
+  else if(CUR.v==="done")viewDone(app);
+  else if(CUR.v==="games")viewGames(app);
+  else if(CUR.v==="play")viewPlay(app);
+  else if(CUR.v==="match")viewMatch(app);
+  else if(CUR.v==="baby")viewBaby(app);
+  else if(CUR.v==="profiles")viewProfiles(app);
+  else if(CUR.v==="settings")viewSettings(app);
+  window.scrollTo(0,0);
+}
+function setLang(l){st().lang=l;save();render()}
+function backArrow(){
+  if(CUR.v==="home")return "";
+  const parent={lesson:"done",done:"home",games:"home",play:"games",match:"games",baby:"home",profiles:"home",settings:"home"}[CUR.v]||"home";
+  return '<span class="chip" onclick="go(\''+parent+'\')" title="назад">←</span>';
+}
+function topbar(){
+  const s=st(),p=P.pr[P.cur];
+  return '<div class="topbar">'+backArrow()+'<div class="logo" style="cursor:pointer" onclick="go(\'home\')">🌍 Полиглот</div><div class="spacer"></div>'
+    +'<span class="chip'+(s.lang==="en"?" on-en":"")+'" onclick="setLang(\'en\')">🇬🇧 Англ</span>'
+    +'<span class="chip'+(s.lang==="zh"?" on-zh":"")+'" onclick="setLang(\'zh\')">🇨🇳 Кит</span>'
+    +'<span class="chip" onclick="go(\'profiles\')">'+p.a+" "+esc(p.n)+'</span>'
+    +'<span class="chip" onclick="go(\'settings\')">⚙️</span></div>';
+}
+function closeTip(){P.tip=1;save();render()}
+
+/* ---------- ГЛАВНАЯ ---------- */
+function viewHome(app){
+  const s=st(),lang=s.lang,L=DATA[lang];
+  const all=wordList(lang);
+  const due=all.filter(isDue).length;
+  const newLeft=all.filter(function(w){return !s.c[w.cid]}).length;
+  const newToday=Math.min(newLeft,s.set.per);
+  const learned=all.filter(isLearned).length;
+  let h=topbar();
+  h+='<div class="statrow"><span class="stat">🔥 '+s.strk.n+" "+plural(s.strk.n,"день","дня","дней")+' подряд</span>'
+    +'<span class="stat">✅ '+learned+" / "+all.length+'</span>'
+    +'<span class="stat">⏳ к повтору: '+due+"</span></div>";
+  const bg=badgesHtml(learned);
+  if(bg)h+='<div style="margin:4px 0">'+bg+"</div>";
+  const n=due+newToday;
+  h+='<button class="btn big'+(lang==="en"?" bl":"")+'"'+(n?" onclick=\"startLesson(null)\"":" disabled")+">"
+    +(n?"📖 Учиться сегодня":"🎉 На сегодня всё!")+"</button>";
+  if(n)h+='<div class="small muted center" style="margin-top:6px">'+due+" повторов + "+newToday+" новых</div>";
+  if(DEF_PROMPT)h+='<button class="btn ghost big" style="margin-top:10px" onclick="doInstall()">📲 Установить как приложение</button>';
+  else if(/iphone|ipad|ipod/i.test(navigator.userAgent))h+='<div class="small muted center" style="margin-top:8px">Установка на iPhone: кнопка «Поделиться» → «На экран „Домой“»</div>';
+  if(!P.tip)h+='<div class="hint" style="margin-top:14px"><b>Как заниматься</b><br>10–15 минут в день: нажимайте «Учиться сегодня» и честно оценивайте себя — приложение само покажет слово, когда вы вот-вот его забудете. <span onclick="closeTip()" style="color:var(--acc);cursor:pointer;font-weight:700">Понятно</span></div>';
+  if(lang==="zh"&&zhMissing())h+='<div class="hint">🔊 Китайской озвучки на этом устройстве пока нет — пиньиня (звуки латиницей) показывается всегда. Включить звук: Windows → Параметры → Время и язык → Язык → Добавить язык → «中文 (упрощённый)», затем перезапустить браузер. Либо откройте файл в браузере Edge — там обычно есть онлайн-голоса китайского.</div>';
+  h+='<div class="row" style="margin-top:14px"><button class="btn ghost" onclick="go(\'games\')">🎮 Игры</button>'
+    +'<button class="btn ghost" onclick="go(\'baby\')">👶 Режим малыша</button></div>';
+  if(lang==="en"){
+    h+=deckSection("📘 С нуля → A1 · слова",L.decks.filter(function(d){return !d.ph&&d.lv!==2}),lang);
+    h+=deckSection("Фразы для жизни и переезда (база)",L.decks.filter(function(d){return d.ph&&d.lv!==2}),lang);
+    h+=deckSection("📗 A1 → B1 · слова и грамматика общения",L.decks.filter(function(d){return !d.ph&&d.lv===2}),lang);
+    h+=deckSection("💼 Рабочий английский (для работы с китайцами)",L.decks.filter(function(d){return d.ph&&d.lv===2}),lang);
+  }else{
+    h+=deckSection("Слова по темам",L.decks.filter(function(d){return !d.ph}),lang);
+    h+=deckSection("Фразы для переезда",L.decks.filter(function(d){return d.ph}),lang);
+  }
+  h+='<hr><div class="small muted center">Прогресс хранится в этом браузере. Голос озвучки выбирается в ⚙️.</div>';
+  app.innerHTML=h;
+}
+function plural(n,a,b,c){const m=n%10,h=n%100;if(h>=11&&h<=14)return c;if(m===1)return a;if(m>=2&&m<=4)return b;return c}
+function deckSection(title,decks,lang){
+  if(!decks.length)return "";
+  let h="<h2>"+title+"</h2><div class='grid cols2'>";
+  decks.forEach(function(d){
+    const ws=wordList(lang,d.id);
+    const l=ws.filter(isLearned).length;
+    const du=ws.filter(isDue).length;
+    h+='<div class="deck '+lang+'" onclick="startLesson(\''+d.id+'\')"><div class="ic">'+d.i+'</div><div style="flex:1">'
+      +'<div class="ttl">'+esc(d.t)+(d.lv===2?' <span class="badge">A2–B1</span>':"")+'</div><div class="pr">'+l+" / "+ws.length+(du?" · ⏳"+du:"")+"</div>"
+      +'<div class="bar"><i style="width:'+(ws.length?Math.round(100*l/ws.length):0)+'%"></i></div></div></div>';
+  });
+  return h+"</div>";
+}
+
+/* ---------- УРОК ---------- */
+let LSN=null;
+function startLesson(deckId){
+  const lang=st().lang;
+  const q=buildQueue(lang,deckId);
+  if(!q.length){alert("Повторять нечего: новые слова этого курса появятся завтра. Загляните в другую тему!");return}
+  LSN={q:q,i:0,deck:deckId||null,shown:0,good:0,bad:0,rev:0,spoken:0};
+  go("lesson");
+}
+function findWord(cid,lang){
+  const i=cid.lastIndexOf(":");
+  const dk=DATA[lang].decks.filter(function(x){return x.id===cid.slice(0,i)})[0];
+  return dk?dk.words[+cid.slice(i+1)]:null;
+}
+function sayCard(cid,lang){const w=findWord(cid,lang);if(w)say(w.w,lang)}
+function viewLesson(app){
+  const lang=st().lang;
+  if(!LSN||LSN.i>=LSN.q.length){go("done");return}
+  const w=LSN.q[LSN.i],zh=lang==="zh";
+  const deckTitle=LSN.deck?deckTitleOf(LSN.deck,lang):DATA[lang].name;
+  let h=topbar();
+  h+='<div class="between"><div class="muted small">'+esc(deckTitle)+'</div>'
+    +'<button class="btn sm ghost" onclick="go(\'done\')">Закончить</button></div>';
+  h+='<div class="bar" style="margin:8px 0 12px"><i style="width:'+Math.round(100*LSN.i/LSN.q.length)+'%"></i></div>';
+  h+='<div class="card flash" onclick="reveal()">'
+    +(w.e?'<div class="emoji">'+w.e+"</div>":"")
+    +'<div class="word'+(zh?" hanzi":"")+'" style="'+(zh?"font-size:58px;":"")+'">'+esc(w.w)+"</div>"
+    +(zh?'<div class="pinyin">'+esc(w.p)+"</div>":"")
+    +'<button class="spk" onclick="event.stopPropagation();sayCard(\''+w.cid+"','"+lang+'\')">🔊</button>'
+    +(LSN.rev?'<div class="ru">'+esc(w.r)+"</div>":'<div class="note">нажмите на карточку, чтобы увидеть перевод</div>')
+    +"</div>";
+  if(LSN.rev){
+    h+='<div class="rates"><button class="btn rd" onclick="grade(0)">😕 Сложно</button>'
+      +'<button class="btn" onclick="grade(1)">🙂 Норм</button>'
+      +'<button class="btn gr" onclick="grade(2)">😎 Легко</button></div>';
+  }
+  app.innerHTML=h;
+  if(!LSN.spoken){LSN.spoken=1;say(w.w,lang)}
+}
+function deckTitleOf(deckId,lang){const d=DATA[lang].decks.filter(function(x){return x.id===deckId})[0];return d?d.t:""}
+function reveal(){if(LSN&&!LSN.rev){LSN.rev=1;render()}}
+function grade(g){
+  if(!LSN||!LSN.rev)return;
+  const w=LSN.q[LSN.i];
+  rate(w.cid,g);
+  LSN.shown++;
+  if(g===0){LSN.bad++;LSN.q.push(w)}else LSN.good++;
+  LSN.i++;LSN.rev=0;LSN.spoken=0;
+  if(LSN.i>=LSN.q.length)go("done");else render();
+}
+function viewDone(app){
+  if(LSN)bumpStreak();
+  const s=st(),lang=s.lang;
+  const all=wordList(lang);
+  const dueLeft=all.filter(isDue).length;
+  let h=topbar();
+  h+='<div class="card center" style="padding:30px 16px"><div style="font-size:58px">🎉</div><h1>Урок закончен!</h1>';
+  if(LSN)h+='<div class="muted">Карточек: '+LSN.shown+" · 😕 сложно: "+LSN.bad+"</div>";
+  h+='<div class="statrow" style="justify-content:center;margin-top:10px"><span class="stat">🔥 '+s.strk.n+" "+plural(s.strk.n,"день","дня","дней")+' подряд</span>'
+    +'<span class="stat">✅ '+all.filter(isLearned).length+" "+plural(all.filter(isLearned).length,"слово","слова","слов")+" выучено</span></div>";
+  if(dueLeft)h+='<div class="small muted" style="margin-top:8px">Скоро вернутся на повтор: '+dueLeft+"</div>";
+  h+="</div>";
+  h+='<div class="row" style="margin-top:14px"><button class="btn ghost" onclick="startLesson(null)">📖 Ещё урок</button>'
+    +'<button class="btn ghost" onclick="go(\'games\')">🎮 Игры</button>'
+    +'<button class="btn" onclick="go(\'home\')">🏠 Домой</button></div>';
+  app.innerHTML=h;
+}
+
+/* ---------- РЕЖИМ МАЛЫША ---------- */
+let BABY=null;
+function viewBaby(app){
+  const lang=st().lang;
+  const pool=wordList(lang).filter(function(w){return !w.ph&&w.e});
+  if(!BABY||BABY.lang!==lang)BABY={lang:lang,words:pick(pool,Math.min(24,pool.length))};
+  let h='<div class="topbar"><div class="logo">👶 Малыш</div><div class="spacer"></div>'
+    +'<span class="chip'+(lang==="en"?" on-en":"")+'" onclick="setLang(\'en\')">🇬🇧</span>'
+    +'<span class="chip'+(lang==="zh"?" on-zh":"")+'" onclick="setLang(\'zh\')">🇨🇳</span>'
+    +'<span class="chip" onclick="babyRefresh()">🔄</span>'
+    +'<span class="chip" onclick="go(\'home\')">←</span></div>';
+  h+='<div class="small muted" style="margin-bottom:10px">Нажимай на картинку — она скажет слово!</div><div class="kgrid">';
+  BABY.words.forEach(function(w,i){
+    h+='<div class="kcard" id="kc'+i+'" onclick="babyTap('+i+')"><div class="em">'+w.e+'</div><div class="wd'+(lang==="zh"?" hanzi":"")+'">'+esc(w.w)+"</div></div>";
+  });
+  h+="</div>";
+  app.innerHTML=h;
+}
+function babyRefresh(){BABY=null;render()}
+function babyTap(i){
+  const w=BABY.words[i],el=$("kc"+i);
+  if(el){el.classList.remove("pop");void el.offsetWidth;el.classList.add("pop")}
+  say(w.w,BABY.lang);
+}
+
+/* ---------- ПРОФИЛИ ---------- */
+function learnedTotal(i){
+  const s=P.st[i];if(!s)return 0;let n=0;
+  ["zh","en"].forEach(function(lang){wordList(lang).forEach(function(w){const c=s.c[w.cid];if(c&&c.r>0&&c.i>=1)n++})});
+  return n;
+}
+function viewProfiles(app){
+  let h=topbar()+"<h1>Профили</h1><div class='grid cols2'>";
+  P.pr.forEach(function(p,i){
+    const s=P.st[i];
+    const cur=i===P.cur;
+    h+='<div class="card center"'+(cur?' style="border:2px solid var(--acc)"':"")+' onclick="selProfile('+i+')"'
+      +'<div style="font-size:52px;cursor:pointer" title="сменить аватар" onclick="event.stopPropagation();nextAvatar('+i+')">'+p.a+"</div>"
+      +'<div style="font-weight:800;font-size:17px">'+esc(p.n)+(cur?' <span class="badge">выбран</span>':"")+"</div>"
+      +(s?'<div class="small muted" style="margin-top:4px">✅ '+learnedTotal(i)+" сл. · 🔥 "+(s.strk?s.strk.n:0)+"</div>":"")
+      +'<button class="btn sm ghost" style="margin-top:8px" onclick="event.stopPropagation();editName('+i+')">✏️ имя</button>'
+      +"</div>";
+  });
+  h+="</div>";
+  h+='<div class="small muted" style="margin-top:10px">Нажмите на профиль, чтобы выбрать его. У каждого — свой прогресс и свои настройки.</div>';
+  app.innerHTML=h;
+}
+function selProfile(i){P.cur=i;save();render()}
+function editName(i){
+  const n=prompt("Имя профиля:",P.pr[i].n);
+  if(n&&n.trim()){P.pr[i].n=n.trim().slice(0,20);save();render()}
+}
+function nextAvatar(i){
+  const k=AVATARS.indexOf(P.pr[i].a);
+  P.pr[i].a=AVATARS[(k+1+AVATARS.length)%AVATARS.length];
+  save();render();
+}
+
+/* ---------- НАСТРОЙКИ ---------- */
+function viewSettings(app){
+  const s=st();
+  let h=topbar()+"<h1>⚙️ Настройки — "+esc(P.pr[P.cur].n)+"</h1><div class='card'>";
+  h+='<div class="setrow"><label>Новых слов в день</label><select class="select" onchange="onPer(this.value)">';
+  [3,5,7,10].forEach(function(n){h+='<option value="'+n+'"'+(s.set.per===n?" selected":"")+">"+n+"</option>"});
+  h+="</select></div>";
+  h+='<div class="setrow"><label>Скорость речи: <span id="rateVal">'+s.set.rate+'</span></label>'
+    +'<input type="range" min="0.5" max="1.2" step="0.05" value="'+s.set.rate+'" style="width:100%" oninput="onRate(this.value)"></div>';
+  h+='<div class="setrow"><label>Голос — английский 🇬🇧</label>'+voiceSelect("en")+"</div>";
+  h+='<div class="setrow"><label>Голос — китайский 🇨🇳</label>'+voiceSelect("zh")+"</div>";
+  h+='<div class="setrow"><label>Прогресс</label><button class="btn rd sm" onclick="resetProgress()">Сбросить прогресс профиля</button></div>';
+  h+="</div>";
+  h+='<div class="small muted" style="margin-top:10px">«Полиглот» — семейный тренажёр: один файл, работает без интернета. Прогресс каждого устройства хранится отдельно.</div>';
+  app.innerHTML=h;
+}
+function voiceSelect(lang){
+  const vs=voicesFor(lang);
+  if(!vs.length){
+    if(lang==="zh")return '<div class="hint" style="margin:0">Китайского голоса нет. Windows: Параметры → Время и язык → Язык → Добавить язык → «中文 (упрощённый)» → после установки перезапустить браузер. В Edge онлайн-голоса китайского есть обычно сразу.</div>';
+    return '<div class="small muted">Голоса не найдены — проверьте озвучку в системе.</div>';
+  }
+  let h='<select class="select" id="voice_'+lang+'" onchange="onVoice(\''+lang+'\')"><option value="">Автоматически</option>';
+  vs.forEach(function(v){h+='<option value="'+esc(v.name)+'"'+(st().set.v[lang]===v.name?" selected":"")+">"+esc(v.name)+"</option>"});
+  h+='</select> <button class="btn sm ghost" onclick="testVoice(\''+lang+'\')">🔈 Проверить</button>';
+  return h;
+}
+function onVoice(lang){st().set.v[lang]=$("voice_"+lang).value;save()}
+function testVoice(lang){
+  onVoice(lang);
+  say(lang==="zh"?"你好！我们来学汉语！":"Hello! Let's learn English!",lang);
+}
+function onPer(v){st().set.per=Number(v)||5;save()}
+function onRate(v){st().set.rate=Number(v);save();$("rateVal").textContent=v}
+function resetProgress(){
+  if(!confirm("Сбросить весь прогресс профиля «"+P.pr[P.cur].n+"»? Это нельзя отменить."))return;
+  delete P.st[P.cur];st();save();render();
+}
+
+/* ---------- КЛАВИАТУРА (для компьютера) ---------- */
+document.addEventListener("keydown",function(e){
+  if(CUR.v!=="lesson"||!LSN)return;
+  if(e.code==="Space"||e.key==="Enter"){e.preventDefault();reveal()}
+  else if(e.key==="1"&&LSN.rev)grade(0);
+  else if(e.key==="2"&&LSN.rev)grade(1);
+  else if(e.key==="3"&&LSN.rev)grade(2);
+});
+
+/* ---------- СТАРТ ---------- */
+function boot(){
+  st();render();
+  setTimeout(function(){refreshVoices();if(CUR.v==="home")render()},1200);
+}
+
+/* ---------- ИГРЫ: меню ---------- */
+function viewGames(app){
+  const lang=st().lang,zh=lang==="zh";
+  const intro=wordList(lang).filter(function(w){return st().c[w.cid]});
+  const words=intro.filter(function(w){return !w.ph});
+  const phrases=intro.filter(function(w){return w.ph});
+  const fl=zh?"🇨🇳":"🇬🇧";
+  const games=[
+    {id:"t1",ic:fl+"→🇷🇺",n:"Перевод: "+(zh?"китайский":"английский")+" → русский",d:"Видишь слово — выбери перевод",
+     ok:words.length>=4},
+    {id:"t2",ic:"🇷🇺→"+fl,n:"Перевод: русский → "+(zh?"китайский":"английский"),d:"Видишь перевод — выбери слово",
+     ok:words.length>=4},
+    {id:"au",ic:"👂",n:"Послушай и выбери",d:"Слышишь слово — найди его на экране",
+     ok:words.length>=4&&voicesFor(lang).length>0},
+    {id:"mt",ic:"🀄",n:"Найди пары",d:"Соедини слово и перевод — 6 пар",ok:words.length>=6}
+  ];
+  if(zh){
+    games.push({id:"py",ic:"🧩",n:"Собери пиньиня",d:"Слоги — в правильном порядке",
+      ok:words.filter(function(w){return w.p.trim().split(/\s+/).length>=2}).length>=4});
+    games.push({id:"tn",ic:"🎵",n:"Какой тон?",d:"ˉ ´ ˇ ` — выбери тон слога",
+      ok:words.filter(function(w){return toneOf(w.p)>0&&w.p.trim().split(/\s+/).length===1}).length>=4});
+  }else{
+    games.push({id:"lt",ic:"🔤",n:"Собери слово",d:"Буквы — в правильном порядке",
+      ok:words.filter(function(w){return w.w.length>=3&&w.w.length<=10&&w.w.indexOf(" ")<0}).length>=4});
+  }
+  games.push({id:"ph",ic:"💬",n:"Собери фразу",d:"Слова фразы — по порядку",ok:phrases.length>=3});
+  let h=topbar()+"<h1>🎮 Игры — "+DATA[lang].name.toLowerCase()+"</h1>";
+  if(intro.length<4)h+='<div class="hint">Игры откроются, когда вы выучите первые слова (нужно хотя бы 4 слова в уроках).</div>';
+  h+='<div class="grid cols2">';
+  games.forEach(function(g){
+    h+='<div class="gbtn"'+(g.ok?' onclick="startGame(\''+g.id+'\')"':' style="opacity:.45"')+'>'
+      +'<div class="gameIcon">'+g.ic+'</div><div><div class="gameName">'+g.n+'</div><div class="gameDesc">'+g.d+"</div>"
+      +(g.ok?"":'<div class="gameDesc" style="color:var(--bad)">пока мало слов</div>')+"</div></div>";
+  });
+  h+="</div>";
+  app.innerHTML=h;
+}
+
+/* ---------- ИГРЫ: движок ---------- */
+let G=null;
+function startGame(id){
+  const lang=st().lang;
+  const intro=wordList(lang).filter(function(w){return st().c[w.cid]});
+  const words=intro.filter(function(w){return !w.ph});
+  const phrases=intro.filter(function(w){return w.ph});
+  if(id==="mt"){
+    if(words.length<6){alert("Нужно хотя бы 6 выученных слов.");return}
+    const pairs=pick(words,Math.min(6,words.length));
+    const tiles=[];
+    pairs.forEach(function(w,i){
+      tiles.push({pid:i,cid:w.cid,txt:w.w,side:0,done:false});
+      tiles.push({pid:i,cid:w.cid,txt:w.r,side:1,done:false});
+    });
+    G={id:"mt",lang:lang,pairs:pairs,tiles:shuffle(tiles),open:[],found:0,bad:0,lock:false};
+    go("match");
+    return;
+  }
+  let pool=null;
+  if(id==="t1"||id==="t2"||id==="au")pool=words;
+  else if(id==="py")pool=words.filter(function(w){return w.p.trim().split(/\s+/).length>=2});
+  else if(id==="tn")pool=words.filter(function(w){return toneOf(w.p)>0&&w.p.trim().split(/\s+/).length===1});
+  else if(id==="lt")pool=words.filter(function(w){return w.w.length>=3&&w.w.length<=10&&w.w.indexOf(" ")<0});
+  else if(id==="ph")pool=phrases;
+  if(!pool||pool.length<3){alert("Пока не хватает слов для этой игры.");return}
+  G={id:id,lang:lang,qs:pick(pool,Math.min(10,pool.length)),i:0,ok:0,bad:0,lock:false,opts:null,asm:null};
+  go("play");
+}
+function nextRound(){if(!G)return;G.i++;G.lock=false;G.opts=null;render()}
+function gameHeader(w){
+  let h='<div class="between"><div class="muted small">Вопрос '+(G.i+1)+" / "+G.qs.length+'</div>'
+    +'<button class="btn sm ghost" onclick="go(\'games\')">Выйти</button></div>'
+    +'<div class="bar" style="margin:8px 0 12px"><i style="width:'+Math.round(100*G.i/G.qs.length)+'%"></i></div>';
+  return h;
+}
+function makeOpts(w,valFn){
+  const right=valFn(w);
+  const same=wordList(G.lang).filter(function(x){return x.cid!==w.cid&&!!x.ph===!!w.ph&&valFn(x)!==right});
+  return shuffle([{v:right,ok:true}].concat(pick(same,3).map(function(x){return {v:valFn(x),ok:false}})));
+}
+function optsHtml(arr,hanzi){
+  let h='<div class="grid cols2" style="margin-top:12px">';
+  arr.forEach(function(o,i){
+    h+='<div class="opt'+(hanzi?" hanzi":"")+'" id="op'+i+'" onclick="optTap('+i+')">'+esc(o.v)+"</div>";
+  });
+  return h+"</div>";
+}
+function optTap(i){
+  if(!G||G.lock)return;G.lock=true;
+  const w=G.qs[G.i],o=G.opts[i];
+  const el=$("op"+i);if(el)el.classList.add(o.ok?"ok":"no");
+  if(o.ok){G.ok++}
+  else{
+    G.bad++;weaken(w.cid);
+    G.opts.forEach(function(x,k){if(x.ok){const e=$("op"+k);if(e)e.classList.add("ok")}});
+  }
+  setTimeout(nextRound,o.ok?700:1500);
+}
+
+/* ---------- ИГРЫ: экран раунда ---------- */
+function viewPlay(app){
+  if(!G){go("games");return}
+  if(G.i>=G.qs.length){viewGameDone(app);return}
+  const w=G.qs[G.i],lang=G.lang,zh=lang==="zh";
+  let h=topbar()+gameHeader(w)+'<div class="card">';
+  if(G.id==="t1"){
+    h+='<div class="center">'+(w.e?'<div class="emoji">'+w.e+"</div>":"")
+      +'<div class="word'+(zh?" hanzi":"")+'" style="font-size:34px">'+esc(w.w)+"</div>"
+      +(zh?'<div class="pinyin">'+esc(w.p)+"</div>":"")
+      +'<button class="spk" style="margin-top:6px" onclick="sayCard(\''+w.cid+"','"+lang+'\')">🔊</button></div>';
+    G.opts=makeOpts(w,function(x){return x.r});
+    h+=optsHtml(G.opts,false);
+  }else if(G.id==="t2"){
+    h+='<div class="center"><div class="word" style="font-size:30px">'+esc(w.r)+"</div>"
+      +'<button class="spk" style="margin-top:6px" onclick="sayCard(\''+w.cid+"','"+lang+'\')">🔊</button></div>';
+    G.opts=makeOpts(w,function(x){return x.w});
+    h+=optsHtml(G.opts,zh);
+  }else if(G.id==="au"){
+    h+='<div class="center" style="padding:14px 0"><button class="spk" style="width:110px;height:110px;font-size:46px" onclick="sayCard(\''+w.cid+"','"+lang+'\')">🔊</button>'
+      +'<div class="muted small" style="margin-top:8px">нажимай, чтобы слушать ещё раз</div></div>';
+    G.opts=makeOpts(w,function(x){return x.w});
+    h+=optsHtml(G.opts,zh);
+  }else if(G.id==="tn"){
+    const t=toneOf(w.p);
+    h+='<div class="center"><div class="word hanzi" style="font-size:56px">'+esc(w.w)+"</div>"
+      +'<button class="spk" style="margin:6px 0" onclick="sayCard(\''+w.cid+"','"+lang+'\')">🔊</button>'
+      +'<div class="muted">Какой тон у слога <b>'+esc(w.p)+"</b>?</div></div>";
+    G.tone=t;
+    h+='<div class="tonebtns">';
+    for(let k=1;k<=4;k++)h+='<button class="tonebtn" id="tb'+k+'" onclick="toneTap('+k+')">'+k+"<br>"+TONE_MARKS[k]+"</button>";
+    h+="</div>";
+  }else{
+    /* игры-сборки: py (пиньиня), lt (буквы), ph (фраза) */
+    if(!G.asm||G.asm.ri!==G.i){
+      let parts,sep,hint,question;
+      if(G.id==="py"){parts=w.p.trim().split(/\s+/);sep=" ";hint=w.w;question="Собери пиньиня"}
+      else if(G.id==="lt"){parts=w.w.toLowerCase().split("");sep="";hint=w.r;question="Собери слово по буквам"}
+      else{
+        parts=(zh?w.w.split(""):w.w.split(" ")).filter(function(p){return /[a-zA-Zа-яА-Я一-鿿]/.test(p)});
+        sep=zh?"":" ";hint=w.r;question="Собери фразу";
+      }
+      G.asm={ri:G.i,parts:shuffle(parts.slice()),done:[],sep:sep,target:parts.join(sep),hint:hint,q:question};
+    }
+    const a=G.asm;
+    h+='<div class="center"><div class="muted small">'+esc(a.q)+"</div>"
+      +'<div class="word'+(zh?" hanzi":"")+'" style="font-size:32px">'+esc(a.hint)+"</div>"
+      +'<button class="spk" style="margin:6px 0" onclick="sayCard(\''+w.cid+"','"+lang+'\')">🔊</button></div>';
+    h+='<div class="ansline" id="ansline">';
+    a.done.forEach(function(p,k){h+='<span class="tile'+(a.state?" "+a.state:"")+'" onclick="asmUntap('+k+')">'+esc(p)+"</span>"});
+    if(!a.done.length)h+='<span class="muted small">нажимай на кусочки ниже</span>';
+    h+="</div>";
+    h+='<div class="tiles">';
+    a.parts.forEach(function(p,k){h+='<span class="tile" id="tl'+k+'" onclick="asmTap('+k+')">'+esc(p)+"</span>"});
+    h+="</div>";
+    if(a.state==="no")h+='<div class="center muted small">Правильно: '+esc(a.target)+"</div>";
+  }
+  h+="</div>";
+  app.innerHTML=h;
+  if(G.id==="au"){
+    const ri=G.i;
+    setTimeout(function(){if(CUR.v==="play"&&G&&G.i===ri&&!G.lock)sayCard(w.cid,G.lang)},350);
+  }
+}
+function toneTap(k){
+  if(!G||G.lock)return;G.lock=true;
+  const w=G.qs[G.i];
+  if(k===G.tone){G.ok++;const e=$("tb"+k);if(e)e.classList.add("ok")}
+  else{
+    G.bad++;weaken(w.cid);
+    const e=$("tb"+k);if(e)e.classList.add("no");
+    const g=$("tb"+G.tone);if(g)g.classList.add("ok");
+  }
+  setTimeout(nextRound,900);
+}
+function asmTap(i){
+  if(!G||G.lock)return;
+  const a=G.asm;
+  a.done.push(a.parts[i]);a.parts.splice(i,1);a.state="";
+  if(!a.parts.length)asmCheck();else render();
+}
+function asmUntap(k){
+  if(!G||G.lock)return;
+  const a=G.asm;
+  a.parts.push(a.done[k]);a.done.splice(k,1);a.state="";
+  render();
+}
+function asmCheck(){
+  const a=G.asm,w=G.qs[G.i];
+  if(a.done.join(a.sep)===a.target){a.state="ok";G.ok++;G.lock=true;render();setTimeout(nextRound,850)}
+  else{a.state="no";G.bad++;G.lock=true;weaken(w.cid);render();setTimeout(nextRound,2000)}
+}
+function viewGameDone(app){
+  const tot=G.qs?G.qs.length:G.pairs.length;
+  let h=topbar();
+  h+='<div class="card center" style="padding:30px 16px"><div style="font-size:58px">'+(G.bad===0?"🏆":"🎯")+"</div>"
+    +"<h1>"+(G.ok!==undefined?G.ok:G.found)+" из "+tot+"</h1>"
+    +'<div class="muted">'+(G.bad===0?"Идеально!":"Ошибок: "+G.bad+" — эти слова вернутся в урок")+"</div></div>";
+  h+='<div class="row" style="margin-top:14px"><button class="btn ghost" onclick="startGame(\''+G.id+'\')">🔄 Ещё раз</button>'
+    +'<button class="btn ghost" onclick="go(\'games\')">🎮 Другая игра</button>'
+    +'<button class="btn" onclick="go(\'home\')">🏠 Домой</button></div>';
+  app.innerHTML=h;
+}
+
+/* ---------- ИГРА: найди пары ---------- */
+function viewMatch(app){
+  if(!G||G.id!=="mt"||!G.tiles){go("games");return}
+  if(G.found>=G.pairs.length){viewGameDone(app);return}
+  let h=topbar();
+  h+='<div class="between"><div class="muted small">Найди пары: '+G.found+" / "+G.pairs.length+'</div>'
+    +'<button class="btn sm ghost" onclick="go(\'games\')">Выйти</button></div>'
+    +'<div class="small muted" style="margin:8px 0">Открой слово и его перевод. Ошибки: '+G.bad+"</div>";
+  h+='<div class="grid cols2">';
+  G.tiles.forEach(function(t,i){
+    const open=G.open.indexOf(i)>=0||t.done;
+    const small=t.txt.length>12?' style="font-size:14px"':"";
+    h+='<div class="opt'+(open?" ok":"")+(t.side===0&&G.lang==="zh"?" hanzi":"")+'"'+small+' id="mt'+i+'" onclick="matchTap('+i+')">'+(open?esc(t.txt):"❓")+"</div>";
+  });
+  h+="</div>";
+  app.innerHTML=h;
+}
+function matchTap(i){
+  if(!G||G.lock)return;
+  if(G.open.indexOf(i)>=0)return;
+  const t=G.tiles[i];
+  if(t.done)return;
+  G.open.push(i);
+  if(G.open.length===2){
+    const a=G.tiles[G.open[0]],b=G.tiles[G.open[1]];
+    if(a.pid===b.pid&&a.side!==b.side){
+      a.done=b.done=true;G.found++;G.open=[];
+      if(G.found>=G.pairs.length){save();setTimeout(render,700)}
+    }else{
+      G.bad++;G.lock=true;
+      weaken(a.cid);
+      setTimeout(function(){G.open=[];G.lock=false;render()},900);
+    }
+  }
+  render();
+}
+
+/* ---------- PWA: установка как приложение, офлайн-режим ---------- */
+let DEF_PROMPT=null;
+window.addEventListener("beforeinstallprompt",function(e){
+  e.preventDefault();DEF_PROMPT=e;
+  if(CUR.v==="home")render();
+});
+function doInstall(){
+  if(!DEF_PROMPT)return;
+  DEF_PROMPT.prompt();
+  DEF_PROMPT.userChoice.then(function(){DEF_PROMPT=null;render()});
+}
+if((location.protocol==="http:"||location.protocol==="https:")&&("serviceWorker" in navigator)){
+  try{navigator.serviceWorker.register("sw.js")}catch(e){}
+}
+
+/* точка входа */
+boot();
+</script>
+</body>
+</html>
