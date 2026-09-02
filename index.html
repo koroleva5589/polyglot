@@ -17,7 +17,24 @@
   --bg:#f6f4ef; --card:#ffffff; --ink:#22201b; --mut:#8a8577; --line:#e7e2d8;
   --acc:#4f46e5; --acc2:#4338ca; --en:#2563eb; --zh:#d9483b;
   --ok:#15803d; --bad:#dc2626; --gold:#d97706;
+  --soft:#f5f3ff; --spk-bg:#eef2ff; --ok-bg:#f0fdf4; --bad-bg:#fef2f2;
+  --en-bg:#eff6ff; --zh-bg:#fef2f2; --hint-bg:#fffbeb; --hint-bd:#fde68a;
+  --gx-bg:#f0fdf4; --gx-bd:#bbf7d0;
   --r:16px; --sh:0 1px 3px rgba(30,25,10,.08),0 4px 14px rgba(30,25,10,.07);
+}
+:root[data-theme="dark"]{
+  --bg:#16151a; --card:#201e25; --ink:#ede9e1; --mut:#9a9488; --line:#37333e;
+  --soft:#2b2940; --spk-bg:#2f2f52; --ok-bg:#12301f; --bad-bg:#3a1d1d;
+  --en-bg:#152a47; --zh-bg:#3a1c1c; --hint-bg:#2c2410; --hint-bd:#5c4c1c;
+  --gx-bg:#12301f; --gx-bd:#1f4c35;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#16151a; --card:#201e25; --ink:#ede9e1; --mut:#9a9488; --line:#37333e;
+    --soft:#2b2940; --spk-bg:#2f2f52; --ok-bg:#12301f; --bad-bg:#3a1d1d;
+    --en-bg:#152a47; --zh-bg:#3a1c1c; --hint-bg:#2c2410; --hint-bd:#5c4c1c;
+    --gx-bg:#12301f; --gx-bd:#1f4c35;
+  }
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
@@ -48,8 +65,8 @@ h1,h2,h3{line-height:1.2;margin:.35em 0} h1{font-size:24px} h2{font-size:19px}
 .btn.yl{background:var(--gold)} .btn:disabled{opacity:.45;cursor:default}
 .chip{display:inline-flex;align-items:center;gap:6px;background:var(--card);border:1.5px solid var(--line);
   border-radius:999px;padding:6px 12px;font-size:14px;font-weight:600;cursor:pointer}
-.chip.on-en{border-color:var(--en);color:var(--en);background:#eff6ff}
-.chip.on-zh{border-color:var(--zh);color:var(--zh);background:#fef2f2}
+.chip.on-en{border-color:var(--en);color:var(--en);background:var(--en-bg)}
+.chip.on-zh{border-color:var(--zh);color:var(--zh);background:var(--zh-bg)}
 .topbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .logo{font-size:20px;font-weight:800;letter-spacing:.2px}
 .spacer{flex:1}
@@ -70,18 +87,18 @@ h1,h2,h3{line-height:1.2;margin:.35em 0} h1{font-size:24px} h2{font-size:19px}
 .flash .pinyin{font-size:22px;color:var(--mut)}
 .flash .ru{font-size:30px;font-weight:700;color:var(--acc2)}
 .flash .note{font-size:13px;color:var(--mut)}
-.spk{border:0;background:#eef2ff;color:var(--acc2);border-radius:999px;width:46px;height:46px;font-size:20px;
+.spk{border:0;background:var(--spk-bg);color:var(--acc2);border-radius:999px;width:46px;height:46px;font-size:20px;
   cursor:pointer;box-shadow:var(--sh)}
 .rates{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
 .opt{display:flex;align-items:center;justify-content:center;min-height:58px;padding:10px;font-size:19px;font-weight:600;
   background:var(--card);border:2px solid var(--line);border-radius:14px;cursor:pointer;text-align:center}
-.opt.ok{border-color:var(--ok);background:#f0fdf4;color:var(--ok)}
-.opt.no{border-color:var(--bad);background:#fef2f2;color:var(--bad)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.opt.no{border-color:var(--bad);background:var(--bad-bg);color:var(--bad)}
 .tiles{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
 .tile{padding:10px 14px;font-size:18px;font-weight:700;background:var(--card);border:2px solid var(--line);
   border-radius:12px;cursor:pointer;box-shadow:var(--sh)}
-.tile.ok{border-color:var(--ok);background:#f0fdf4}
-.tile.no{border-color:var(--bad);background:#fef2f2}
+.tile.ok{border-color:var(--ok);background:var(--ok-bg)}
+.tile.no{border-color:var(--bad);background:var(--bad-bg)}
 .tile.used{opacity:.25;pointer-events:none}
 .ansline{min-height:58px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;
   border:2px dashed var(--line);border-radius:14px;padding:8px;margin-top:8px}
@@ -98,18 +115,25 @@ h1,h2,h3{line-height:1.2;margin:.35em 0} h1{font-size:24px} h2{font-size:19px}
 .shake{animation:shake .3s} @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .select,.input{width:100%;padding:11px;border:1.5px solid var(--line);border-radius:12px;font-size:15px;
   font-family:inherit;background:var(--card);color:var(--ink)}
-.hint{background:#fffbeb;border:1.5px solid #fde68a;border-radius:12px;padding:12px;font-size:14px;margin:10px 0}
+.hint{background:var(--hint-bg);border:1.5px solid var(--hint-bd);border-radius:12px;padding:12px;font-size:14px;margin:10px 0}
 .setrow{margin:14px 0} .setrow label{display:block;font-weight:700;margin-bottom:6px;font-size:14px}
-.badge{display:inline-block;background:#f5f3ff;color:var(--acc2);border-radius:999px;padding:4px 10px;
+.badge{display:inline-block;background:var(--soft);color:var(--acc2);border-radius:999px;padding:4px 10px;
   font-size:13px;font-weight:700;margin:2px}
 .gameIcon{font-size:30px} .gameName{font-weight:700;font-size:15px} .gameDesc{font-size:12px;color:var(--mut);margin-top:2px}
 .gbtn{display:flex;flex-direction:column;align-items:flex-start;gap:4px;background:var(--card);border-radius:var(--r);
   box-shadow:var(--sh);padding:14px;cursor:pointer;text-align:left;border:1.5px solid transparent}
 .gbtn:active{border-color:var(--acc)}
-.gx{margin-top:12px;text-align:left;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:10px 12px;font-size:16px;line-height:1.7}
+.gx{margin-top:12px;text-align:left;background:var(--gx-bg);border:1.5px solid var(--gx-bd);border-radius:12px;padding:10px 12px;font-size:16px;line-height:1.7}
 .grule{font-size:19px;font-weight:700;color:var(--acc2);text-align:center;line-height:1.4}
 .dots::after{content:"…";animation:blink 1s infinite}@keyframes blink{50%{opacity:.2}}
 hr{border:0;border-top:1.5px solid var(--line);margin:18px 0}
+.pill{display:inline-block;border-radius:999px;padding:8px 16px;font-size:16px;font-weight:700}
+.pill.ok{background:var(--ok-bg);color:var(--ok)}
+.pill.no{background:var(--bad-bg);color:var(--bad)}
+.bubble{background:var(--soft);border-radius:18px 18px 18px 4px;padding:14px;margin:10px 0}
+.bubble .bh{font-size:22px;font-weight:700;line-height:1.4}
+.bubble .bp{font-size:14px;color:var(--mut);margin-top:4px}
+.bubble .br{font-size:14px;color:var(--mut);margin-top:6px;border-top:1.5px dashed var(--line);padding-top:6px}
 a{color:var(--acc)}
 </style>
 </head>
@@ -1411,6 +1435,220 @@ DATA.zh.decks.push(
 ]}
 );
 
+/* ---------- КИТАЙСКИЙ: HSK 2 (следующая ступень) ---------- */
+DATA.zh.decks.push(
+{id:"zh12",t:"HSK2 · Дом и быт",i:"🧹",words:[
+ {r:"убирать",w:"打扫",p:"dǎsǎo",e:"🧹"},
+ {r:"чистый",w:"干净",p:"gānjìng",e:"✨"},
+ {r:"грязный",w:"脏",p:"zāng",e:"🧽"},
+ {r:"хозяин квартиры",w:"房东",p:"fángdōng",e:"🧑"},
+ {r:"снимать (жильё)",w:"租",p:"zū",e:"🔑"},
+ {r:"переезжать, переносить",w:"搬",p:"bān",e:"📦"},
+ {r:"этаж; здание",w:"楼",p:"lóu",e:"🏢"},
+ {r:"лифт",w:"电梯",p:"diàntī",e:"🛗"},
+ {r:"кондиционер",w:"空调",p:"kōngtiáo",e:"❄️"},
+ {r:"мебель",w:"家具",p:"jiājù",e:"🛋️"}
+]},
+{id:"zh13",t:"HSK2 · Внешность и характер",i:"😊",words:[
+ {r:"высокий (ростом)",w:"高",p:"gāo",e:"🦒"},
+ {r:"невысокий",w:"矮",p:"ǎi",e:"🐣"},
+ {r:"полный",w:"胖",p:"pàng",e:"🐻"},
+ {r:"худой",w:"瘦",p:"shòu",e:"🥢"},
+ {r:"красивый (о мужчине)",w:"帅",p:"shuài",e:"🕺"},
+ {r:"милый, славный",w:"可爱",p:"kě'ài",e:"🥰"},
+ {r:"умный",w:"聪明",p:"cōngmíng",e:"🧠"},
+ {r:"серьёзный",w:"认真",p:"rènzhēn",e:"📐"},
+ {r:"радушный",w:"热情",p:"rèqíng",e:"🤗"},
+ {r:"интересный",w:"有趣",p:"yǒuqù",e:"🎈"},
+ {r:"стараться",w:"努力",p:"nǔlì",e:"💪"},
+ {r:"легкий (нетрудный)",w:"容易",p:"róngyì",e:"😌"},
+ {r:"трудный",w:"难",p:"nán",e:"🤯"}
+]},
+{id:"zh14",t:"HSK2 · Ещё еда",i:"🍰",words:[
+ {r:"хлеб",w:"面包",p:"miànbāo",e:"🍞"},
+ {r:"торт",w:"蛋糕",p:"dàngāo",e:"🍰"},
+ {r:"яйцо",w:"鸡蛋",p:"jīdàn",e:"🥚"},
+ {r:"зелень, овощи (листовые)",w:"青菜",p:"qīngcài",e:"🥬"},
+ {r:"фрукты",w:"水果",p:"shuǐguǒ",e:"🍇"},
+ {r:"вкусный (о напитке)",w:"好喝",p:"hǎohē",e:"👍"},
+ {r:"сладкий",w:"甜",p:"tián",e:"🍬"},
+ {r:"солёный",w:"咸",p:"xián",e:"🧂"},
+ {r:"кислый",w:"酸",p:"suān",e:"🍋"},
+ {r:"пиво",w:"啤酒",p:"píjiǔ",e:"🍺"},
+ {r:"напитки",w:"饮料",p:"yǐnliào",e:"🧃"},
+ {r:"вкус (о еде)",w:"味道",p:"wèidao",e:"👅"},
+ {r:"сытый",w:"饱",p:"bǎo",e:"😋"},
+ {r:"угощать (за свой счёт)",w:"请客",p:"qǐngkè",e:"🎉"}
+]},
+{id:"zh15",t:"HSK2 · Работа и учёба",i:"💼",words:[
+ {r:"офис",w:"办公室",p:"bàngōngshì",e:"🏢"},
+ {r:"идти на работу",w:"上班",p:"shàngbān",e:"🧑‍💼"},
+ {r:"уходить с работы",w:"下班",p:"xiàbān",e:"🕕"},
+ {r:"коллега",w:"同事",p:"tóngshì",e:"🤝"},
+ {r:"переработка, работать сверхурочно",w:"加班",p:"jiābān",e:"🌙"},
+ {r:"совещание",w:"会议",p:"huìyì",e:"📅"},
+ {r:"электронное письмо",w:"邮件",p:"yóujiàn",e:"📧"},
+ {r:"отчёт, доклад",w:"报告",p:"bàogào",e:"📄"},
+ {r:"план",w:"计划",p:"jìhuà",e:"📋"},
+ {r:"завершить",w:"完成",p:"wánchéng",e:"✔️"},
+ {r:"повысить (уровень)",w:"提高",p:"tígāo",e:"📈"},
+ {r:"упражняться",w:"练习",p:"liànxí",e:"✍️"},
+ {r:"повторять (учёбу)",w:"复习",p:"fùxí",e:"🔁"},
+ {r:"экзамен",w:"考试",p:"kǎoshì",e:"📝"},
+ {r:"оценка, результат",w:"成绩",p:"chéngjì",e:"🏅"}
+]},
+{id:"zh16",t:"HSK2 · Город и направления",i:"🧭",words:[
+ {r:"парк",w:"公园",p:"gōngyuán",e:"🌳"},
+ {r:"мир",w:"世界",p:"shìjiè",e:"🌍"},
+ {r:"страна",w:"国家",p:"guójiā",e:"🗺️"},
+ {r:"север",w:"北",p:"běi",e:"⬆️"},
+ {r:"восток",w:"东",p:"dōng",e:"➡️"},
+ {r:"запад",w:"西",p:"xī",e:"⬅️"},
+ {r:"юг",w:"南",p:"nán",e:"⬇️"},
+ {r:"близко",w:"近",p:"jìn",e:"📍"},
+ {r:"далеко",w:"远",p:"yuǎn",e:"✈️"},
+ {r:"река",w:"河",p:"hé",e:"🏞️"},
+ {r:"дорога, путь",w:"路",p:"lù",e:"🛣️"},
+ {r:"улица",w:"街",p:"jiē",e:"🏙️"},
+ {r:"мост",w:"桥",p:"qiáo",e:"🌉"},
+ {r:"супермаркет",w:"超市",p:"chāoshì",e:"🛒"},
+ {r:"музей",w:"博物馆",p:"bówùguǎn",e:"🖼️"}
+]},
+{id:"zh17",t:"HSK2 · Время 2",i:"⌛",words:[
+ {r:"час (продолжительность)",w:"小时",p:"xiǎoshí",e:"🕐"},
+ {r:"половина",w:"半",p:"bàn",e:"🌗"},
+ {r:"каждый день",w:"每天",p:"měitiān",e:"📅"},
+ {r:"выходные",w:"周末",p:"zhōumò",e:"🎈"},
+ {r:"каникулы, отпуск",w:"放假",p:"fàngjià",e:"🏖️"},
+ {r:"отпроситься (с работы)",w:"请假",p:"qǐngjià",e:"📝"},
+ {r:"опоздать",w:"迟到",p:"chídào",e:"⏰"},
+ {r:"раньше, прежде",w:"以前",p:"yǐqián",e:"⏪"},
+ {r:"потом, в дальнейшем",w:"以后",p:"yǐhòu",e:"⏩"},
+ {r:"сразу, немедленно",w:"马上",p:"mǎshàng",e:"⚡"},
+ {r:"внезапно",w:"突然",p:"tūrán",e:"💨"},
+ {r:"наконец-то",w:"终于",p:"zhōngyú",e:"🏁"},
+ {r:"всё время, постоянно",w:"一直",p:"yìzhí",e:"♾️"},
+ {r:"всегда",w:"总是",p:"zǒngshì",e:"🔁"}
+]},
+{id:"zh18",t:"HSK2 · Глаголы 3",i:"🏃",words:[
+ {r:"помогать (делом)",w:"帮忙",p:"bāngmáng",e:"🫱"},
+ {r:"считать, чувствовать",w:"觉得",p:"juéde",e:"💭"},
+ {r:"надеяться",w:"希望",p:"xīwàng",e:"🤞"},
+ {r:"соглашаться",w:"同意",p:"tóngyì",e:"🤝"},
+ {r:"решать",w:"决定",p:"juédìng",e:"🎯"},
+ {r:"помнить",w:"记得",p:"jìde",e:"🧠"},
+ {r:"забыть",w:"忘记",p:"wàngjì",e:"🙈"},
+ {r:"сообщить, сказать",w:"告诉",p:"gàosu",e:"📣"},
+ {r:"объяснять",w:"解释",p:"jiěshì",e:"💬"},
+ {r:"брать (в руки)",w:"拿",p:"ná",e:"🫴"},
+ {r:"приносить, брать с собой",w:"带",p:"dài",e:"🎒"},
+ {r:"дарить; провожать",w:"送",p:"sòng",e:"🎁"},
+ {r:"одалживать",w:"借",p:"jiè",e:"🤲"},
+ {r:"менять; обменивать",w:"换",p:"huàn",e:"🔄"},
+ {r:"использовать",w:"用",p:"yòng",e:"🛠️"},
+ {r:"пробовать",w:"试",p:"shì",e:"🧪"}
+]},
+{id:"zh19",t:"HSK2 · Слова-помощники",i:"🔗",words:[
+ {r:"или (в вопросе)",w:"还是",p:"háishi",e:"🔀"},
+ {r:"если",w:"如果",p:"rúguǒ",e:"❓"},
+ {r:"потому что",w:"因为",p:"yīnwèi",e:"💡"},
+ {r:"поэтому",w:"所以",p:"suǒyǐ",e:"➡️"},
+ {r:"хотя",w:"虽然",p:"suīrán",e:"↩️"},
+ {r:"но, однако",w:"但是",p:"dànshì",e:"🔀"},
+ {r:"особенно",w:"特别",p:"tèbié",e:"⭐"},
+ {r:"сравнительно",w:"比较",p:"bǐjiào",e:"📏"},
+ {r:"ещё более",w:"更",p:"gèng",e:"📈"},
+ {r:"самый",w:"最",p:"zuì",e:"🏆"},
+ {r:"обязательно",w:"一定",p:"yídìng",e:"❗"},
+ {r:"возможно",w:"可能",p:"kěnéng",e:"🤔"},
+ {r:"следует",w:"应该",p:"yīnggāi",e:"✅"},
+ {r:"уже",w:"已经",p:"yǐjīng",e:"⏱️"},
+ {r:"вместе",w:"一起",p:"yìqǐ",e:"👨‍👩‍👧"}
+]},
+{id:"zh20",t:"HSK2 · Тело и самочувствие",i:"🩹",words:[
+ {r:"голова",w:"头",p:"tóu",e:"🗣️"},
+ {r:"лицо",w:"脸",p:"liǎn",e:"😊"},
+ {r:"очки",w:"眼镜",p:"yǎnjìng",e:"👓"},
+ {r:"нога (ступня/голень)",w:"腿",p:"tuǐ",e:"🦵"},
+ {r:"простуда",w:"感冒",p:"gǎnmào",e:"🤧"},
+ {r:"лекарство",w:"药",p:"yào",e:"💊"},
+ {r:"комфортно, хорошо",w:"舒服",p:"shūfu",e:"😌"},
+ {r:"болит",w:"疼",p:"téng",e:"😖"},
+ {r:"безопасно",w:"安全",p:"ānquán",e:"🛡️"},
+ {r:"опасно",w:"危险",p:"wēixiǎn",e:"⚠️"}
+]}
+);
+/* ---------- КИТАЙСКИЙ: деловые фразы ---------- */
+DATA.zh.decks.push(
+{id:"zhp14",t:"Работа: переговоры",i:"🤝",ph:1,words:[
+ {r:"Мы заинтересованы в продукции вашей компании",w:"我们对贵公司的产品感兴趣",p:"Wǒmen duì guì gōngsī de chǎnpǐn gǎn xìngqù"},
+ {r:"Назовите цену, пожалуйста",w:"请报一下价格",p:"qǐng bào yíxià jiàgé"},
+ {r:"Какой минимальный объём заказа?",w:"最少订多少?",p:"zuìshǎo dìng duōshǎo?"},
+ {r:"Можете прислать образцы?",w:"能寄样品吗?",p:"néng jì yàngpǐn ma?"},
+ {r:"Какие сроки поставки?",w:"交货期多久?",p:"jiāohuòqī duō jiǔ?"},
+ {r:"Есть проблемы с качеством",w:"质量有问题",p:"zhìliàng yǒu wèntí"},
+ {r:"Можете это исправить?",w:"可以修一下吗?",p:"kěyǐ xiū yíxià ma?"},
+ {r:"Мы согласны на эту цену",w:"我们接受这个价格",p:"Wǒmen jiēshòu zhège jiàgé"},
+ {r:"Подпишем контракт",w:"签合同吧",p:"qiān hetóng ba"},
+ {r:"Надеемся на сотрудничество",w:"期待合作",p:"qīdài hézuò"}
+]},
+{id:"zhp15",t:"Работа: офис",i:"🏢",ph:1,words:[
+ {r:"Я на совещании",w:"我在开会",p:"Wǒ zài kāihuì"},
+ {r:"Отправьте мне письмо (email)",w:"请发邮件给我",p:"qǐng fā yóujiàn gěi wǒ"},
+ {r:"Отчёт готов",w:"报告准备好了",p:"bàogào zhǔnbèi hǎo le"},
+ {r:"Срок — завтра",w:"明天截止",p:"míngtiān jiézhǐ"},
+ {r:"Спасибо за труды! (традиционно)",w:"辛苦了!",p:"xīnkǔ le!"},
+ {r:"Я сразу этим займусь",w:"我马上处理",p:"Wǒ mǎshàng chǔlǐ"},
+ {r:"По вопросам — обращайтесь ко мне",w:"有问题找我",p:"yǒu wèntí zhǎo wǒ"},
+ {r:"Поужинаем вместе после работы?",w:"下班一起吃饭?",p:"xiàbān yìqǐ chīfàn?"},
+ {r:"Хороших выходных!",w:"周末愉快!",p:"zhōumò yúkuài!"},
+ {r:"Я немного опоздаю",w:"我晚点到",p:"Wǒ wǎndiǎn dào"}
+]}
+);
+/* ---------- ДИАЛОГИ-СИМУЛЯТОРЫ ---------- */
+const DIALOGS={
+zh:[
+ {id:"dzt",t:"В такси",i:"🚕",steps:[
+  {h:"你好!去哪儿?",hp:"nǐ hǎo! qù nǎr?",hr:"Привет! Куда едем?",o:["去机场,请打表","我不明白","多少钱一斤?"],k:0,or:"В аэропорт, пожалуйста, включите счётчик"},
+  {h:"好嘞,大概四十分钟。你是哪国人?",hp:"hǎo lei, dàgài sìshí fēnzhōng. Nǐ shì nǎ guó rén?",hr:"Хорошо, минут сорок. Откуда вы?",o:["我是俄国人,来工作的","我是老师","你叫什么名字?"],k:0,or:"Я из России, приехал(а) по работе"},
+  {h:"欢迎!你会说汉语吗?",hp:"huānyíng! Nǐ huì shuō Hànyǔ ma?",hr:"Добро пожаловать! Вы говорите по-китайски?",o:["我会一点儿","我不喝","星期"],k:0,or:"Я говорю немного"},
+  {h:"说得真好!到了,一百二十块。",hp:"shuō de zhēn hǎo! Dào le, yìbǎi èrshí kuài.",hr:"Очень хорошо говорите! Приехали — 120 юаней.",o:["扫码可以吗?","太冷了","再见!"],k:0,or:"Можно отсканировать (QR-код)?"}
+ ]},
+ {id:"dzs",t:"В магазине одежды",i:"🛍️",steps:[
+  {h:"你好!想买什么?",hp:"nǐ hǎo! xiǎng mǎi shénme?",hr:"Здравствуйте! Что хотите купить?",o:["我想买一件衣服","我随便看看","我很好"],k:1,or:"Я просто смотрю"},
+  {h:"好的。这件是新款,很适合您。",hp:"hǎo de. Zhè jiàn shì xīnkuǎn, hěn shìhé nín.",hr:"Хорошо. Эта модель новая, вам очень идёт.",o:["太贵了,便宜一点可以吗?","快点!","我不吃"],k:0,or:"Слишком дорого — можно подешевле?"},
+  {h:"最低二百八。",hp:"zuìdī èrbǎi bā.",hr:"Минимум 280.",o:["二百五,可以吗?","太多了,不要","晚安"],k:0,or:"Двести пятьдесят — можно?"},
+  {h:"二百六,不能再少了。",hp:"èrbǎi liù, bù néng zài shǎo le.",hr:"260, дешевле никак.",o:["好,我要了","我不喜欢你了","等一下"],k:0,or:"Хорошо, беру"}
+ ]},
+ {id:"dzo",t:"Знакомство с коллегой",i:"🤝",steps:[
+  {h:"你好!你是新来的吗?",hp:"nǐ hǎo! nǐ shì xīn lái de ma?",hr:"Привет! Вы здесь новенький?",o:["是,我是新来的","不客气","十二点"],k:0,or:"Да, я новенький"},
+  {h:"欢迎!我叫王明。你叫什么名字?",hp:"huānyíng! Wǒ jiào Wáng Míng. Nǐ jiào shénme míngzi?",hr:"Добро пожаловать! Меня зовут Ван Мин. А вас?",o:["我叫娜塔莎","我很好","再见"],k:0,or:"Меня зовут Наташа"},
+  {h:"你的汉语很好!你在哪个部门工作?",hp:"nǐ de Hànyǔ hěn hǎo! nǐ zài nǎ ge bùmén gōngzuò?",hr:"Ваш китайский хорош! В каком отделе вы работаете?",o:["我在销售部","我是俄国人","下午"],k:0,or:"Я в отделе продаж"},
+  {h:"有问题可以问我。慢慢来!",hp:"yǒu wèntí kěyǐ wèn wǒ. Mànmàn lái!",hr:"Если что — спрашивайте меня. Не торопитесь!",o:["谢谢你的帮助!","我很忙","没有"],k:0,or:"Спасибо за помощь!"}
+ ]}
+],
+en:[
+ {id:"det",t:"Small talk с коллегой",i:"☕",steps:[
+  {h:"Hi! Nice to meet you. Where are you from?",hr:"Привет! Приятно познакомиться. Откуда вы?",o:["I am from Russia","I am a driver","Yes, please"],k:0,or:"Я из России"},
+  {h:"Welcome to Guangzhou! How long have you been here?",hr:"Добро пожаловать в Гуанчжоу! Как давно вы здесь?",o:["Since Monday","I am fine","Two tickets, please"],k:0,or:"С понедельника"},
+  {h:"Do you like the city?",hr:"Как вам город?",o:["Yes, but it is very hot!","I don't know him","Blue"],k:0,or:"Да, но очень жарко!"},
+  {h:"Haha, true! Coffee together tomorrow?",hr:"Ха, правда! Кофе вместе завтра?",o:["That is a good idea!","Yesterday, please","I don't drink the city"],k:0,or:"Отличная идея!"}
+ ]},
+ {id:"dec",t:"В кафе",i:"🍽️",steps:[
+  {h:"Good afternoon! Table for two?",hr:"Добрый день! Столик на двоих?",o:["Yes, table for two, please","I am not a table","Taxi!"],k:0,or:"Да, столик на двоих, пожалуйста"},
+  {h:"Here is the menu. Something to drink first?",hr:"Вот меню. Сначала что-нибудь выпить?",o:["Two teas, no ice, please","I want to sleep","Monday"],k:0,or:"Два чая, без льда, пожалуйста"},
+  {h:"Are you ready to order?",hr:"Вы готовы сделать заказ?",o:["We will have this and this","No, never","Where are you from?"],k:0,or:"Мы возьмём это и это"},
+  {h:"Enjoy your meal! Anything else?",hr:"Приятного аппетита! Что-нибудь ещё?",o:["The bill, please. It was delicious!","Help!","I don't know"],k:0,or:"Счёт, пожалуйста. Было очень вкусно!"}
+ ]},
+ {id:"des",t:"Разговор с поставщиком",i:"🤝",steps:[
+  {h:"Good morning! How can I help you?",hr:"Доброе утро! Чем могу помочь?",o:["We are interested in your products","Nice weather today","I am sleeping"],k:0,or:"Мы заинтересованы в вашей продукции"},
+  {h:"Great! Which products exactly?",hr:"Отлично! Какие именно продукты?",o:["Fitness equipment — treadmills","My cat","Yesterday"],k:0,or:"Фитнес-оборудование — беговые дорожки"},
+  {h:"Could you send us a quotation and samples?",hr:"Могли бы вы прислать коммерческое предложение и образцы?",o:["Yes, I will send them today","No, I can't help you","Maybe next year"],k:0,or:"Да, отправлю сегодня"},
+  {h:"And what is your best price for 100 units?",hr:"И какая ваша лучшая цена за 100 штук?",o:["Let's discuss — our budget is limited","I have no money at all","Goodbye forever"],k:0,or:"Давайте обсудим — наш бюджет ограничен"},
+  {h:"Sounds reasonable. Looking forward to cooperating!",hr:"Звучит разумно. Надеемся на сотрудничество!",o:["We look forward to it too!","I don't understand the word \"cooperating\"","Stop writing me"],k:0,or:"Мы тоже!"}
+ ]}
+]};
+
 /* ---------- СОСТОЯНИЕ (localStorage) ---------- */
 const LS="polyglot_v1", DAY=86400000;
 const AVATARS=["👤","👩","👨","🧒","👶","🦊","🐼","🐯","🦁","🐨","🐸","🦄"];
@@ -1534,6 +1772,8 @@ function render(){
   else if(CUR.v==="play")viewPlay(app);
   else if(CUR.v==="match")viewMatch(app);
   else if(CUR.v==="audio")viewAudio(app);
+  else if(CUR.v==="dict")viewDict(app);
+  else if(CUR.v==="dlg")viewDialogs(app);
   else if(CUR.v==="baby")viewBaby(app);
   else if(CUR.v==="profiles")viewProfiles(app);
   else if(CUR.v==="settings")viewSettings(app);
@@ -1542,7 +1782,7 @@ function render(){
 function setLang(l){st().lang=l;save();render()}
 function backArrow(){
   if(CUR.v==="home")return "";
-  const parent={lesson:"done",done:"home",games:"home",play:"games",match:"games",audio:"home",baby:"home",profiles:"home",settings:"home"}[CUR.v]||"home";
+  const parent={lesson:"done",done:"home",games:"home",play:"games",match:"games",audio:"home",dict:"home",dlg:"home",baby:"home",profiles:"home",settings:"home"}[CUR.v]||"home";
   return '<span class="chip" onclick="go(\''+parent+'\')" title="назад">←</span>';
 }
 function topbar(){
@@ -1580,6 +1820,17 @@ function viewHome(app){
   h+='<div class="row" style="margin-top:14px"><button class="btn ghost" onclick="go(\'games\')">🎮 Игры</button>'
     +'<button class="btn ghost" onclick="go(\'audio\')">🎧 В дороге</button>'
     +'<button class="btn ghost" onclick="go(\'baby\')">👶 Режим малыша</button></div>';
+  h+='<div class="row" style="margin-top:10px"><button class="btn ghost sm" onclick="go(\'dict\')">📖 Словарь</button>'
+    +'<button class="btn ghost sm" onclick="go(\'dlg\')">💬 Диалоги-симуляторы</button></div>';
+  if(P.md){
+    const days=Math.ceil((new Date(P.md+"T00:00:00")-today0())/DAY);
+    if(days>0){
+      const wordsLeft=all.filter(function(w){return !w.gr&&!st().c[w.cid]}).length;
+      const per=Math.max(1,Math.ceil(wordsLeft/days));
+      h+='<div class="small muted" style="margin-top:8px">📅 до переезда '+days+" "+plural(days,"день","дня","дней")
+        +" · осталось "+wordsLeft+" "+plural(wordsLeft,"слово","слова","слов")+" этого курса → по "+per+" в день</div>";
+    }
+  }
   if(lang==="en"){
     h+=deckSection("📘 С нуля → A1 · слова",L.decks.filter(function(d){return !d.ph&&!d.gr&&d.lv!==2}),lang);
     h+=deckSection("Фразы для жизни и переезда (база)",L.decks.filter(function(d){return d.ph&&d.lv!==2}),lang);
@@ -1765,6 +2016,12 @@ function viewSettings(app){
     +'<input type="range" min="0.5" max="1.2" step="0.05" value="'+s.set.rate+'" style="width:100%" oninput="onRate(this.value)"></div>';
   h+='<div class="setrow"><label>Голос — английский 🇬🇧</label>'+voiceSelect("en")+"</div>";
   h+='<div class="setrow"><label>Голос — китайский 🇨🇳</label>'+voiceSelect("zh")+"</div>";
+  h+='<div class="setrow"><label>Оформление</label><div class="row">'
+    +'<span class="chip'+((P.th||"auto")==="auto"?" on-en":"")+'" onclick="setTheme(\'auto\')">🌗 Авто</span>'
+    +'<span class="chip'+(P.th==="light"?" on-en":"")+'" onclick="setTheme(\'light\')">☀️ Светлая</span>'
+    +'<span class="chip'+(P.th==="dark"?" on-en":"")+'" onclick="setTheme(\'dark\')">🌙 Тёмная</span></div></div>';
+  h+='<div class="setrow"><label>📅 Дата переезда — для плана «сколько слов в день»</label>'
+    +'<input type="date" class="input" value="'+(P.md||"")+'" onchange="setMoveDate(this.value)"></div>';
   h+='<div class="setrow"><label>Перенос на другое устройство</label>'
     +'<button class="btn ghost sm" onclick="expShow()">📤 Код моего прогресса</button> '
     +'<button class="btn ghost sm" onclick="impGo()">📥 Загрузить из кода</button>'
@@ -1930,9 +2187,125 @@ function impGo(){
   }catch(e){alert("Не получилось прочитать код — убедитесь, что скопировали его целиком.")}
 }
 
+/* ---------- СЛОВАРЬ С ПОИСКОМ ---------- */
+function viewDict(app){
+  const lang=st().lang;
+  const all=wordList(lang);
+  const weak=all.filter(function(w){const c=st().c[w.cid];return c&&c.l>=2});
+  let h=topbar()+"<h1>📖 Словарь — "+DATA[lang].name.toLowerCase()+"</h1>";
+  if(weak.length)h+='<button class="btn ghost sm" style="margin-bottom:8px" onclick="startWeak()">⚠️ Трудные слова ('+weak.length+") — повторить</button>";
+  h+='<input class="input" id="dq" placeholder="поиск: вода, water, shuǐ…" oninput="dictSearch(this.value)">';
+  h+='<div id="dlist">'+dictListHtml("",lang)+"</div>";
+  app.innerHTML=h;
+}
+function dictListHtml(q,lang){
+  const all=wordList(lang);
+  const ql=q.trim().toLowerCase();
+  const list=all.filter(function(w){return !ql||w.r.toLowerCase().indexOf(ql)>=0||w.w.toLowerCase().indexOf(ql)>=0||(w.p||"").toLowerCase().indexOf(ql)>=0});
+  let h='<div class="small muted" style="margin:8px 0">найдено: '+list.length+" из "+all.length+" · нажмите на слово, чтобы услышать</div>";
+  list.slice(0,200).forEach(function(w){
+    h+='<div class="deck" style="margin-bottom:6px" onclick="sayCard(\''+w.cid+"','"+lang+'\')"><div style="flex:1">'
+      +'<div class="ttl'+(lang==="zh"?" hanzi":"")+'" style="font-size:19px">'+esc(w.w)
+      +(lang==="zh"&&w.p?' <span class="muted" style="font-size:13px;font-weight:400">'+esc(w.p)+"</span>":"")+"</div>"
+      +'<div class="pr">'+esc(w.r)+(w.ph?" · фраза":(w.gr?" · грамматика":""))+" · "+esc(w.dt)+"</div></div>"
+      +(w.e?'<div style="font-size:24px">'+w.e+"</div>":"")+"</div>";
+  });
+  if(list.length>200)h+='<div class="small muted center">показаны первые 200 — уточните поиск</div>';
+  if(!list.length)h+='<div class="small muted center" style="margin-top:14px">Ничего не найдено</div>';
+  return h;
+}
+function dictSearch(v){
+  const el=$("dlist");
+  if(el)el.innerHTML=dictListHtml(v,st().lang);
+}
+function startWeak(){
+  const lang=st().lang;
+  const ws=wordList(lang).filter(function(w){const c=st().c[w.cid];return c&&c.l>=2})
+    .sort(function(a,b){return st().c[b.cid].l-st().c[a.cid].l});
+  if(!ws.length)return;
+  LSN={q:ws.slice(0,20),i:0,deck:null,shown:0,good:0,bad:0,rev:0,spoken:0};
+  go("lesson");
+}
+
+/* ---------- ДИАЛОГИ-СИМУЛЯТОРЫ ---------- */
+let DL=null;
+function viewDialogs(app){
+  const lang=st().lang;
+  if(DL&&DL.step<DL.d.steps.length){viewDlg(app);return}
+  let h=topbar()+"<h1>💬 Диалоги — "+DATA[lang].name.toLowerCase()+"</h1>";
+  h+='<div class="small muted" style="margin-bottom:10px">Собеседник говорит — выберите ответ. Так тренируются настоящие разговоры.</div><div class="grid cols2">';
+  DIALOGS[lang].forEach(function(d,i){
+    h+='<div class="gbtn" onclick="startDlg('+i+')"><div class="gameIcon">'+d.i+'</div><div><div class="gameName">'+esc(d.t)+'</div>'
+      +'<div class="gameDesc">'+d.steps.length+" "+plural(d.steps.length,"реплика","реплики","реплик")+"</div></div></div>";
+  });
+  h+="</div>";
+  app.innerHTML=h;
+}
+function startDlg(i){
+  DL={d:DIALOGS[st().lang][i],step:0,ok:0,bad:0,pick:-1};
+  go("dlg");
+}
+function viewDlg(app){
+  const lang=st().lang,zh=lang==="zh";
+  const stp=DL.d.steps[DL.step];
+  let h=topbar();
+  h+='<div class="between"><div class="muted small">'+esc(DL.d.t)+" · реплика "+(DL.step+1)+" из "+DL.d.steps.length+'</div>'
+    +'<button class="btn sm ghost" onclick="DL=null;go(\'dlg\')">Выйти</button></div>';
+  h+='<div class="bar" style="margin:8px 0 12px"><i style="width:'+Math.round(100*DL.step/DL.d.steps.length)+'%"></i></div>';
+  h+='<div class="bubble"><div class="bh'+(zh?" hanzi":"")+'">'+esc(stp.h)+"</div>"
+    +(zh&&stp.hp?'<div class="bp">'+esc(stp.hp)+"</div>":"")
+    +'<button class="spk" style="margin-top:8px" onclick="say(\''+esc(stp.h).replace(/'/g,"")+'\',\''+lang+'\')">🔊</button>'
+    +'<div class="br">Перевод: '+esc(stp.hr)+"</div></div>";
+  h+='<div class="grid cols2" style="margin-top:10px">';
+  stp.o.forEach(function(o,i){
+    const picked=DL.pick===i, right=DL.pick>=0&&i===stp.k;
+    const cls=picked?(i===stp.k?"opt ok":"opt no"):(right?"opt ok":"opt");
+    h+='<div class="opt'+(zh?" hanzi":"")+" "+cls+(DL.pick>=0&&i!==stp.k&&i!==DL.pick?"":"")+'"'+(DL.pick<0?' onclick="dlgPick('+i+')"':"")+'>'+esc(o)+"</div>";
+  });
+  h+="</div>";
+  if(DL.pick>=0){
+    if(DL.pick===stp.k){h+='<div class="center" style="margin-top:12px"><span class="pill ok">✅ Верно!</span></div>'}
+    else{h+='<div class="center" style="margin-top:12px"><span class="pill no">❌ Подходил другой вариант</span></div>'}
+    h+='<div class="center small muted" style="margin-top:6px">Ваш ответ: «'+esc(stp.o[stp.k])+"» — "+esc(stp.or)+"</div>";
+    h+='<div class="center" style="margin-top:10px"><button class="btn" onclick="dlgNext()">Дальше ▶</button></div>';
+  }
+  app.innerHTML=h;
+  if(!DL.spoken){DL.spoken=1;say(stp.h,lang)}
+}
+function dlgPick(i){
+  if(!DL||DL.pick>=0)return;
+  DL.pick=i;
+  if(i===DL.d.steps[DL.step].k)DL.ok++;else DL.bad++;
+  render();
+}
+function dlgNext(){
+  DL.step++;DL.pick=-1;DL.spoken=0;
+  if(DL.step>=DL.d.steps.length){
+    const r=DL;
+    DL=null;
+    let h=topbar();
+    h+='<div class="card center" style="padding:30px 16px"><div style="font-size:58px">'+(r.bad===0?"🏆":"💬")+"</div>"
+      +"<h1>Диалог пройден!</h1><div class=\"muted\">Верных ответов: "+r.ok+" из "+r.d.steps.length+"</div></div>";
+    h+='<div class="row" style="margin-top:14px"><button class="btn ghost" onclick="go(\'dlg\')">💬 Другой диалог</button>'
+      +'<button class="btn" onclick="go(\'home\')">🏠 Домой</button></div>';
+    $("app").innerHTML=h;
+    return;
+  }
+  render();
+}
+
+/* ---------- ТЕМА И ДАТА ПЕРЕЕЗДА ---------- */
+function applyTheme(){
+  const t=P.th||"auto";
+  if(t==="auto")document.documentElement.removeAttribute("data-theme");
+  else document.documentElement.setAttribute("data-theme",t);
+}
+function setTheme(t){P.th=t;save();applyTheme();render()}
+function setMoveDate(v){P.md=v||"";save();render()}
+
 /* ---------- СТАРТ ---------- */
 function boot(){
-  st();render();
+  st();applyTheme();render();
   setTimeout(function(){refreshVoices();if(CUR.v==="home")render()},1200);
 }
 
@@ -2067,8 +2440,7 @@ function viewPlay(app){
     if(G.prState==="run"){
       h+='<div class="center big" style="margin-top:16px">🎧 слушаю<span class="dots"></span></div>';
     }else if(G.prState==="ok"||G.prState==="no"){
-      h+='<div class="center" style="margin-top:14px"><span class="stat" style="font-size:17px;'+(G.prState==="ok"
-        ?"background:#f0fdf4;color:var(--ok)":"background:#fef2f2;color:var(--bad)")+'">'
+      h+='<div class="center" style="margin-top:14px"><span class="pill '+(G.prState==="ok"?"ok":"no")+'">'
         +(G.prState==="ok"?"✅ Отлично!":"❌ Услышал: "+esc(G.heard||"—"))+"</span></div>";
       h+='<div class="row" style="margin-top:12px;justify-content:center"><button class="btn ghost" onclick="prRec()">🎙️ Ещё раз</button>'
         +'<button class="btn" onclick="nextRound()">Дальше ▶</button></div>';

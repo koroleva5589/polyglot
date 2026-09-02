@@ -1,7 +1,7 @@
 /* Полиглот — офлайн-кэш (PWA).
    ВАЖНО: при каждом изменении index.html повышать VERSION,
    иначе телефоны продолжат показывать старую версию. */
-const VERSION = "v3";
+const VERSION = "v4";
 const CACHE = "polyglot-cache-" + VERSION;
 const ASSETS = [
   "./",
