@@ -106,6 +106,9 @@ h1,h2,h3{line-height:1.2;margin:.35em 0} h1{font-size:24px} h2{font-size:19px}
 .gbtn{display:flex;flex-direction:column;align-items:flex-start;gap:4px;background:var(--card);border-radius:var(--r);
   box-shadow:var(--sh);padding:14px;cursor:pointer;text-align:left;border:1.5px solid transparent}
 .gbtn:active{border-color:var(--acc)}
+.gx{margin-top:12px;text-align:left;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:10px 12px;font-size:16px;line-height:1.7}
+.grule{font-size:19px;font-weight:700;color:var(--acc2);text-align:center;line-height:1.4}
+.dots::after{content:"…";animation:blink 1s infinite}@keyframes blink{50%{opacity:.2}}
 hr{border:0;border-top:1.5px solid var(--line);margin:18px 0}
 a{color:var(--acc)}
 </style>
@@ -1254,6 +1257,160 @@ DATA.en.decks.push(
 ]}
 );
 
+/* ---------- АНГЛИЙСКАЯ ГРАММАТИКА в карточках ---------- */
+DATA.en.decks.push(
+{id:"eg1",t:"Время: Present",i:"⏱️",gr:1,lv:2,words:[
+ {r:"Present Simple — факты и привычки",w:"глагол; он/она/оно + -s",x:"She works in a bank.\nI drink tea every morning."},
+ {r:"Present Simple: вопросы и отрицания",w:"do / does + глагол",x:"Do you speak English?\nHe doesn't smoke.\nWhere do you live?"},
+ {r:"Present Continuous — прямо сейчас",w:"am / is / are + глагол-ing",x:"I am learning Chinese.\nShe is working now."},
+ {r:"Simple или Continuous?",w:"привычка — Simple; момент — Continuous",x:"I usually work at home, but today I am working in the office."},
+ {r:"Present Perfect — результат к сейчас",w:"have / has + 3-я форма глагола",x:"I have done my homework.\nWe have lived here for two years."},
+ {r:"Perfect или Past Simple?",w:"связь с сейчас — Perfect; время в прошлом — Past",x:"I have lost my key (и не могу войти).\nI lost my key yesterday."},
+ {r:"Вопросы с вопросительным словом",w:"What / Where / When / Why / How + do / is…",x:"Where does he work?\nWhat are you doing?"},
+ {r:"Вопрос «хвостиком»",w:"…, isn't it? / …, don't you?",x:"It is hot, isn't it?\nYou speak Chinese, don't you?"}
+]},
+{id:"eg2",t:"Время: Past и Future",i:"🕰️",gr:1,lv:2,words:[
+ {r:"Past Simple — прошлое закончилось",w:"глагол-ed / 2-я форма",x:"We visited China last year.\nHe went home."},
+ {r:"was / were — «был» в прошлом",w:"I/he/she/it — was; you/we/they — were",x:"I was tired.\nThey were at work."},
+ {r:"didn't / Did …? — прошлое",w:"did + глагол (без -ed)",x:"I didn't know.\nDid you call him?"},
+ {r:"will — будущее: решение, обещание",w:"will + глагол",x:"I will help you.\nIt will rain tomorrow."},
+ {r:"going to — план на будущее",w:"am/is/are going to + глагол",x:"We are going to move to China.\nI am going to learn Chinese."},
+ {r:"Past Continuous — длилось в момент",w:"was / were + глагол-ing",x:"I was working when he called."},
+ {r:"Частые неправильные глаголы",w:"go-went · see-saw · buy-bought · take-took",x:"We saw a good film yesterday.\nShe bought a car."}
+]},
+{id:"eg3",t:"Артикли и счёт",i:"🔢",gr:1,lv:2,words:[
+ {r:"a / an — один из многих",w:"a + согласный звук; an + гласный",x:"a shop, an apple\nI have a question."},
+ {r:"the — конкретный, единственный",w:"этот самый, оба знают о чём речь",x:"The sun is hot.\nWhere is the metro station?"},
+ {r:"Без артикля",w:"говорим вообще; множественное число",x:"I like tea.\nChildren play football."},
+ {r:"Множественное число",w:"+s; -es после шипящих; исключения",x:"books, watches\nchildren, people, feet"},
+ {r:"some / any",w:"some — «немного» (утверждение); any — вопросы и «не»",x:"I have some money.\nDo you have any questions?"},
+ {r:"much / many",w:"much — нельзя посчитать; many — можно",x:"much water, many books\nHow much? How many?"},
+ {r:"a little / a few",w:"a little — немножко (неисчисл.); a few — несколько",x:"a little sugar, a few friends"},
+ {r:"Числа",w:"hundred / thousand после числа без -s",x:"three hundred people\nfive thousand yuan"}
+]},
+{id:"eg4",t:"Сравнение и «можно-нужно»",i:"⚖️",gr:1,lv:2,words:[
+ {r:"Сравнительная степень",w:"short+er / more + long",x:"This phone is cheaper.\nChinese is more difficult than English."},
+ {r:"Превосходная степень",w:"the …est / the most …",x:"It is the best restaurant in the city."},
+ {r:"as … as — такой же, как",w:"as + прилагательное + as",x:"It is as cold as in Moscow."},
+ {r:"can / can't",w:"умение и разрешение",x:"I can drive.\nYou can't smoke here."},
+ {r:"must / have to",w:"must — должен (сам); have to — приходится",x:"I must go.\nI have to work on Saturday."},
+ {r:"should — «стоит»",w:"совет, рекомендация",x:"You should rest.\nWe should book tickets."},
+ {r:"would like — «хотел бы»",w:"вежливый запрос",x:"I would like a coffee, please.\nWould you like some tea?"},
+ {r:"Предлоги времени",w:"at 5 o'clock · on Monday · in September",x:"The meeting is at 9 on Monday.\nWe move in summer."}
+]},
+{id:"eg5",t:"Реплики для работы",i:"💼",gr:1,lv:2,words:[
+ {r:"Вежливая просьба",w:"Could you …? / Would you …?",x:"Could you send me the file?\nWould you check it, please?"},
+ {r:"there is / there are — «есть»",w:"there is + ед.ч.; there are + мн.ч.",x:"There is a problem.\nThere are two options."},
+ {r:"Цель и план",w:"I'd like to… / I'm going to…",x:"I'd like to discuss the price."},
+ {r:"Уточнение",w:"Sorry? / What do you mean?",x:"Sorry, could you repeat that?"},
+ {r:"Несогласие вежливо",w:"I'm afraid… / Unfortunately…",x:"I am afraid we can't accept this price."},
+ {r:"Предложение",w:"Let's… / Shall we…?",x:"Let's start.\nShall we break for lunch?"},
+ {r:"Завершение письма/разговора",w:"Thanks for… / Looking forward to…",x:"Thanks for your help.\nLooking forward to your reply."}
+]}
+);
+/* ---------- КИТАЙСКАЯ ГРАММАТИКА в карточках ---------- */
+DATA.zh.decks.push(
+{id:"zg1",t:"Счётные слова",i:"🀄",gr:1,words:[
+ {r:"个 — универсальное счётное слово",w:"число + 个 + предмет",x:"一个苹果 yí ge píngguǒ — одно яблоко\n三个人 sān ge rén — три человека"},
+ {r:"本 — для книг и тетрадей",w:"число + 本 + книга",x:"三本书 sān běn shū — три книги"},
+ {r:"杯 — стаканы и чашки",w:"число + 杯 + напиток",x:"两杯茶 liǎng bēi chá — два чая"},
+ {r:"只 — животные и один из пары",w:"число + 只 + животное",x:"一只猫 yì zhī māo — один кот"},
+ {r:"件 — одежда и дела",w:"число + 件 + вещь/дело",x:"一件衣服 yí jiàn yīfu — одна вещь одежды"},
+ {r:"张 — плоское: билеты, столы, карты",w:"число + 张 + предмет",x:"一张桌子 yì zhāng zhuōzi — один стол"},
+ {r:"条 — длинное: рыба, брюки, реки",w:"число + 条 + предмет",x:"一条鱼 yì tiáo yú — одна рыба"},
+ {r:"位 — вежливо о людях",w:"число + 位 + человек",x:"两位客人 liǎng wèi kèrén — два гостя"},
+ {r:"Общий порядок",w:"число → счётное слово → предмет",x:"三个苹果 sān ge píngguǒ"}
+]},
+{id:"zg2",t:"Порядок слов и частицы",i:"🧩",gr:1,words:[
+ {r:"Порядок: кто → когда → что делает",w:"время стоит перед глаголом",x:"我明天工作。Wǒ míngtiān gōngzuò. — Я завтра работаю."},
+ {r:"的 — принадлежность",w:"кто + 的 + вещь",x:"我的书 wǒ de shū — моя книга"},
+ {r:"了 — действие закончено",w:"глагол + 了",x:"我买了。Wǒ mǎi le. — Я купил."},
+ {r:"吗 — вопрос-частица",w:"утверждение + 吗?",x:"你是老师吗? Nǐ shì lǎoshī ma? — Вы учитель?"},
+ {r:"不 / 没 — «не»",w:"不 — сейчас и вообще; 没 — в прошлом",x:"我不去。Wǒ bù qù.\n我没去。Wǒ méi qù."},
+ {r:"很 — «очень» и просто связка",w:"очень + прилагательное",x:"我很好。Wǒ hěn hǎo. — Я хорошo."},
+ {r:"是…的 — уточнение «именно»",w:"是 + что именно + 的",x:"我是从俄罗斯来的。Я из России."},
+ {r:"和 — «и» для предметов",w:"А 和 B",x:"咖啡和茶 kāfēi hé chá — кофе и чай"},
+ {r:"想 / 要 / 会 — хочу / намерен / умею",w:"частица + глагол",x:"我想喝水。\n我要咖啡。\n我会说英语。"}
+]},
+{id:"zg3",t:"Полезные конструкции",i:"🔧",gr:1,words:[
+ {r:"在 + место + глагол",w:"«находясь где — делать»",x:"我在家工作。Wǒ zài jiā gōngzuò. — Я работаю дома."},
+ {r:"地方有… — «где-то есть…»",w:"место + 有 + предмет",x:"这里有一家银行。Здесь есть банк."},
+ {r:"多大? — «сколько лет?»",w:"你多大了? Nǐ duō dà le?",x:"你的孩子多大了? Сколько твоему ребёнку?"},
+ {r:"多少钱 / 几 — цена и число",w:"сколько стоит / сколько (мало)",x:"这个多少钱? Сколько это стоит?"},
+ {r:"可以…吗? — «можно?»",w:"можно + действие + 吗",x:"可以进来吗? Kěyǐ jìnlai ma? — Можно войти?"},
+ {r:"必须 / 应该 — должен / следует",w:"必须 bìxū / 应该 yīnggāi + глагол",x:"我必须去。Я должен идти."},
+ {r:"别 / 不要 — «не делай»",w:"запрет действия",x:"别担心! Bié dānxīn! — Не волнуйся!"},
+ {r:"最 — «самый»",w:"最 + прилагательное",x:"最好的 zuì hǎo de — самый лучший"}
+]}
+);
+/* ---------- КИТАЙСКИЙ: первые недели в Китае ---------- */
+DATA.zh.decks.push(
+{id:"zhp8",t:"WeChat и оплата",i:"💳",ph:1,words:[
+ {r:"Отсканируйте, пожалуйста (QR)",w:"请扫码",p:"qǐng sǎo mǎ"},
+ {r:"оплата через WeChat",w:"微信支付",p:"Wēixìn zhīfù"},
+ {r:"Alipay (оплата)",w:"支付宝",p:"Zhīfùbǎo"},
+ {r:"наличные",w:"现金",p:"xiànjīn"},
+ {r:"QR-код",w:"二维码",p:"èrwéimǎ"},
+ {r:"Отсканируйте мой код",w:"扫我的码",p:"sǎo wǒ de mǎ"},
+ {r:"Я переведу вам (деньги)",w:"我转给你",p:"wǒ zhuǎn gěi nǐ"},
+ {r:"Перевод дошёл?",w:"收到没有?",p:"shōudào méiyǒu?"},
+ {r:"Пополнить счёт (телефона)",w:"充值",p:"chōngzhí"},
+ {r:"номер мобильного телефона",w:"手机号码",p:"shǒujī hàomǎ"}
+]},
+{id:"zhp9",t:"Метро и транспорт",i:"🚇",ph:1,words:[
+ {r:"станция метро",w:"地铁站",p:"dìtiě zhàn"},
+ {r:"Купить билет, пожалуйста",w:"买车票",p:"mǎi chēpiào"},
+ {r:"Приложить карту на входе",w:"刷卡进站",p:"shuā kǎ jìn zhàn"},
+ {r:"Какая линия (ветка)?",w:"几号线?",p:"jǐ hào xiàn?"},
+ {r:"пересадка",w:"换乘",p:"huànchéng"},
+ {r:"выход (из метро)",w:"出口",p:"chūkǒu"},
+ {r:"Как пройти к …?",w:"去……怎么走?",p:"qù… zěnme zǒu?"},
+ {r:"пробка (на дороге)",w:"堵车",p:"dǔchē"},
+ {r:"Остановите на следующей",w:"下一站停",p:"xià yí zhàn tíng"},
+ {r:"Вызовите машину (такси через приложение)",w:"叫车",p:"jiào chē"}
+]},
+{id:"zhp10",t:"Доставка и покупки",i:"📦",ph:1,words:[
+ {r:"доставка еды",w:"外卖",p:"wàimài"},
+ {r:"курьер, посылка",w:"快递",p:"kuàidì"},
+ {r:"Оставьте у двери",w:"放在门口",p:"fàng zài ménkǒu"},
+ {r:"мой заказ",w:"我的订单",p:"wǒ de dìngdān"},
+ {r:"Когда придёт (посылка)?",w:"什么时候到?",p:"shénme shíhou dào?"},
+ {r:"возврат товара",w:"退换货",p:"tuìhuànhuò"},
+ {r:"намного дешевле",w:"便宜很多",p:"piányi hěnduō"},
+ {r:"Это можно попробовать?",w:"可以尝一下吗?",p:"kěyǐ cháng yíxià ma?"}
+]},
+{id:"zhp11",t:"Симкарта и банк",i:"📱",ph:1,words:[
+ {r:"Оформить (купить) симкарту",w:"办手机卡",p:"bàn shǒujīkǎ"},
+ {r:"Открыть банковскую карту",w:"办银行卡",p:"bàn yínhángkǎ"},
+ {r:"мобильный интернет (трафик)",w:"流量",p:"liúliàng"},
+ {r:"Пополнить на 100 юаней",w:"充值一百元",p:"chōngzhí yìbǎi yuán"},
+ {r:"пароль, код",w:"密码",p:"mìmǎ"},
+ {r:"Нет сигнала (сети)",w:"没有信号",p:"méiyǒu xìnhào"},
+ {r:"Пакет (тариф) интернета",w:"流量包",p:"liúliàng bāo"}
+]},
+{id:"zhp12",t:"Кантонская еда",i:"🥟",ph:1,words:[
+ {r:"утренний чай (завтрак димсам)",w:"早茶",p:"zǎochá"},
+ {r:"димсам (маленькие закуски)",w:"点心",p:"diǎnxin"},
+ {r:"рисовый ролл (чангфэнь)",w:"肠粉",p:"chángfěn"},
+ {r:"рисовая лапша",w:"米粉",p:"mǐfěn"},
+ {r:"суп",w:"汤",p:"tāng"},
+ {r:"острый",w:"辣",p:"là"},
+ {r:"лёгкий, пресный (о еде)",w:"清淡",p:"qīngdàn"},
+ {r:"С собой, пожалуйста (упакуйте)",w:"打包",p:"dǎbāo"},
+ {r:"Вкусно! (по-кантонски)",w:"好好味!",p:"hǎo hǎo wèi!"}
+]},
+{id:"zhp13",t:"Ориентируемся в городе",i:"🧭",ph:1,words:[
+ {r:"Скажите, пожалуйста…",w:"请问……",p:"qǐngwèn…"},
+ {r:"Рядом есть …?",w:"附近有……吗?",p:"fùjìn yǒu… ma?"},
+ {r:"Я заблудился (заблудилась)",w:"我迷路了",p:"wǒ mílù le"},
+ {r:"Сфотографируйте нас, пожалуйста",w:"帮我们拍张照片",p:"bāng wǒmen pāi zhāng zhàopiàn"},
+ {r:"Сколько за полкило (цзин)?",w:"多少钱一斤?",p:"duōshao qián yì jīn?"},
+ {r:"Слишком много, не надо",w:"太多了,不要",p:"tài duō le, bú yào"},
+ {r:"Положите (в пакет) отдельно",w:"分开装",p:"fēnkāi zhuāng"},
+ {r:"Что это такое?",w:"这是什么?",p:"zhè shì shénme?"}
+]}
+);
+
 /* ---------- СОСТОЯНИЕ (localStorage) ---------- */
 const LS="polyglot_v1", DAY=86400000;
 const AVATARS=["👤","👩","👨","🧒","👶","🦊","🐼","🐯","🦁","🐨","🐸","🦄"];
@@ -1284,7 +1441,7 @@ function wordList(lang,deckId){
   const out=[];
   DATA[lang].decks.forEach(function(d){
     if(deckId&&d.id!==deckId)return;
-    d.words.forEach(function(w,i){out.push({r:w.r,w:w.w,p:w.p||"",e:w.e||"",ph:!!d.ph,deck:d.id,dt:d.t,cid:d.id+":"+i})});
+    d.words.forEach(function(w,i){out.push({r:w.r,w:w.w,p:w.p||"",e:w.e||"",x:w.x||"",ph:!!d.ph,gr:!!d.gr,deck:d.id,dt:d.t,cid:d.id+":"+i})});
   });
   return out;
 }
@@ -1332,7 +1489,7 @@ if(window.speechSynthesis){
   refreshVoices();
   speechSynthesis.onvoiceschanged=function(){refreshVoices();if(CUR.v==="home"||CUR.v==="settings")render()};
 }
-function voicesFor(lang){const want=lang==="zh"?"zh":"en";return VOICES.filter(function(v){return (v.lang||"").toLowerCase().indexOf(want)===0})}
+function voicesFor(lang){const want=lang==="zh"?"zh":(lang==="ru"?"ru":"en");return VOICES.filter(function(v){return (v.lang||"").toLowerCase().indexOf(want)===0})}
 function pickVoice(lang){
   const pref=st().set.v[lang];
   if(pref){const v=VOICES.filter(function(x){return x.name===pref})[0];if(v)return v}
@@ -1343,7 +1500,7 @@ function say(text,lang){
   try{
     speechSynthesis.cancel();
     const u=new SpeechSynthesisUtterance(text);
-    u.lang=lang==="zh"?"zh-CN":"en-US";
+    u.lang=lang==="zh"?"zh-CN":(lang==="ru"?"ru-RU":"en-US");
     const v=pickVoice(lang);if(v)u.voice=v;
     u.rate=Number(st().set.rate)||0.9;
     speechSynthesis.speak(u);
@@ -1363,7 +1520,11 @@ const TONE_MARKS={1:"ˉ",2:"´",3:"ˇ",4:"`"};
 
 /* ---------- НАВИГАЦИЯ И ЭКРАНЫ ---------- */
 let CUR={v:"home"};
-function go(v,a){CUR={v:v,a:a};render()}
+function go(v,a){
+  if(v!=="audio")audioStop();
+  if(v!=="play"&&G&&G.rec){try{G.rec.abort()}catch(e){}}
+  CUR={v:v,a:a};render();
+}
 function render(){
   const app=$("app");
   if(CUR.v==="home")viewHome(app);
@@ -1372,6 +1533,7 @@ function render(){
   else if(CUR.v==="games")viewGames(app);
   else if(CUR.v==="play")viewPlay(app);
   else if(CUR.v==="match")viewMatch(app);
+  else if(CUR.v==="audio")viewAudio(app);
   else if(CUR.v==="baby")viewBaby(app);
   else if(CUR.v==="profiles")viewProfiles(app);
   else if(CUR.v==="settings")viewSettings(app);
@@ -1380,7 +1542,7 @@ function render(){
 function setLang(l){st().lang=l;save();render()}
 function backArrow(){
   if(CUR.v==="home")return "";
-  const parent={lesson:"done",done:"home",games:"home",play:"games",match:"games",baby:"home",profiles:"home",settings:"home"}[CUR.v]||"home";
+  const parent={lesson:"done",done:"home",games:"home",play:"games",match:"games",audio:"home",baby:"home",profiles:"home",settings:"home"}[CUR.v]||"home";
   return '<span class="chip" onclick="go(\''+parent+'\')" title="назад">←</span>';
 }
 function topbar(){
@@ -1416,15 +1578,18 @@ function viewHome(app){
   if(!P.tip)h+='<div class="hint" style="margin-top:14px"><b>Как заниматься</b><br>10–15 минут в день: нажимайте «Учиться сегодня» и честно оценивайте себя — приложение само покажет слово, когда вы вот-вот его забудете. <span onclick="closeTip()" style="color:var(--acc);cursor:pointer;font-weight:700">Понятно</span></div>';
   if(lang==="zh"&&zhMissing())h+='<div class="hint">🔊 Китайской озвучки на этом устройстве пока нет — пиньиня (звуки латиницей) показывается всегда. Включить звук: Windows → Параметры → Время и язык → Язык → Добавить язык → «中文 (упрощённый)», затем перезапустить браузер. Либо откройте файл в браузере Edge — там обычно есть онлайн-голоса китайского.</div>';
   h+='<div class="row" style="margin-top:14px"><button class="btn ghost" onclick="go(\'games\')">🎮 Игры</button>'
+    +'<button class="btn ghost" onclick="go(\'audio\')">🎧 В дороге</button>'
     +'<button class="btn ghost" onclick="go(\'baby\')">👶 Режим малыша</button></div>';
   if(lang==="en"){
-    h+=deckSection("📘 С нуля → A1 · слова",L.decks.filter(function(d){return !d.ph&&d.lv!==2}),lang);
+    h+=deckSection("📘 С нуля → A1 · слова",L.decks.filter(function(d){return !d.ph&&!d.gr&&d.lv!==2}),lang);
     h+=deckSection("Фразы для жизни и переезда (база)",L.decks.filter(function(d){return d.ph&&d.lv!==2}),lang);
-    h+=deckSection("📗 A1 → B1 · слова и грамматика общения",L.decks.filter(function(d){return !d.ph&&d.lv===2}),lang);
+    h+=deckSection("📗 A1 → B1 · слова",L.decks.filter(function(d){return !d.ph&&!d.gr&&d.lv===2}),lang);
     h+=deckSection("💼 Рабочий английский (для работы с китайцами)",L.decks.filter(function(d){return d.ph&&d.lv===2}),lang);
+    h+=deckSection("📐 Грамматика в карточках",L.decks.filter(function(d){return d.gr}),lang);
   }else{
-    h+=deckSection("Слова по темам",L.decks.filter(function(d){return !d.ph}),lang);
-    h+=deckSection("Фразы для переезда",L.decks.filter(function(d){return d.ph}),lang);
+    h+=deckSection("Слова по темам",L.decks.filter(function(d){return !d.ph&&!d.gr}),lang);
+    h+=deckSection("Фразы для переезда",L.decks.filter(function(d){return d.ph&&!d.gr}),lang);
+    h+=deckSection("📐 Грамматика в карточках",L.decks.filter(function(d){return d.gr}),lang);
   }
   h+='<hr><div class="small muted center">Прогресс хранится в этом браузере. Голос озвучки выбирается в ⚙️.</div>';
   app.innerHTML=h;
@@ -1456,9 +1621,19 @@ function startLesson(deckId){
 function findWord(cid,lang){
   const i=cid.lastIndexOf(":");
   const dk=DATA[lang].decks.filter(function(x){return x.id===cid.slice(0,i)})[0];
-  return dk?dk.words[+cid.slice(i+1)]:null;
+  if(!dk)return null;
+  const w=dk.words[+cid.slice(i+1)];
+  return w?Object.assign({gr:!!dk.gr,ph:!!dk.ph},w):null;
 }
-function sayCard(cid,lang){const w=findWord(cid,lang);if(w)say(w.w,lang)}
+function sayCard(cid,lang){
+  const w=findWord(cid,lang);if(!w)return;
+  if(w.gr){
+    if(lang==="zh"){const m=(w.x||"").match(/[一-鿿]+/g);if(m)say(m[0],lang)}
+    else{const f=(w.x||"").split("\n")[0];if(f)say(f,lang)}
+    return;
+  }
+  say(w.w,lang);
+}
 function viewLesson(app){
   const lang=st().lang;
   if(!LSN||LSN.i>=LSN.q.length){go("done");return}
@@ -1468,20 +1643,29 @@ function viewLesson(app){
   h+='<div class="between"><div class="muted small">'+esc(deckTitle)+'</div>'
     +'<button class="btn sm ghost" onclick="go(\'done\')">Закончить</button></div>';
   h+='<div class="bar" style="margin:8px 0 12px"><i style="width:'+Math.round(100*LSN.i/LSN.q.length)+'%"></i></div>';
-  h+='<div class="card flash" onclick="reveal()">'
-    +(w.e?'<div class="emoji">'+w.e+"</div>":"")
-    +'<div class="word'+(zh?" hanzi":"")+'" style="'+(zh?"font-size:58px;":"")+'">'+esc(w.w)+"</div>"
-    +(zh?'<div class="pinyin">'+esc(w.p)+"</div>":"")
-    +'<button class="spk" onclick="event.stopPropagation();sayCard(\''+w.cid+"','"+lang+'\')">🔊</button>'
-    +(LSN.rev?'<div class="ru">'+esc(w.r)+"</div>":'<div class="note">нажмите на карточку, чтобы увидеть перевод</div>')
-    +"</div>";
+  h+='<div class="card flash" onclick="reveal()">';
+  if(w.gr){
+    h+=(w.e?'<div class="emoji">'+w.e+"</div>":"")
+      +'<div class="grule">'+esc(w.r)+"</div>"
+      +'<button class="spk" onclick="event.stopPropagation();sayCard(\''+w.cid+"','"+lang+'\')">🔊</button>'
+      +(LSN.rev?'<div class="grule" style="color:var(--ink);font-size:17px;font-weight:600">'+esc(w.w)+"</div>"
+        +(w.x?'<div class="gx'+(zh?" hanzi":"")+'">'+w.x.split("\n").map(function(l){return "<div>"+esc(l)+"</div>"}).join("")+"</div>":"")
+        :'<div class="note">нажмите, чтобы посмотреть правило</div>');
+  }else{
+    h+=(w.e?'<div class="emoji">'+w.e+"</div>":"")
+      +'<div class="word'+(zh?" hanzi":"")+'" style="'+(zh?"font-size:58px;":"")+'">'+esc(w.w)+"</div>"
+      +(zh?'<div class="pinyin">'+esc(w.p)+"</div>":"")
+      +'<button class="spk" onclick="event.stopPropagation();sayCard(\''+w.cid+"','"+lang+'\')">🔊</button>'
+      +(LSN.rev?'<div class="ru">'+esc(w.r)+"</div>":'<div class="note">нажмите на карточку, чтобы увидеть перевод</div>');
+  }
+  h+="</div>";
   if(LSN.rev){
     h+='<div class="rates"><button class="btn rd" onclick="grade(0)">😕 Сложно</button>'
       +'<button class="btn" onclick="grade(1)">🙂 Норм</button>'
       +'<button class="btn gr" onclick="grade(2)">😎 Легко</button></div>';
   }
   app.innerHTML=h;
-  if(!LSN.spoken){LSN.spoken=1;say(w.w,lang)}
+  if(!LSN.spoken){LSN.spoken=1;if(!w.gr)say(w.w,lang)}
 }
 function deckTitleOf(deckId,lang){const d=DATA[lang].decks.filter(function(x){return x.id===deckId})[0];return d?d.t:""}
 function reveal(){if(LSN&&!LSN.rev){LSN.rev=1;render()}}
@@ -1516,7 +1700,7 @@ function viewDone(app){
 let BABY=null;
 function viewBaby(app){
   const lang=st().lang;
-  const pool=wordList(lang).filter(function(w){return !w.ph&&w.e});
+  const pool=wordList(lang).filter(function(w){return !w.ph&&!w.gr&&w.e});
   if(!BABY||BABY.lang!==lang)BABY={lang:lang,words:pick(pool,Math.min(24,pool.length))};
   let h='<div class="topbar"><div class="logo">👶 Малыш</div><div class="spacer"></div>'
     +'<span class="chip'+(lang==="en"?" on-en":"")+'" onclick="setLang(\'en\')">🇬🇧</span>'
@@ -1581,6 +1765,11 @@ function viewSettings(app){
     +'<input type="range" min="0.5" max="1.2" step="0.05" value="'+s.set.rate+'" style="width:100%" oninput="onRate(this.value)"></div>';
   h+='<div class="setrow"><label>Голос — английский 🇬🇧</label>'+voiceSelect("en")+"</div>";
   h+='<div class="setrow"><label>Голос — китайский 🇨🇳</label>'+voiceSelect("zh")+"</div>";
+  h+='<div class="setrow"><label>Перенос на другое устройство</label>'
+    +'<button class="btn ghost sm" onclick="expShow()">📤 Код моего прогресса</button> '
+    +'<button class="btn ghost sm" onclick="impGo()">📥 Загрузить из кода</button>'
+    +'<textarea id="expBox" class="input" hidden style="min-height:80px;font-size:11px;margin-top:8px"></textarea>'
+    +'<button id="expCopy" class="btn sm" hidden style="margin-top:6px" onclick="expCopy()">Скопировать код</button></div>';
   h+='<div class="setrow"><label>Прогресс</label><button class="btn rd sm" onclick="resetProgress()">Сбросить прогресс профиля</button></div>';
   h+="</div>";
   h+='<div class="small muted" style="margin-top:10px">«Полиглот» — семейный тренажёр: один файл, работает без интернета. Прогресс каждого устройства хранится отдельно.</div>';
@@ -1618,6 +1807,129 @@ document.addEventListener("keydown",function(e){
   else if(e.key==="3"&&LSN.rev)grade(2);
 });
 
+/* ---------- АУДИО-РЕЖИМ «В ДОРОГЕ» ---------- */
+let AU={on:false,i:0,list:[],t:null};
+function viewAudio(app){
+  const lang=st().lang;
+  let h=topbar()+"<h1>🎧 В дороге</h1><div class='card center' style='padding:22px 14px'>";
+  if(AU.on){
+    const w=AU.list[Math.min(AU.i,AU.list.length-1)];
+    h+='<div class="muted small">'+(AU.i+1)+" из "+AU.list.length+"</div>"
+      +'<div class="word" style="font-size:28px;margin-top:8px">'+esc(w.r)+"</div>"
+      +'<div class="word'+(lang==="zh"?" hanzi":"")+'" style="font-size:34px;color:var(--acc2)">'+esc(w.w)+"</div>"
+      +(lang==="zh"?'<div class="pinyin">'+esc(w.p)+"</div>":"")
+      +'<div class="muted small" style="margin-top:10px">слушай и повторяй вслух</div>'
+      +'<button class="btn rd big" style="margin-top:12px" onclick="audioStop();render()">⏹ Остановить</button>';
+  }else{
+    const learned=wordList(lang).filter(function(w){return !w.gr&&isLearned(w)}).length;
+    h+='<div style="font-size:52px">🎧</div>'
+      +'<div style="margin:8px 0">Читает вслух выученные слова: «по-русски — по-'+(lang==="zh"?"китайски":"английски")+'». Руки не нужны — включайте в машине и транспорте.</div>'
+      +(lang==="zh"&&zhMissing()?'<div class="hint">Китайского голоса на этом устройстве нет — звук будет только для русских слов. Включите китайский язык в системе или послушайте английский курс.</div>':"")
+      +'<button class="btn big"'+(learned>=5?" onclick=\"audioStart()\"":" disabled")+">▶ Начать ("+Math.min(30,learned)+" "+plural(Math.min(30,learned),"слово","слова","слов")+")</button>"
+      +(learned<5?'<div class="small muted" style="margin-top:8px">Нужно хотя бы 5 выученных слов — пока выучено '+learned+"</div>":"");
+  }
+  h+="</div>";
+  app.innerHTML=h;
+}
+function audioStart(){
+  const lang=st().lang;
+  const ws=wordList(lang).filter(function(w){return !w.gr&&isLearned(w)});
+  if(ws.length<5)return;
+  AU={on:true,i:0,list:shuffle(ws.slice()).slice(0,30),t:null};
+  audioNext();
+}
+function audioNext(){
+  clearTimeout(AU.t);
+  if(!AU.on)return;
+  const w=AU.list[AU.i],lang=st().lang;
+  render();
+  say(w.r,"ru");
+  AU.t=setTimeout(function(){
+    if(!AU.on)return;
+    say(w.w,lang);
+    AU.t=setTimeout(function(){
+      if(!AU.on)return;
+      AU.i++;
+      if(AU.i>=AU.list.length){audioStop();go("home");return}
+      audioNext();
+    },2600);
+  },2200);
+}
+function audioStop(){
+  if(AU&&AU.t)clearTimeout(AU.t);
+  AU.on=false;
+  try{if(window.speechSynthesis)speechSynthesis.cancel()}catch(e){}
+}
+
+/* ---------- ТРЕНАЖЁР ПРОИЗНОШЕНИЯ (микрофон) ---------- */
+function recOk(){return !!(window.SpeechRecognition||window.webkitSpeechRecognition)}
+function prRec(){
+  const S=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!S){alert("Этот браузер не умеет распознавать речь. Откройте приложение в Chrome на телефоне или в Edge.");return}
+  if(!G)return;
+  const w=G.qs[G.i];
+  const rec=new S();
+  G.rec=rec;G.prState="run";render();
+  rec.lang=G.lang==="zh"?"zh-CN":"en-US";
+  rec.interimResults=false;rec.maxAlternatives=4;
+  rec.onresult=function(ev){
+    const res=ev.results[ev.results.length-1];
+    const alts=[];
+    for(let k=0;k<res.length;k++)alts.push(res[k].transcript);
+    G.heard=alts[0]||"";
+    const ok=alts.some(function(a){return prMatch(a,w.w)});
+    G.prState=ok?"ok":"no";
+    if(ok)G.ok++;
+    else{G.bad++;if(!G.prScored){weaken(w.cid);G.prScored=1}}
+    render();
+  };
+  rec.onerror=function(){G.prState="no";G.heard="(микрофон не услышал — проверьте разрешение)";render()};
+  try{rec.start()}catch(e){G.prState=null;render()}
+}
+function prMatch(a,t){
+  const n=function(s){return (s||"").toLowerCase().replace(/[^a-z0-9一-鿿]/g,"")};
+  const A=n(a),T=n(t);
+  if(!A||!T)return false;
+  if(G.lang==="zh")return A.indexOf(T)>=0||T.indexOf(A)>=0;
+  return A===T||(T.length>=4&&A.indexOf(T)>=0);
+}
+
+/* ---------- ПЕРЕНОС ПРОГРЕССА КОДОМ ---------- */
+function expShow(){
+  const s=st();
+  const d={v:1,n:P.pr[P.cur].n,a:P.pr[P.cur].a,lang:s.lang,set:s.set,strk:s.strk,c:s.c};
+  try{
+    const code="PG1:"+btoa(unescape(encodeURIComponent(JSON.stringify(d))));
+    const box=$("expBox");
+    box.value=code;box.hidden=false;$("expCopy").hidden=false;
+    box.focus();box.select();
+  }catch(e){alert("Не получилось создать код: "+e.message)}
+}
+function expCopy(){
+  const box=$("expBox");
+  box.focus();box.select();
+  let ok=false;
+  try{ok=document.execCommand("copy")}catch(e){}
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(box.value);ok=true}
+  alert(ok?"Код скопирован! Отправьте его сами себе в мессенджере или почте. На другом устройстве: ⚙️ → «📥 Загрузить из кода» и вставьте код.":"Выделите код долгим нажатием и скопируйте вручную.");
+}
+function impGo(){
+  const code=prompt("Вставьте сюда код прогресса (PG1:…):","");
+  if(!code||!code.trim())return;
+  if(code.trim().indexOf("PG1:")!==0){alert("Это не код прогресса «Полиглота».");return}
+  try{
+    const d=JSON.parse(decodeURIComponent(escape(atob(code.trim().slice(4)))));
+    if(!d.c){alert("Код повреждён.");return}
+    if(!confirm("Заменить прогресс профиля «"+P.pr[P.cur].n+"» прогрессом профиля «"+(d.n||"?")+"»? Текущий прогресс этого профиля пропадёт."))return;
+    P.pr[P.cur].n=(d.n||P.pr[P.cur].n).slice(0,20);
+    if(d.a)P.pr[P.cur].a=d.a;
+    P.st[P.cur]={c:d.c,strk:d.strk||{d:0,n:0},lang:d.lang||"zh",set:d.set||{rate:0.9,per:5,v:{}}};
+    save();st();
+    alert("Готово! Прогресс перенесён.");
+    render();
+  }catch(e){alert("Не получилось прочитать код — убедитесь, что скопировали его целиком.")}
+}
+
 /* ---------- СТАРТ ---------- */
 function boot(){
   st();render();
@@ -1628,7 +1940,7 @@ function boot(){
 function viewGames(app){
   const lang=st().lang,zh=lang==="zh";
   const intro=wordList(lang).filter(function(w){return st().c[w.cid]});
-  const words=intro.filter(function(w){return !w.ph});
+  const words=intro.filter(function(w){return !w.ph&&!w.gr});
   const phrases=intro.filter(function(w){return w.ph});
   const fl=zh?"🇨🇳":"🇬🇧";
   const games=[
@@ -1638,6 +1950,8 @@ function viewGames(app){
      ok:words.length>=4},
     {id:"au",ic:"👂",n:"Послушай и выбери",d:"Слышишь слово — найди его на экране",
      ok:words.length>=4&&voicesFor(lang).length>0},
+    {id:"pr",ic:"🎙️",n:"Скажи слово",d:"Произнеси в микрофон — телефон проверит",
+     ok:words.length>=4&&recOk()},
     {id:"mt",ic:"🀄",n:"Найди пары",d:"Соедини слово и перевод — 6 пар",ok:words.length>=6}
   ];
   if(zh){
@@ -1667,7 +1981,7 @@ let G=null;
 function startGame(id){
   const lang=st().lang;
   const intro=wordList(lang).filter(function(w){return st().c[w.cid]});
-  const words=intro.filter(function(w){return !w.ph});
+  const words=intro.filter(function(w){return !w.ph&&!w.gr});
   const phrases=intro.filter(function(w){return w.ph});
   if(id==="mt"){
     if(words.length<6){alert("Нужно хотя бы 6 выученных слов.");return}
@@ -1682,16 +1996,16 @@ function startGame(id){
     return;
   }
   let pool=null;
-  if(id==="t1"||id==="t2"||id==="au")pool=words;
+  if(id==="t1"||id==="t2"||id==="au"||id==="pr")pool=words;
   else if(id==="py")pool=words.filter(function(w){return w.p.trim().split(/\s+/).length>=2});
   else if(id==="tn")pool=words.filter(function(w){return toneOf(w.p)>0&&w.p.trim().split(/\s+/).length===1});
   else if(id==="lt")pool=words.filter(function(w){return w.w.length>=3&&w.w.length<=10&&w.w.indexOf(" ")<0});
   else if(id==="ph")pool=phrases;
   if(!pool||pool.length<3){alert("Пока не хватает слов для этой игры.");return}
-  G={id:id,lang:lang,qs:pick(pool,Math.min(10,pool.length)),i:0,ok:0,bad:0,lock:false,opts:null,asm:null};
+  G={id:id,lang:lang,qs:pick(pool,Math.min(10,pool.length)),i:0,ok:0,bad:0,lock:false,opts:null,asm:null,prState:null,heard:"",prScored:0};
   go("play");
 }
-function nextRound(){if(!G)return;G.i++;G.lock=false;G.opts=null;render()}
+function nextRound(){if(!G)return;G.i++;G.lock=false;G.opts=null;G.prState=null;G.heard="";G.prScored=0;render()}
 function gameHeader(w){
   let h='<div class="between"><div class="muted small">Вопрос '+(G.i+1)+" / "+G.qs.length+'</div>'
     +'<button class="btn sm ghost" onclick="go(\'games\')">Выйти</button></div>'
@@ -1700,7 +2014,7 @@ function gameHeader(w){
 }
 function makeOpts(w,valFn){
   const right=valFn(w);
-  const same=wordList(G.lang).filter(function(x){return x.cid!==w.cid&&!!x.ph===!!w.ph&&valFn(x)!==right});
+  const same=wordList(G.lang).filter(function(x){return x.cid!==w.cid&&!x.gr&&!!x.ph===!!w.ph&&valFn(x)!==right});
   return shuffle([{v:right,ok:true}].concat(pick(same,3).map(function(x){return {v:valFn(x),ok:false}})));
 }
 function optsHtml(arr,hanzi){
@@ -1745,6 +2059,23 @@ function viewPlay(app){
       +'<div class="muted small" style="margin-top:8px">нажимай, чтобы слушать ещё раз</div></div>';
     G.opts=makeOpts(w,function(x){return x.w});
     h+=optsHtml(G.opts,zh);
+  }else if(G.id==="pr"){
+    h+='<div class="center">'+(w.e?'<div class="emoji">'+w.e+"</div>":"")
+      +'<div class="word'+(zh?" hanzi":"")+'" style="font-size:40px">'+esc(w.w)+"</div>"
+      +(zh?'<div class="pinyin">'+esc(w.p)+"</div>":"")
+      +'<button class="spk" style="margin-top:6px" onclick="sayCard(\''+w.cid+"','"+lang+'\')">🔊</button></div>';
+    if(G.prState==="run"){
+      h+='<div class="center big" style="margin-top:16px">🎧 слушаю<span class="dots"></span></div>';
+    }else if(G.prState==="ok"||G.prState==="no"){
+      h+='<div class="center" style="margin-top:14px"><span class="stat" style="font-size:17px;'+(G.prState==="ok"
+        ?"background:#f0fdf4;color:var(--ok)":"background:#fef2f2;color:var(--bad)")+'">'
+        +(G.prState==="ok"?"✅ Отлично!":"❌ Услышал: "+esc(G.heard||"—"))+"</span></div>";
+      h+='<div class="row" style="margin-top:12px;justify-content:center"><button class="btn ghost" onclick="prRec()">🎙️ Ещё раз</button>'
+        +'<button class="btn" onclick="nextRound()">Дальше ▶</button></div>';
+    }else{
+      h+='<div class="center" style="margin-top:16px"><button class="btn big yl" onclick="prRec()">🎙️ Сказать</button>'
+        +'<div class="small muted" style="margin-top:6px">разрешите доступ к микрофону, когда спросит браузер</div></div>';
+    }
   }else if(G.id==="tn"){
     const t=toneOf(w.p);
     h+='<div class="center"><div class="word hanzi" style="font-size:56px">'+esc(w.w)+"</div>"
