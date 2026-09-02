@@ -1976,8 +1976,8 @@ function backArrow(){
 function topbar(){
   const s=st(),p=P.pr[P.cur];
   return '<div class="topbar">'+backArrow()+'<div class="logo hanzi" style="cursor:pointer" onclick="go(\'home\')">你好 Нихао!</div><div class="spacer"></div>'
-    +'<span class="chip'+(s.lang==="en"?" on-en":"")+'" onclick="setLang(\'en\')">🇬🇧 Англ</span>'
-    +'<span class="chip'+(s.lang==="zh"?" on-zh":"")+'" onclick="setLang(\'zh\')">🇨🇳 Кит</span>'
+    +'<span class="chip'+(s.lang==="en"?" on-en":"")+'" onclick="setLang(\'en\')">🇬🇧 Английский</span>'
+    +'<span class="chip'+(s.lang==="zh"?" on-zh":"")+'" onclick="setLang(\'zh\')">🇨🇳 Китайский</span>'
     +'<span class="chip" onclick="go(\'profiles\')">'+p.a+" "+esc(p.n)+'</span>'
     +'<span class="chip" onclick="go(\'settings\')">⚙️</span></div>';
 }
