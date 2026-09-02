@@ -124,6 +124,7 @@ h1,h2,h3{line-height:1.2;margin:.35em 0} h1{font-size:24px} h2{font-size:19px}
   box-shadow:var(--sh);padding:14px;cursor:pointer;text-align:left;border:1.5px solid transparent}
 .gbtn:active{border-color:var(--acc)}
 .gx{margin-top:12px;text-align:left;background:var(--gx-bg);border:1.5px solid var(--gx-bd);border-radius:12px;padding:10px 12px;font-size:16px;line-height:1.7}
+.tr{font-size:15px;color:var(--mut);font-style:italic}
 .grule{font-size:19px;font-weight:700;color:var(--acc2);text-align:center;line-height:1.4}
 .dots::after{content:"…";animation:blink 1s infinite}@keyframes blink{50%{opacity:.2}}
 hr{border:0;border-top:1.5px solid var(--line);margin:18px 0}
@@ -1810,6 +1811,18 @@ DATA.zh.decks.push(
 ]}
 );
 
+/* ---------- ПРОИЗНОШЕНИЕ РУССКИМИ БУКВАМИ (первые темы) ---------- */
+const TR={
+zh:{"你好":"ни ха́о","您好":"ньин ха́о","再见":"цза́й-цзянь","明天见":"ми́н-тянь цзянь","谢谢":"се́-се","不客气":"бу кхэ́-ци","请":"цин","对不起":"ду́й-бу-ци","没关系":"мэ́й гу́ань-си","喂":"вэ́й","是":"шы","不":"бу","也":"е",
+"爸爸":"ба́-ба","妈妈":"ма́-ма","儿子":"э́р-цзы","女儿":"ню́й-эр","家":"цзя","朋友":"пэ́н-ъю","老师":"ла́о-шы","学生":"сюэ́-шэн","医生":"и-шэ́н","人":"жэнь","先生":"ся́нь-шэн","小姐":"ся́о-цзе",
+"零":"лин","一":"и","二":"эр","三":"сань","四":"сы","五":"у","六":"лю","七":"ци","八":"ба","九":"цзю","十":"шы","百":"бай","红":"хун","白":"бай","黑":"хэй","蓝":"лань","绿":"люй",
+"吃":"чы","喝":"хэ","茶":"ча","水":"шу́й","米饭":"ми́-фань","菜":"цай","苹果":"пи́н-го","面条":"мя́нь-тяо","鸡肉":"цзи-ро́у","牛奶":"ню́-най","咖啡":"ка-фэ́й","好吃":"ха́о-чы","杯子":"бэ́й-цзы","筷子":"куа́й-цзы",
+"我叫……":"во цзя́о…","我是俄国人":"во шы э-го́ жэнь","很高兴认识你":"хэ́нь га́о-синь жэ́нь-шы ни","你叫什么名字?":"ни цзя́о шэ́-мэ ми́н-цзы","你会说英语吗?":"ни ху́й шо и́н-юй ма","我不会说汉语":"во бу ху́й шо ха́нь-юй","请再说一遍":"цин цза́й шо и́ бянь","请说慢一点":"цин шо ма́нь и-дя́нь","我不明白":"во бу ми́н-бай","这个怎么说?":"чжэ́-гэ цзэ́-мэ шо"},
+en:{"hello":"хэло́у","hi":"хи́","good morning":"гуд мо́рнинг","good afternoon":"гуд а́фтэнун","good evening":"гуд и́внинг","good night":"гуд на́йт","goodbye":"гудба́й","bye":"бай","please":"пли́з","thank you":"сэ́нк-ю","thanks":"сэ́нкс","you are welcome":"ю а вэ́лкам","sorry":"со́ри","excuse me":"экску́з ми","yes":"йес","no":"но́у","OK":"оу-ке́й",
+"family":"фэ́мили","mother":"ма́дзэр","mum":"мам","father":"фа́дзэр","dad":"дэд","son":"сан","daughter":"до́тэр","brother":"бра́дзэр","sister":"си́стэр","grandmother":"грандма́дзэр","grandfather":"грандфа́дзэр","wife":"уа́йф","husband":"ха́збэнд","child":"чайлд","children":"чи́лдрен","friend":"фрэнд","name":"нэйм",
+"zero":"зи́роу","one":"уан","two":"ту","three":"сри","four":"фо","five":"файв","six":"сикс","seven":"сэ́вэн","eight":"эйт","nine":"найн","ten":"тэн","hundred":"ха́ндрид","red":"рэд","blue":"блю","green":"грин","yellow":"е́лоу","black":"блэк","white":"уа́йт","orange":"о́риндж","brown":"браун","pink":"пинк"}
+};
+
 /* ---------- СОСТОЯНИЕ (localStorage) ---------- */
 const LS="polyglot_v1", DAY=86400000;
 const AVATARS=["👤","👩","👨","🧒","👶","🦊","🐼","🐯","🦁","🐨","🐸","🦄"];
@@ -1852,7 +1865,7 @@ function wordList(lang,deckId){
   const out=[];
   DATA[lang].decks.forEach(function(d){
     if(deckId&&d.id!==deckId)return;
-    d.words.forEach(function(w,i){out.push({r:w.r,w:w.w,p:w.p||"",e:w.e||"",x:w.x||"",ph:!!d.ph,gr:!!d.gr,deck:d.id,dt:d.t,cid:d.id+":"+i})});
+    d.words.forEach(function(w,i){out.push({r:w.r,w:w.w,p:w.p||"",e:w.e||"",x:w.x||"",tr:(TR[lang]&&TR[lang][w.w])||"",ph:!!d.ph,gr:!!d.gr,deck:d.id,dt:d.t,cid:d.id+":"+i})});
   });
   return out;
 }
@@ -1998,6 +2011,7 @@ function viewHome(app){
       +'<span class="small muted" style="font-weight:700">☀️ слово дня</span>'
       +'<span class="word'+(lang==="zh"?" hanzi":"")+'" style="font-size:24px;margin-left:4px">'+esc(wd.w)+"</span>"
       +(lang==="zh"?'<span class="pinyin" style="font-size:14px">'+esc(wd.p)+"</span>":"")
+      +(wd.tr?'<span class="tr" style="font-size:14px">['+esc(wd.tr)+"]</span>":"")
       +'<span style="font-weight:700">'+esc(wd.r)+"</span>"
       +'<button class="spk" style="width:38px;height:38px;font-size:16px" onclick="sayCard(\''+wd.cid+"','"+lang+'\')">🔊</button></div>';
   }
@@ -2098,6 +2112,7 @@ function viewLesson(app){
     h+=(w.e?'<div class="emoji">'+w.e+"</div>":"")
       +'<div class="word'+(zh?" hanzi":"")+'" style="'+(zh?"font-size:58px;":"")+'">'+esc(w.w)+"</div>"
       +(zh?'<div class="pinyin">'+esc(w.p)+"</div>":"")
+      +(w.tr?'<div class="tr">[ '+esc(w.tr)+" ]</div>":"")
       +'<button class="spk" onclick="event.stopPropagation();sayCard(\''+w.cid+"','"+lang+'\')">🔊</button>'
       +(LSN.rev?'<div class="ru">'+esc(w.r)+"</div>":'<div class="note">нажмите на карточку, чтобы увидеть перевод</div>');
   }
@@ -2268,6 +2283,7 @@ function viewAudio(app){
       +'<div class="word" style="font-size:28px;margin-top:8px">'+esc(w.r)+"</div>"
       +'<div class="word'+(lang==="zh"?" hanzi":"")+'" style="font-size:34px;color:var(--acc2)">'+esc(w.w)+"</div>"
       +(lang==="zh"?'<div class="pinyin">'+esc(w.p)+"</div>":"")
+      +(w.tr?'<div class="tr">[ '+esc(w.tr)+" ]</div>":"")
       +'<div class="muted small" style="margin-top:10px">слушай и повторяй вслух</div>'
       +'<button class="btn rd big" style="margin-top:12px" onclick="audioStop();render()">⏹ Остановить</button>';
   }else{
@@ -2409,7 +2425,8 @@ function dictListHtml(q,lang){
   list.slice(0,200).forEach(function(w){
     h+='<div class="deck" style="margin-bottom:6px" onclick="sayCard(\''+w.cid+"','"+lang+'\')"><div style="flex:1">'
       +'<div class="ttl'+(lang==="zh"?" hanzi":"")+'" style="font-size:19px">'+esc(w.w)
-      +(lang==="zh"&&w.p?' <span class="muted" style="font-size:13px;font-weight:400">'+esc(w.p)+"</span>":"")+"</div>"
+      +(lang==="zh"&&w.p?' <span class="muted" style="font-size:13px;font-weight:400">'+esc(w.p)+"</span>":"")
+      +(w.tr?' <span class="tr" style="font-size:13px;font-weight:400">['+esc(w.tr)+"]</span>":"")+"</div>"
       +'<div class="pr">'+esc(w.r)+(w.ph?" · фраза":(w.gr?" · грамматика":""))+" · "+esc(w.dt)+"</div></div>"
       +(w.e?'<div style="font-size:24px">'+w.e+"</div>":"")+"</div>";
   });
