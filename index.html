@@ -134,6 +134,20 @@ hr{border:0;border-top:1.5px solid var(--line);margin:18px 0}
 .bubble .bh{font-size:22px;font-weight:700;line-height:1.4}
 .bubble .bp{font-size:14px;color:var(--mut);margin-top:4px}
 .bubble .br{font-size:14px;color:var(--mut);margin-top:6px;border-top:1.5px dashed var(--line);padding-top:6px}
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:10px}
+.calcell{aspect-ratio:1;border-radius:5px;background:var(--line)}
+.calcell.on{background:var(--ok)}
+.pgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:5mm}
+.pcard{border:1.5px dashed #888;border-radius:3mm;min-height:48mm;display:flex;flex-direction:column;
+  justify-content:center;align-items:center;text-align:center;page-break-inside:avoid;background:#fff;padding:4mm}
+.pcard .pw{font-size:24pt;font-weight:800}
+.pcard .pp{font-size:12pt;color:#555;margin-top:1mm}
+.pcard .pr2{font-size:13pt;margin-top:2.5mm;border-top:1px solid #999;padding-top:2.5mm;width:85%}
+@media print{
+  body{background:#fff}
+  #app{max-width:none;padding:0}
+  .topbar,.no-print{display:none!important}
+}
 a{color:var(--acc)}
 </style>
 </head>
@@ -1648,6 +1662,66 @@ en:[
   {h:"Sounds reasonable. Looking forward to cooperating!",hr:"Звучит разумно. Надеемся на сотрудничество!",o:["We look forward to it too!","I don't understand the word \"cooperating\"","Stop writing me"],k:0,or:"Мы тоже!"}
  ]}
 ]};
+DIALOGS.zh.push(
+ {id:"dzv",t:"У врача",i:"🩺",steps:[
+  {h:"你好,哪里不舒服?",hp:"nǐ hǎo, nǎlǐ bù shūfu?",hr:"Здравствуйте, что беспокоит?",o:["我头疼,发烧","我很好","我想吃饭"],k:0,or:"У меня болит голова и температура"},
+  {h:"几天了?咳嗽吗?",hp:"jǐ tiān le? késou ma?",hr:"Сколько дней? Кашель есть?",o:["三天了,咳嗽","明天","我不抽烟"],k:0,or:"Три дня, кашляю"},
+  {h:"我看一下嗓子。张开嘴——啊……",hp:"wǒ kàn yíxià sǎngzi. Zhāng kāi zuǐ — ā…",hr:"Посмотрю горло. Откройте рот — а-а…",o:["啊……","谢谢!","再见!"],k:0,or:"А-а…"},
+  {h:"感冒了,不严重。这个药一天三次,饭后吃。",hp:"gǎnmào le, bù yánzhòng. Zhège yào yì tiān sān cì, fàn hòu chī.",hr:"Простуда, ничего страшного. Лекарство три раза в день после еды.",o:["谢谢医生","多少钱一斤?","我不吃药"],k:0,or:"Спасибо, доктор"},
+  {h:"多喝水,好好休息,一周就好了。",hp:"duō hē shuǐ, hǎohāo xiūxi, yì zhōu jiù hǎo le.",hr:"Пейте воду, отдыхайте — за неделю пройдёт.",o:["好的,谢谢!","下次见","我不喝水"],k:0,or:"Хорошо, спасибо!"}
+ ]},
+ {id:"dzh",t:"Аренда квартиры",i:"🏠",steps:[
+  {h:"您好!想租什么样的房子?",hp:"nín hǎo! xiǎng zū shénme yàng de fángzi?",hr:"Здравствуйте! Какую квартиру ищете?",o:["两室一厅,带空调","便宜的苹果","出租车"],k:0,or:"Две спальни с гостиной, с кондиционером"},
+  {h:"这个小区有一个,月租四千五。您几个人住?",hp:"zhège xiǎoqū yǒu yí ge, yuèzū sìqiān wǔ. Nín jǐ ge rén zhù?",hr:"В этом комплексе есть одна, 4500 в месяц. Сколько вас?",o:["我们一家四口","一个","十二点"],k:0,or:"Нас в семье четверо"},
+  {h:"有孩子吗?附近有学校和公园。",hp:"yǒu háizi ma? Fùjìn yǒu xuéxiào hé gōngyuán.",hr:"Дети есть? Рядом школа и парк.",o:["有两个孩子,太好了","我没有孩子","我不喜欢公园"],k:0,or:"Двое детей — отлично"},
+  {h:"押金两个月,水电费自己交。什么时候看房?",hp:"yājīn liǎng ge yuè, shuǐdiànfèi zìjǐ jiāo. Shénme shíhou kàn fáng?",hr:"Депозит два месяца, коммуналку сами. Когда посмотрите?",o:["明天可以吗?","去年","我不看"],k:0,or:"Можно завтра?"},
+  {h:"可以,我下午发地址给您。",hp:"kěyǐ, wǒ xiàwǔ fā dìzhǐ gěi nín.",hr:"Можно, пришлю вам адрес после обеда.",o:["好的,谢谢您!","太贵了!","再见,不买"],k:0,or:"Хорошо, спасибо!"}
+ ]},
+ {id:"dzx",t:"В школе ребёнка",i:"🏫",steps:[
+  {h:"您好!请问找谁?",hp:"nín hǎo! qǐngwèn zhǎo shéi?",hr:"Здравствуйте! Вы к кому?",o:["我想给孩子报名","我找王老师","这是什么的?"],k:0,or:"Хочу записать ребёнка"},
+  {h:"好的,孩子多大了?以前学过汉语吗?",hp:"hǎo de, háizi duō dà le? Yǐqián xué guo Hànyǔ ma?",hr:"Хорошо, сколько ребёнку? Раньше учил(а) китайский?",o:["十二岁,学过一点儿","三岁","我是学生"],k:0,or:"Двенадцать, немного учил(а)"},
+  {h:"可以来试听一节课。学费一学期八千。",hp:"kěyǐ lái shìtīng yì jié kè. Xuéfèi yì xuéqī bāqiān.",hr:"Можно на пробный урок. Обучение 8000 за семестр.",o:["有校车吗?","太好了,我要两个","我不懂"],k:0,or:"Есть школьный автобус?"},
+  {h:"有,早上七点半接。还有问题吗?",hp:"yǒu, zǎoshang qī diǎn bàn jiē. Hái yǒu wèntí ma?",hr:"Есть, в 7:30 забирает. Ещё вопросы?",o:["没有了,谢谢您!","我要吃饭","不好"],k:0,or:"Больше нет, спасибо!"}
+ ]},
+ {id:"dzw",t:"Доставка еды",i:"🛵",steps:[
+  {h:"您好,您的外卖到了,我在楼下。",hp:"nín hǎo, nín de wàimài dào le, wǒ zài lóuxià.",hr:"Здравствуйте, ваша доставка приехала, я внизу.",o:["请放门口,谢谢","你是谁?","多少钱一斤?"],k:0,or:"Оставьте у двери, спасибо"},
+  {h:"好的,麻烦给个五星好评!",hp:"hǎo de, máfan gěi ge wǔxīng hǎopíng!",hr:"Хорошо, поставьте пять звёзд, пожалуйста!",o:["没问题","不可能","我给一星"],k:0,or:"Без проблем"},
+  {h:"您好,这里是客服,有什么可以帮您?",hp:"nín hǎo, zhèlǐ shì kèfú, yǒu shénme kěyǐ bāng nín?",hr:"Здравствуйте, служба поддержки! Чем помочь?",o:["我的订单少了一份汤","我想点一百个","你是谁?"],k:0,or:"В моём заказе не хватает супа"},
+  {h:"不好意思!马上补送,再送您一张优惠券。",hp:"bù hǎoyìsi! Mǎshàng bǔ sòng, zài sòng nín yì zhāng yōuhuìquàn.",hr:"Извините! Сейчас доставим и дадим купон.",o:["好的,谢谢","不行,我要退货","再见"],k:0,or:"Хорошо, спасибо"}
+ ]},
+ {id:"dzb",t:"Симкарта и банк",i:"📱",steps:[
+  {h:"您好,办业务还是买手机卡?",hp:"nín hǎo, bàn yèwù háishi mǎi shǒujī kǎ?",hr:"Здравствуйте, оформить карту или купить сим?",o:["我要办手机卡","我要吃饭","我在等朋友"],k:0,or:"Хочу оформить симкарту"},
+  {h:"请出示护照。需要多大流量的套餐?",hp:"qǐng chūshì hùzhào. Xūyào duō dà liúliàng de tàocān?",hr:"Паспорт, пожалуйста. Какой тариф по трафику нужен?",o:["一个月五十G的","红色的","明天"],k:0,or:"50 гигабайт в месяц"},
+  {h:"好,卡办好了。还要办银行卡吗?",hp:"hǎo, kǎ bàn hǎo le. Hái yào bàn yínhángkǎ ma?",hr:"Готово, симкарта оформлена. Банковскую карту тоже?",o:["要,谢谢","不要钱","我不认识你"],k:0,or:"Да, спасибо"},
+  {h:"请填这张表,设一个六位密码。",hp:"qǐng tián zhè zhāng biǎo, shè yí ge liù wèi mìmǎ.",hr:"Заполните анкету и задайте шестизначный пароль.",o:["好的","六个什么?","我不会写字"],k:0,or:"Хорошо"}
+ ]}
+);
+DIALOGS.en.push(
+ {id:"dev",t:"At the doctor's",i:"🩺",steps:[
+  {h:"Good morning. What seems to be the problem?",hr:"Доброе утро. Что случилось?",o:["I have a headache and a fever","I am a doctor","Nice weather today"],k:0,or:"У меня болит голова и температура"},
+  {h:"How long have you felt like this?",hr:"Как давно вы так себя чувствуете?",o:["Since Tuesday","Three kilometres","Very much"],k:0,or:"Со вторника"},
+  {h:"It looks like flu. I will prescribe some medicine.",hr:"Похоже на грипп. Выпишу лекарство.",o:["How often should I take it?","Can I eat the medicine?","Who are you?"],k:0,or:"Как часто его принимать?"},
+  {h:"Twice a day after meals. Rest and drink water.",hr:"Дважды в день после еды. Отдыхайте, пейте воду.",o:["Thank you, doctor!","I hate water","Goodbye forever"],k:0,or:"Спасибо, доктор!"}
+ ]},
+ {id:"deh",t:"Renting an apartment",i:"🏠",steps:[
+  {h:"Hi! I'm the agent. What are you looking for?",hr:"Привет! Я агент. Что вы ищете?",o:["A two-bedroom flat with AC","A red apple","A taxi driver"],k:0,or:"Двухкомнатную квартиру с кондиционером"},
+  {h:"I have one in this area — 4,500 a month.",hr:"Есть одна в этом районе — 4500 в месяц.",o:["Are utilities included?","Is it free?","Can I pay with a smile?"],k:0,or:"Коммунальные услуги включены?"},
+  {h:"Water and electricity are not included. Deposit is two months.",hr:"Вода и электричество не включены. Депозит — два месяца.",o:["When can we view it?","Yesterday, please","I don't like doors"],k:0,or:"Когда можно посмотреть?"},
+  {h:"How about tomorrow at 6 pm?",hr:"Как насчёт завтра в 18:00?",o:["Perfect, see you then","At night only","Never"],k:0,or:"Отлично, до встречи"}
+ ]},
+ {id:"dex",t:"At the school",i:"🏫",steps:[
+  {h:"Good morning! How can I help you?",hr:"Доброе утро! Чем помочь?",o:["I want to enrol my son","I want to enrol my car","I am the director"],k:0,or:"Хочу записать сына"},
+  {h:"How old is he? Does he speak English?",hr:"Сколько ему? Он говорит по-английски?",o:["He is twelve and speaks a little","He is two hundred","He speaks only to me"],k:0,or:"Ему двенадцать, говорит немного"},
+  {h:"We can offer a trial lesson on Friday.",hr:"Можем предложить пробный урок в пятницу.",o:["Is there a school bus?","Is there a school plane?","Can he sleep at school?"],k:0,or:"Есть школьный автобус?"},
+  {h:"Yes, at 7:30. The tuition is 8,000 per term.",hr:"Да, в 7:30. Обучение — 8000 за семестр.",o:["That works for us, thank you!","That is a hotel price","I will pay in apples"],k:0,or:"Нас устраивает, спасибо!"}
+ ]},
+ {id:"den",t:"Знакомство с соседями",i:"👋",steps:[
+  {h:"Oh hi! Are you the new neighbours from 12A?",hr:"О, привет! Вы новые соседи из 12A?",o:["Yes, we just moved in","No, I am from the moon","This is a hospital"],k:0,or:"Да, мы только переехали"},
+  {h:"Welcome! I'm Li from 12B. If you need anything — just knock.",hr:"Добро пожаловать! Я Ли из 12B. Если что — просто стучите.",o:["Thank you so much!","I will never knock","Knock who?"],k:0,or:"Большое спасибо!"},
+  {h:"Do you need a good market? There is one behind the building.",hr:"Нужен хороший рынок? Есть за домом.",o:["That is great, thanks!","I only eat at restaurants","Markets are scary"],k:0,or:"Отлично, спасибо!"},
+  {h:"See you around! And sorry for my dog — he is friendly.",hr:"Ещё увидимся! И извините за собаку — она дружелюбная.",o:["No problem, we love dogs!","Your dog must leave","I am a cat"],k:0,or:"Ничего, мы любим собак!"}
+ ]}
+);
 
 /* ---------- СОСТОЯНИЕ (localStorage) ---------- */
 const LS="polyglot_v1", DAY=86400000;
@@ -1664,6 +1738,7 @@ function st(){
   const s=P.st[i];
   if(!s.set)s.set={rate:0.9,per:5,v:{}};
   if(!s.strk)s.strk={d:0,n:0};
+  if(!s.days)s.days={};
   if(!s.c)s.c={};
   if(!s.lang)s.lang="zh";
   return s;
@@ -1774,6 +1849,8 @@ function render(){
   else if(CUR.v==="audio")viewAudio(app);
   else if(CUR.v==="dict")viewDict(app);
   else if(CUR.v==="dlg")viewDialogs(app);
+  else if(CUR.v==="stats")viewStats(app);
+  else if(CUR.v==="print")viewPrint(app);
   else if(CUR.v==="baby")viewBaby(app);
   else if(CUR.v==="profiles")viewProfiles(app);
   else if(CUR.v==="settings")viewSettings(app);
@@ -1782,7 +1859,7 @@ function render(){
 function setLang(l){st().lang=l;save();render()}
 function backArrow(){
   if(CUR.v==="home")return "";
-  const parent={lesson:"done",done:"home",games:"home",play:"games",match:"games",audio:"home",dict:"home",dlg:"home",baby:"home",profiles:"home",settings:"home"}[CUR.v]||"home";
+  const parent={lesson:"done",done:"home",games:"home",play:"games",match:"games",audio:"home",dict:"home",dlg:"home",stats:"home",print:"dict",baby:"home",profiles:"home",settings:"home"}[CUR.v]||"home";
   return '<span class="chip" onclick="go(\''+parent+'\')" title="назад">←</span>';
 }
 function topbar(){
@@ -1821,7 +1898,8 @@ function viewHome(app){
     +'<button class="btn ghost" onclick="go(\'audio\')">🎧 В дороге</button>'
     +'<button class="btn ghost" onclick="go(\'baby\')">👶 Режим малыша</button></div>';
   h+='<div class="row" style="margin-top:10px"><button class="btn ghost sm" onclick="go(\'dict\')">📖 Словарь</button>'
-    +'<button class="btn ghost sm" onclick="go(\'dlg\')">💬 Диалоги-симуляторы</button></div>';
+    +'<button class="btn ghost sm" onclick="go(\'dlg\')">💬 Диалоги-симуляторы</button>'
+    +'<button class="btn ghost sm" onclick="go(\'stats\')">📊 Семейный зачёт</button></div>';
   if(P.md){
     const days=Math.ceil((new Date(P.md+"T00:00:00")-today0())/DAY);
     if(days>0){
@@ -1924,6 +2002,7 @@ function grade(g){
   if(!LSN||!LSN.rev)return;
   const w=LSN.q[LSN.i];
   rate(w.cid,g);
+  const s=st();const td=today0();s.days[td]=(s.days[td]||0)+1;
   LSN.shown++;
   if(g===0){LSN.bad++;LSN.q.push(w)}else LSN.good++;
   LSN.i++;LSN.rev=0;LSN.spoken=0;
@@ -2193,7 +2272,8 @@ function viewDict(app){
   const all=wordList(lang);
   const weak=all.filter(function(w){const c=st().c[w.cid];return c&&c.l>=2});
   let h=topbar()+"<h1>📖 Словарь — "+DATA[lang].name.toLowerCase()+"</h1>";
-  if(weak.length)h+='<button class="btn ghost sm" style="margin-bottom:8px" onclick="startWeak()">⚠️ Трудные слова ('+weak.length+") — повторить</button>";
+  if(weak.length)h+='<button class="btn ghost sm" style="margin-bottom:8px" onclick="startWeak()">⚠️ Трудные слова ('+weak.length+") — повторить</button> ";
+  h+='<button class="btn ghost sm" style="margin-bottom:8px" onclick="printDict()">🖨️ Печать карточек (что найдено)</button>';
   h+='<input class="input" id="dq" placeholder="поиск: вода, water, shuǐ…" oninput="dictSearch(this.value)">';
   h+='<div id="dlist">'+dictListHtml("",lang)+"</div>";
   app.innerHTML=h;
@@ -2303,6 +2383,115 @@ function applyTheme(){
 function setTheme(t){P.th=t;save();applyTheme();render()}
 function setMoveDate(v){P.md=v||"";save();render()}
 
+/* ---------- СЕМЕЙНЫЙ ЗАЧЁТ И КАЛЕНДАРЬ ---------- */
+function viewStats(app){
+  let h=topbar()+"<h1>📊 Семейный зачёт</h1>";
+  const s=st();
+  h+='<div class="card"><h2 style="font-size:16px">Календарь занятий — '+esc(P.pr[P.cur].n)+'</h2>'
+    +'<div class="small muted">клетка = день; зелёная — занимались (7 недель)</div>'
+    +'<div class="calgrid" id="cal"></div>'
+    +'<div class="statrow" style="margin-top:10px"><span class="stat">🔥 '+s.strk.n+" "+plural(s.strk.n,"день","дня","дней")+' подряд</span>'
+    +'<span class="stat">✅ '+learnedTotal(P.cur)+" "+plural(learnedTotal(P.cur),"слово","слова","слов")+"</span></div></div>";
+  const rows=P.pr.map(function(p,i){
+    return {p:p,i:i,n:learnedTotal(i),streak:(P.st[i]&&P.st[i].strk)?P.st[i].strk.n:0};
+  }).sort(function(a,b){return b.n-a.n});
+  const medals=["🥇","🥈","🥉"];
+  h+="<h2>Кто больше выучил</h2><div class='card'>";
+  rows.forEach(function(r,k){
+    h+='<div class="between" style="padding:9px 0;border-bottom:1.5px solid var(--line)">'
+      +'<div class="row"><span style="font-size:20px;width:28px">'+(r.n?medals[k]||"🏅":"·")+"</span>"
+      +'<span style="font-size:22px">'+r.p.a+"</span> <b>"+esc(r.p.n)+"</b>"
+      +(r.i===P.cur?' <span class="badge">вы</span>':"")+"</div>"
+      +'<div style="font-weight:700">'+r.n+" сл. · 🔥"+r.streak+"</div></div>";
+  });
+  h+="</div>";
+  h+='<div class="small muted" style="margin-top:8px">Считаются слова и фразы обоих языков. Соревнуйтесь по-доброму! 🙂</div>';
+  app.innerHTML=h;
+  const cal=$("cal");
+  if(cal){
+    const days=s.days||{};
+    const dow=(new Date(today0()).getDay()+6)%7;
+    const start=today0()-dow-42*DAY;
+    let g="";
+    for(let i=0;i<49;i++){
+      const d=start+i*DAY;
+      const c=days[d]||0;
+      g+='<div class="calcell'+(c?" on":"")+'"'+(c?' style="opacity:'+Math.min(1,0.35+c*0.13)+'"':"")+' title="'+new Date(d).toLocaleDateString("ru-RU")+(c?" · "+c+" карточек":"")+'"></div>';
+    }
+    cal.innerHTML=g;
+  }
+}
+
+/* ---------- ПЕЧАТЬ КАРТОЧЕК ---------- */
+function printDict(){
+  const lang=st().lang;
+  const q=($("dq")?$("dq").value:"").trim().toLowerCase();
+  let list=wordList(lang).filter(function(w){
+    return !q||w.r.toLowerCase().indexOf(q)>=0||w.w.toLowerCase().indexOf(q)>=0||(w.p||"").toLowerCase().indexOf(q)>=0;
+  });
+  if(list.length>120)list=list.slice(0,120);
+  if(!list.length){alert("Нечего печатать — сначала найдите слова.");return}
+  go("print",list);
+}
+function viewPrint(app){
+  const list=(CUR.a&&CUR.a.length)?CUR.a:[];
+  const lang=st().lang;
+  let h='<div class="no-print row" style="margin-bottom:10px"><button class="btn" onclick="window.print()">🖨️ Распечатать</button>'
+    +'<button class="btn ghost" onclick="go(\'dict\')">← Назад к словарю</button>'
+    +'<span class="small muted">'+list.length+" карточек · A4 · резать по пунктиру</span></div>";
+  h+='<div class="pgrid">';
+  list.forEach(function(w){
+    h+='<div class="pcard"><div class="pw'+(lang==="zh"?" hanzi":"")+'">'+esc(w.w)+"</div>"
+      +(w.p?'<div class="pp">'+esc(w.p)+"</div>":"")
+      +'<div class="pr2">'+esc(w.r)+"</div></div>";
+  });
+  h+="</div>";
+  app.innerHTML=h;
+}
+
+/* ---------- ТРЕНАЖЁР ИЕРОГЛИФОВ (HanziWriter) ---------- */
+function loadHanziWriter(cb){
+  if(window.HanziWriter){cb(true);return}
+  const s=document.createElement("script");
+  s.src="https://cdn.jsdelivr.net/npm/hanzi-writer@3/dist/hanzi-writer.min.js";
+  s.onload=function(){cb(!!window.HanziWriter)};
+  s.onerror=function(){cb(false)};
+  document.head.appendChild(s);
+}
+function hwStart(){
+  const w=G.qs[G.i];
+  const ch=((w.w.match(/[一-鿿]/)||[""])[0]);
+  if(!ch){nextRound();return}
+  loadHanziWriter(function(ok){
+    if(!ok||!window.HanziWriter){alert("Для этой игры нужен интернет — она подгружает данные иероглифов. Остальное приложение работает офлайн.");go("games");return}
+    try{
+      G.writer=window.HanziWriter.create("hwbox",ch,{
+        width:260,height:260,padding:8,showOutline:true,
+        strokeColor:"#2563eb",radicalColor:"#d9483b",
+        strokeHighlightColor:"#15803d",showCharacterAfterComplete:true
+      });
+      G.hwMis=0;G.hwWeakened=0;
+      G.writer.quiz({
+        onMistake:function(){G.hwMis++;if(G.hwMis>=2&&!G.hwWeakened){weaken(w.cid);G.hwWeakened=1}},
+        onComplete:function(){
+          if(G.hwMis===0)G.ok++;else G.bad++;
+          setTimeout(nextRound,1200);
+        }
+      });
+    }catch(e){alert("Не удалось загрузить иероглиф — возможно, нет интернета.");go("games")}
+  });
+}
+function hwShow(){
+  if(!G||!G.writer)return;
+  G.writer.showCharacter();
+  G.writer.animateCharacter();
+  setTimeout(function(){
+    if(!G||!G.writer)return;
+    G.writer.hideCharacter();
+    G.writer.quiz({onMistake:function(){},onComplete:function(){setTimeout(nextRound,800)}});
+  },4500);
+}
+
 /* ---------- СТАРТ ---------- */
 function boot(){
   st();applyTheme();render();
@@ -2332,6 +2521,8 @@ function viewGames(app){
       ok:words.filter(function(w){return w.p.trim().split(/\s+/).length>=2}).length>=4});
     games.push({id:"tn",ic:"🎵",n:"Какой тон?",d:"ˉ ´ ˇ ` — выбери тон слога",
       ok:words.filter(function(w){return toneOf(w.p)>0&&w.p.trim().split(/\s+/).length===1}).length>=4});
+    games.push({id:"hw",ic:"✍️",n:"Напиши иероглиф",d:"Обведи по чертам — с проверкой (нужен интернет)",
+      ok:words.filter(function(w){return /[一-鿿]/.test(w.w)}).length>=3});
   }else{
     games.push({id:"lt",ic:"🔤",n:"Собери слово",d:"Буквы — в правильном порядке",
       ok:words.filter(function(w){return w.w.length>=3&&w.w.length<=10&&w.w.indexOf(" ")<0}).length>=4});
@@ -2370,15 +2561,16 @@ function startGame(id){
   }
   let pool=null;
   if(id==="t1"||id==="t2"||id==="au"||id==="pr")pool=words;
+  else if(id==="hw")pool=words.filter(function(w){return /[一-鿿]/.test(w.w)});
   else if(id==="py")pool=words.filter(function(w){return w.p.trim().split(/\s+/).length>=2});
   else if(id==="tn")pool=words.filter(function(w){return toneOf(w.p)>0&&w.p.trim().split(/\s+/).length===1});
   else if(id==="lt")pool=words.filter(function(w){return w.w.length>=3&&w.w.length<=10&&w.w.indexOf(" ")<0});
   else if(id==="ph")pool=phrases;
   if(!pool||pool.length<3){alert("Пока не хватает слов для этой игры.");return}
-  G={id:id,lang:lang,qs:pick(pool,Math.min(10,pool.length)),i:0,ok:0,bad:0,lock:false,opts:null,asm:null,prState:null,heard:"",prScored:0};
+  G={id:id,lang:lang,qs:pick(pool,Math.min(10,pool.length)),i:0,ok:0,bad:0,lock:false,opts:null,asm:null,prState:null,heard:"",prScored:0,hwInit:0,writer:null};
   go("play");
 }
-function nextRound(){if(!G)return;G.i++;G.lock=false;G.opts=null;G.prState=null;G.heard="";G.prScored=0;render()}
+function nextRound(){if(!G)return;G.i++;G.lock=false;G.opts=null;G.prState=null;G.heard="";G.prScored=0;G.hwInit=0;G.writer=null;render()}
 function gameHeader(w){
   let h='<div class="between"><div class="muted small">Вопрос '+(G.i+1)+" / "+G.qs.length+'</div>'
     +'<button class="btn sm ghost" onclick="go(\'games\')">Выйти</button></div>'
@@ -2448,6 +2640,13 @@ function viewPlay(app){
       h+='<div class="center" style="margin-top:16px"><button class="btn big yl" onclick="prRec()">🎙️ Сказать</button>'
         +'<div class="small muted" style="margin-top:6px">разрешите доступ к микрофону, когда спросит браузер</div></div>';
     }
+  }else if(G.id==="hw"){
+    h+='<div class="center"><div class="muted small">'+esc(w.r)+(w.p?" · "+esc(w.p):"")+"</div>"
+      +'<div class="word hanzi" style="font-size:30px">'+esc(w.w)+"</div>"
+      +'<div id="hwbox" style="width:260px;height:260px;margin:12px auto;background:#fff;border-radius:16px;box-shadow:var(--sh)"></div>'
+      +'<div class="row" style="justify-content:center"><button class="btn ghost sm" onclick="hwShow()">✨ Показать</button>'
+      +'<button class="btn ghost sm" onclick="nextRound()">Дальше ▶</button></div>'
+      +'<div class="small muted" style="margin-top:6px">обводите иероглиф пальцем или мышкой — по порядку черт</div>';
   }else if(G.id==="tn"){
     const t=toneOf(w.p);
     h+='<div class="center"><div class="word hanzi" style="font-size:56px">'+esc(w.w)+"</div>"
@@ -2484,6 +2683,7 @@ function viewPlay(app){
   }
   h+="</div>";
   app.innerHTML=h;
+  if(G.id==="hw"&&!G.hwInit){G.hwInit=1;hwStart()}
   if(G.id==="au"){
     const ri=G.i;
     setTimeout(function(){if(CUR.v==="play"&&G&&G.i===ri&&!G.lock)sayCard(w.cid,G.lang)},350);
