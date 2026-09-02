@@ -1,7 +1,7 @@
 ﻿/* Полиглот — офлайн-кэш (PWA).
    ВАЖНО: при каждом изменении index.html повышать VERSION,
    иначе телефоны продолжат показывать старую версию. */
-const VERSION = "v11";
+const VERSION = "v12";
 const CACHE = "polyglot-cache-" + VERSION;
 const ASSETS = [
   "./",
@@ -38,7 +38,8 @@ self.addEventListener("fetch", function (e) {
           var u = new URL(e.request.url);
           var cacheable = res.ok && (u.origin === location.origin
             || u.hostname.indexOf("jsdelivr.net") >= 0
-            || u.hostname.indexOf("cdnjs.cloudflare.com") >= 0);
+            || u.hostname.indexOf("cdnjs.cloudflare.com") >= 0
+            || u.hostname.indexOf("tessdata.projectnaptha.com") >= 0);
           if (cacheable) {
             var copy = res.clone();
             caches.open(CACHE).then(function (c) { c.put(e.request, copy); });

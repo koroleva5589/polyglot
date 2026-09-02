@@ -1974,6 +1974,7 @@ function render(){
   else if(CUR.v==="dict")viewDict(app);
   else if(CUR.v==="dlg")viewDialogs(app);
   else if(CUR.v==="stats")viewStats(app);
+  else if(CUR.v==="trans")viewTrans(app);
   else if(CUR.v==="print")viewPrint(app);
   else if(CUR.v==="baby")viewBaby(app);
   else if(CUR.v==="profiles")viewProfiles(app);
@@ -1983,7 +1984,7 @@ function render(){
 function setLang(l){st().lang=l;save();render()}
 function backArrow(){
   if(CUR.v==="home")return "";
-  const parent={lesson:"done",done:"home",games:"home",play:"games",match:"games",audio:"home",dict:"home",dlg:"home",stats:"home",print:"dict",baby:"home",profiles:"home",settings:"home"}[CUR.v]||"home";
+  const parent={lesson:"done",done:"home",games:"home",play:"games",match:"games",audio:"home",dict:"home",dlg:"home",stats:"home",trans:"home",print:"dict",baby:"home",profiles:"home",settings:"home"}[CUR.v]||"home";
   return '<span class="chip" onclick="go(\''+parent+'\')" title="назад">←</span>';
 }
 function topbar(){
@@ -2036,7 +2037,8 @@ function viewHome(app){
     +'<button class="btn ghost" onclick="go(\'baby\')">👶 Режим малыша</button></div>';
   h+='<div class="row" style="margin-top:10px"><button class="btn ghost sm" onclick="go(\'dict\')">📖 Словарь</button>'
     +'<button class="btn ghost sm" onclick="go(\'dlg\')">💬 Диалоги-симуляторы</button>'
-    +'<button class="btn ghost sm" onclick="go(\'stats\')">📊 Семейный зачёт</button></div>';
+    +'<button class="btn ghost sm" onclick="go(\'stats\')">📊 Семейный зачёт</button>'
+    +'<button class="btn ghost sm" onclick="go(\'trans\')">🌐 Переводчик</button></div>';
   if(P.md){
     const days=Math.ceil((new Date(P.md+"T00:00:00")-today0())/DAY);
     if(days>0){
@@ -2643,6 +2645,98 @@ function hwShow(){
     G.writer.hideCharacter();
     G.writer.quiz({onMistake:function(){},onComplete:function(){setTimeout(nextRound,800)}});
   },4500);
+}
+
+/* ---------- ПЕРЕВОДЧИК (словарь приложения офлайн + онлайн + фото) ---------- */
+let TRN={text:"",cards:[],online:"",none:0,status:""};
+function viewTrans(app){
+  const lang=st().lang;
+  let h=topbar()+"<h1>🌐 Переводчик</h1><div class='card'>";
+  h+='<div class="small muted" style="margin-bottom:8px">Сначала ищет в словаре приложения — работает офлайн. Если слова нет — переводит онлайн (нужен интернет). Направление определяется само: русский ⇄ '+(lang==="zh"?"китайский":"английский")+".</div>";
+  h+='<textarea id="trq" class="input" style="min-height:60px" placeholder="слово или фраза…">'+esc(TRN.text)+"</textarea>";
+  h+='<div class="row" style="margin-top:8px"><button class="btn" onclick="translGo()">Перевести</button>'
+    +'<button class="btn ghost" onclick="trPhoto()">📸 По фото</button></div>';
+  h+='<input type="file" id="trfile" accept="image/*" capture="environment" hidden onchange="trFile(this)">';
+  if(TRN.status)h+='<div class="hint" id="trprog">'+esc(TRN.status)+"</div>";
+  if(TRN.cards.length){
+    h+='<h2 style="font-size:15px;margin-top:12px">Из словаря приложения</h2>';
+    TRN.cards.forEach(function(w){
+      h+='<div class="deck" style="margin-bottom:6px" onclick="sayCard(\''+w.cid+"','"+lang+'\')"><div style="flex:1">'
+        +'<div class="ttl'+(lang==="zh"?" hanzi":"")+'" style="font-size:18px">'+esc(w.w)
+        +(lang==="zh"&&w.p?' <span class="muted" style="font-size:13px;font-weight:400">'+esc(w.p)+"</span>":"")
+        +(w.tr?' <span class="tr" style="font-size:13px;font-weight:400">['+esc(w.tr)+"]</span>":"")+"</div>"
+        +'<div class="pr">'+esc(w.r)+" · "+esc(w.dt)+"</div></div>"
+        +(w.e?'<div style="font-size:22px">'+w.e+"</div>":"")+"</div>";
+    });
+  }
+  if(TRN.online)h+='<div class="hint">🌐 <b>'+esc(TRN.online)+"</b><div class='small muted'>онлайн-перевод</div></div>";
+  if(TRN.none)h+='<div class="hint">В словаре приложения этого нет, и онлайн не отвечает — проверьте интернет.</div>';
+  h+="</div>";
+  h+='<div class="small muted" style="margin-top:8px">📸 Фото: снимайте текст крупно и чётко (меню, вывески, упаковки). Первый запуск скачивает модуль распознавания — нужен интернет, дальше он кэшируется. Для повседневных фото по-прежнему удобнее Google Lens или Яндекс Переводчик — наше распознавание попроще.</div>';
+  app.innerHTML=h;
+}
+function trPhoto(){var f=$("trfile");if(f)f.click()}
+function translGo(){
+  const q=($("trq")?$("trq").value:"").trim();
+  TRN.text=q;TRN.cards=[];TRN.online="";TRN.none=0;TRN.status="";
+  if(!q){render();return}
+  const lang=st().lang;
+  const ql=q.toLowerCase();
+  const all=wordList(lang);
+  all.forEach(function(w){
+    if(TRN.cards.length>=8)return;
+    if(w.w.toLowerCase()===ql||w.r.toLowerCase()===ql||((w.p||"").trim().toLowerCase()===ql))TRN.cards.push(w);
+  });
+  if(TRN.cards.length<3){
+    all.forEach(function(w){
+      if(TRN.cards.length>=8||TRN.cards.indexOf(w)>=0)return;
+      if(w.w.toLowerCase().indexOf(ql)===0||w.r.toLowerCase().indexOf(ql)===0)TRN.cards.push(w);
+    });
+  }
+  if(TRN.cards.length){render();return}
+  TRN.status="перевожу онлайн…";render();
+  const hasHan=/[一-鿿]/.test(q);
+  const hasRu=/[а-яё]/i.test(q);
+  const tl=hasHan?"ru":(hasRu?(lang==="zh"?"zh-CN":"en"):"ru");
+  fetch("https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl="+tl+"&dt=t&q="+encodeURIComponent(q))
+    .then(function(r){return r.json()})
+    .then(function(j){
+      let t="";
+      if(j&&j[0]&&j[0].length)j[0].forEach(function(p){if(p&&p[0])t+=p[0]});
+      if(t)TRN.online=t;else TRN.none=1;
+      TRN.status="";render();
+    })
+    .catch(function(){TRN.none=1;TRN.status="";render()});
+}
+function loadTess(cb){
+  if(window.Tesseract){cb(true);return}
+  const s=document.createElement("script");
+  s.src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js";
+  s.onload=function(){cb(!!window.Tesseract)};
+  s.onerror=function(){cb(false)};
+  document.head.appendChild(s);
+}
+function trFile(inp){
+  const f=inp.files&&inp.files[0];
+  try{inp.value=""}catch(e){}
+  if(!f)return;
+  TRN.busy=1;TRN.status="загружаю модуль распознавания…";render();
+  loadTess(function(ok){
+    if(!ok){TRN.busy=0;TRN.status="";alert("Не удалось загрузить распознавание — нужен интернет. Попробуйте позже.");render();return}
+    const langs=st().lang==="zh"?["chi_sim","rus"]:["eng","rus"];
+    TRN.status="загружаю языки ("+langs.join(" + ")+") — первый раз может занять пару минут…";render();
+    window.Tesseract.createWorker(langs,1,{logger:function(m){
+      if(m&&m.status){TRN.status=m.status+" "+Math.round((m.progress||0)*100)+"%";const e=$("trprog");if(e)e.textContent=TRN.status}
+    }}).then(function(worker){
+      return worker.recognize(f).then(function(res){
+        try{worker.terminate()}catch(e){}
+        TRN.busy=0;TRN.status="";
+        const t=(res&&res.data&&res.data.text?res.data.text:"").trim();
+        if(t){TRN.text=t;render();const q=$("trq");if(q)q.value=t;translGo()}
+        else{alert("Текст не распознан. Попробуйте фото с чётким крупным текстом.");render()}
+      },function(err){try{worker.terminate()}catch(e){}TRN.busy=0;TRN.status="";alert("Ошибка распознавания: "+((err&&err.message)||err));render()});
+    },function(err){TRN.busy=0;TRN.status="";alert("Не удалось запустить распознавание: "+((err&&err.message)||err));render()});
+  });
 }
 
 /* ---------- СТАРТ ---------- */
