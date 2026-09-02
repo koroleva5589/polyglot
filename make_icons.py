@@ -1,39 +1,41 @@
 # -*- coding: utf-8 -*-
-"""Генерация иконок приложения «Полиглот»: глобус на индиго-фоне."""
-from PIL import Image, ImageDraw
+"""Иконки приложения «Нихао!»: иероглиф 你 на индиго-фоне."""
+from PIL import Image, ImageDraw, ImageFont
 
 INDIGO = (79, 70, 229, 255)
 WHITE = (255, 255, 255, 255)
+FONT_CANDIDATES = [
+    "C:/Windows/Fonts/msyh.ttc",    # Microsoft YaHei
+    "C:/Windows/Fonts/msyhbd.ttc",
+    "C:/Windows/Fonts/simhei.ttf",  # SimHei
+]
 
 
-def globe(draw, size, scale=1.0):
-    """Рисует глобус: круг, меридианы, экватор."""
-    cx = cy = size // 2
-    r = int(size * 0.30 * scale)
-    w = max(3, int(size * 0.045))
-    thin = max(2, int(w * 0.6))
-    draw.ellipse([cx - r, cy - r, cx + r, cy + r], outline=WHITE, width=w)
-    # экватор и ось
-    draw.line([cx - r, cy, cx + r, cy], fill=WHITE, width=thin)
-    draw.line([cx, cy - r, cx, cy + r], fill=WHITE, width=thin)
-    # два меридиана (узкие эллипсы)
-    rx = int(r * 0.5)
-    draw.ellipse([cx - rx, cy - r, cx + rx, cy + r], outline=WHITE, width=thin)
-    ry = int(r * 0.5)
-    draw.ellipse([cx - r, cy - ry, cx + r, cy + ry], outline=WHITE, width=thin)
+def load_font(px):
+    for path in FONT_CANDIDATES:
+        try:
+            return ImageFont.truetype(path, px)
+        except Exception:
+            continue
+    raise SystemExit("Не найден китайский шрифт (msyh/simhei)")
 
 
 def make(size, path, maskable=False):
     img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     if maskable:
-        # сплошной фон до краёв, глобус в безопасной зоне (~70%)
+        # сплошной фон до краёв, знак в безопасной зоне
         d.rectangle([0, 0, size, size], fill=INDIGO)
-        globe(d, size, scale=0.7)
+        fpx = int(size * 0.42)
     else:
         rad = int(size * 0.22)
         d.rounded_rectangle([0, 0, size - 1, size - 1], radius=rad, fill=INDIGO)
-        globe(d, size)
+        fpx = int(size * 0.52)
+    font = load_font(fpx)
+    ch = "你"
+    b = d.textbbox((0, 0), ch, font=font)
+    w, h = b[2] - b[0], b[3] - b[1]
+    d.text(((size - w) / 2 - b[0], (size - h) / 2 - b[1]), ch, font=font, fill=WHITE)
     img.save(path)
     print(path, img.size)
 

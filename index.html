@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Полиглот — английский и китайский</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+<title>Нихао! — английский и китайский</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text x='50' y='72' font-size='58' text-anchor='middle' fill='white' font-family='sans-serif'>你</text></svg>">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#4f46e5">
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Полиглот">
+<meta name="apple-mobile-web-app-title" content="Нихао!">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
 :root{
@@ -1952,7 +1952,7 @@ function backArrow(){
 }
 function topbar(){
   const s=st(),p=P.pr[P.cur];
-  return '<div class="topbar">'+backArrow()+'<div class="logo" style="cursor:pointer" onclick="go(\'home\')">🌍 Полиглот</div><div class="spacer"></div>'
+  return '<div class="topbar">'+backArrow()+'<div class="logo hanzi" style="cursor:pointer" onclick="go(\'home\')">你好 Нихао!</div><div class="spacer"></div>'
     +'<span class="chip'+(s.lang==="en"?" on-en":"")+'" onclick="setLang(\'en\')">🇬🇧 Англ</span>'
     +'<span class="chip'+(s.lang==="zh"?" on-zh":"")+'" onclick="setLang(\'zh\')">🇨🇳 Кит</span>'
     +'<span class="chip" onclick="go(\'profiles\')">'+p.a+" "+esc(p.n)+'</span>'
@@ -2210,7 +2210,7 @@ function viewSettings(app){
     +'<button id="expCopy" class="btn sm" hidden style="margin-top:6px" onclick="expCopy()">Скопировать код</button></div>';
   h+='<div class="setrow"><label>Прогресс</label><button class="btn rd sm" onclick="resetProgress()">Сбросить прогресс профиля</button></div>';
   h+="</div>";
-  h+='<div class="small muted" style="margin-top:10px">«Полиглот» — семейный тренажёр: один файл, работает без интернета. Прогресс каждого устройства хранится отдельно.</div>';
+  h+='<div class="small muted" style="margin-top:10px">«Нихао!» — семейный тренажёр: один файл, работает без интернета. Прогресс каждого устройства хранится отдельно.</div>';
   app.innerHTML=h;
 }
 function voiceSelect(lang){
