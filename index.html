@@ -1816,7 +1816,17 @@ const AVATARS=["👤","👩","👨","🧒","👶","🦊","🐼","🐯","🦁","�
 let P=loadState();
 function loadState(){
   try{const d=JSON.parse(localStorage.getItem(LS));if(d&&d.pr&&d.pr.length)return d}catch(e){}
-  return {cur:0,tip:0,pr:[{n:"Профиль 1",a:"👤"},{n:"Профиль 2",a:"👤"},{n:"Ребёнок",a:"🧒"},{n:"Малыш",a:"👶"}],st:{}};
+  return {cur:0,tip:0,tip2:0,pr:[{n:"Вячеслав",a:"👨"},{n:"Наталья",a:"👩"},{n:"Денис",a:"🧒"},{n:"Демид",a:"👶"}],st:{}};
+}
+/* переименование старых профилей-заготовок в имена семьи */
+function migrateProfiles(){
+  const oldN=["Профиль 1","Профиль 2","Ребёнок","Малыш"];
+  const newP=[{n:"Вячеслав",a:"👨"},{n:"Наталья",a:"👩"},{n:"Денис",a:"🧒"},{n:"Демид",a:"👶"}];
+  let ch=false;
+  for(let i=0;i<P.pr.length&&i<4;i++){
+    if(oldN.indexOf(P.pr[i].n)>=0){P.pr[i].n=newP[i].n;P.pr[i].a=newP[i].a;ch=true}
+  }
+  if(ch)save();
 }
 function save(){try{localStorage.setItem(LS,JSON.stringify(P))}catch(e){}}
 function st(){
@@ -1959,6 +1969,7 @@ function topbar(){
     +'<span class="chip" onclick="go(\'settings\')">⚙️</span></div>';
 }
 function closeTip(){P.tip=1;save();render()}
+function closeTip2(){P.tip2=1;save();render()}
 
 /* ---------- ГЛАВНАЯ ---------- */
 function viewHome(app){
@@ -1992,6 +2003,7 @@ function viewHome(app){
   }
   if(!P.tip)h+='<div class="hint" style="margin-top:14px"><b>Как заниматься</b><br>10–15 минут в день: нажимайте «Учиться сегодня» и честно оценивайте себя — приложение само покажет слово, когда вы вот-вот его забудете. <span onclick="closeTip()" style="color:var(--acc);cursor:pointer;font-weight:700">Понятно</span></div>';
   if(lang==="zh"&&zhMissing())h+='<div class="hint">🔊 Китайской озвучки на этом устройстве пока нет — пиньиня (звуки латиницей) показывается всегда. Включить звук: Windows → Параметры → Время и язык → Язык → Добавить язык → «中文 (упрощённый)», затем перезапустить браузер. Либо откройте файл в браузере Edge — там обычно есть онлайн-голоса китайского.</div>';
+  if(!P.tip2&&!Object.keys(s.c).length)h+='<div class="hint" style="margin-top:12px">👉 <b>С чего начать:</b> один раз выберите, кто занимается — имя в правом верхнем углу → «Профили» → своя карточка. Телефон запомнит выбор, и больше выбирать не нужно: просто открывайте приложение и нажимайте «Учиться сегодня». <span onclick="closeTip2()" style="color:var(--acc);cursor:pointer;font-weight:700">Понятно</span></div>';
   h+='<div class="row" style="margin-top:14px"><button class="btn ghost" onclick="go(\'games\')">🎮 Игры</button>'
     +'<button class="btn ghost" onclick="go(\'audio\')">🎧 В дороге</button>'
     +'<button class="btn ghost" onclick="go(\'baby\')">👶 Режим малыша</button></div>';
@@ -2172,10 +2184,10 @@ function viewProfiles(app){
       +"</div>";
   });
   h+="</div>";
-  h+='<div class="small muted" style="margin-top:10px">Нажмите на профиль, чтобы выбрать его. У каждого — свой прогресс и свои настройки.</div>';
+  h+='<div class="small muted" style="margin-top:10px">Нажмите на свою карточку — приложение запомнит выбор на этом телефоне и откроет главный экран.</div>';
   app.innerHTML=h;
 }
-function selProfile(i){P.cur=i;save();render()}
+function selProfile(i){P.cur=i;save();go("home")}
 function editName(i){
   const n=prompt("Имя профиля:",P.pr[i].n);
   if(n&&n.trim()){P.pr[i].n=n.trim().slice(0,20);save();render()}
@@ -2605,6 +2617,7 @@ function hwShow(){
 
 /* ---------- СТАРТ ---------- */
 function boot(){
+  migrateProfiles();
   st();applyTheme();render();
   setTimeout(function(){refreshVoices();if(CUR.v==="home")render()},1200);
 }
